@@ -185,4 +185,14 @@ body{
 .content .label{
 	font-weight: bold;
 }
+.error{
+	color:red;
+	font-size:9pt;
+	font-style: italic;
+}
+.success{
+	color:green;
+	font-size:9pt;
+	font-style: italic;
+}
 /*========= Common class ==========*/

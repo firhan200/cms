@@ -19,6 +19,7 @@ class CreateSettingTable extends Migration
             $table->string('value');
             $table->boolean('is_active');
             $table->boolean('is_deleted');
+            $table->boolean('is_editable')->default(1);
             $table->timestamps();
         });
 
@@ -29,6 +30,7 @@ class CreateSettingTable extends Migration
                 'value' => '10',
                 'is_active' => 1,
                 'is_deleted' => 0,
+                'is_editable' => 0,
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
             )

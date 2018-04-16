@@ -20,9 +20,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', 'Admin\LogController@loginProcess');
     Route::get('/home', 'Admin\HomeController@dashboard');
     Route::get('/logout', 'Admin\HomeController@logout');
+    Route::post('/checkUnique', 'Admin\BaseController@__checkUnique');
 
     /*user*/
     Route::prefix('user')->group(function(){
+        Route::get('/truncate', 'Admin\UserController@truncate');
         Route::get('/', 'Admin\UserController@list');
         Route::get('/add', 'Admin\UserController@add');
         Route::post('/addProcess', 'Admin\UserController@addProcess');
@@ -30,6 +32,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit/{id}', 'Admin\UserController@edit');
         Route::post('/editProcess', 'Admin\UserController@editProcess');
         Route::get('/delete/{id}/{isDeleted}', 'Admin\UserController@deleteProcess');
+        Route::get('/deletePermanent/{id}', 'Admin\UserController@deletePermanentProcess');
     });
 
     /*setting*/

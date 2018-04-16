@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta name="csrf-token" content="{{ csrf_token() }}">
 		<title>@yield('title') | CMS</title>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome/css/font-awesome.min.css') }}">

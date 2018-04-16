@@ -7,17 +7,23 @@ use App\Http\Controllers\Controller;
 use Session;
 use Redirect;
 
-class UserController extends BaseController
+/* 
+views in resources/views/admin/crud
+*/
+
+class CRUDController extends BaseController
 {
     protected $model;
     protected $data;
 
     public function __construct(){
+    	//authorize
         $this->middleware('cms_auth');
 
-        $this->model = new \App\Models\User;
-        $this->data['title'] = "Users";
-
+        //init model
+        $this->model = new \App\Models\Setting;
+        $this->data['title'] = "Setting";
+        
         //set pagination
         $paginate = $this->__getSettingValueByName('pagination');
         if(ctype_digit(strval($paginate))){
@@ -31,7 +37,7 @@ class UserController extends BaseController
         $this->data['paginate'] = $paginate;
 
         /* folder in views & routes name */
-        $this->data['objectName'] = 'user';
+        $this->data['objectName'] = 'setting';
     }
 
     public function list(Request $request){
@@ -95,48 +101,26 @@ class UserController extends BaseController
 
     public function add(){
         $this->data['adminInfo'] = $this->__getUserInfo();
-        $this->data['obj']['name'] = '';
-        $this->data['obj']['email'] = '';
-        $this->data['obj']['address'] = '';
-        $this->data['obj']['phone_number'] = '';
         return view('admin/'.$this->data['objectName'].'/add', $this->data);
     }
 
     public function addProcess(Request $request){
-        $this->data['adminInfo'] = $this->__getUserInfo();
-        $this->data['obj'] = [];
-
-        $this->data['obj']['name'] = $request->input('name');
-        $this->data['obj']['email'] = $request->input('email');
-        $this->data['obj']['address'] = $request->input('address');
-        $this->data['obj']['phone_number'] = $request->input('phone_number');
-
         //process data
         $is_active = $request->input('is_active')=="on" ? 1 : 0;
 
-        $checkObj = $this->model->where('email', $request->input('email'))->count();
-        if($checkObj > 0){
-            Session::flash('message', "Email already taken ".$this->model->name);
-            //already taken
-            return view('admin/'.$this->data['objectName'].'/add', $this->data);
-        }else{
-            //insert data to model
-            $this->model->name = $this->data['obj']['name'];
-            $this->model->email = $this->data['obj']['email'];
-            $this->model->password = sha1($request->input('password'));
-            $this->model->address = $this->data['obj']['address'];
-            $this->model->phone_number = $this->data['obj']['phone_number'];
-            $this->model->is_active = $is_active;
-            $this->model->is_deleted = 0;
+        //insert data to model
+        $this->model->name = $request->input('name');
+        $this->model->value = $request->input('value');
+        $this->model->is_active = $is_active;
+        $this->model->is_deleted = 0;
 
-            //save model
-            $this->model->save();
+        //save model
+        $this->model->save();
 
-            //trigger flash message
-            Session::flash('message', "Successfully insert ".$this->model->name);
+        //trigger flash message
+        Session::flash('message', "Successfully insert ".$this->model->name);
 
-            return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
-        }       
+        return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
     }
 
     public function detail($id){

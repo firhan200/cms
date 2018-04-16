@@ -10,15 +10,37 @@
         <div class="col-md-12">
         	<div class="content-title">Add {{ $title }}</div>  
 
+            @if (Session::has('message'))
+               <div class="alert alert-info">{{ Session::get('message') }}</div>
+            @endif
         	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form">
                 {{ csrf_field() }}   
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" class="form-control" placeholder="name" maxlength="150" required>
+                    <label>* Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="name" maxlength="100" value="{{ $obj['name'] }}" required>
+                </div>
+                <div class="form-group unique-form">
+                    <label>* E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control unique-validation" data-entity="users" data-field="email" placeholder="email" maxlength="200" value="{{ $obj['email'] }}" required>
+                    <div class="unique-feedback"></div>
                 </div>
                 <div class="form-group">
-                    <label>Value</label>
-                    <input type="text" name="value" class="form-control" placeholder="value" maxlength="150" required>
+                    <label>* Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="password" maxlength="20" minlength="6" required>
+                    <div class="password-error"></div>
+                </div>
+                <div class="form-group">
+                    <label>* Repeat Password</label>
+                    <input type="password" id="repeat_password" name="repeat_password" class="form-control" placeholder="repeat password" maxlength="20" required>
+                    <div class="repeat-password-error"></div>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" value="{{ $obj['address'] }}" name="address" class="form-control" placeholder="address" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" value="{{ $obj['phone_number'] }}" name="phone_number" class="form-control" placeholder="Phone Number" maxlength="50">
                 </div>
                 <div class="form-group">
                     <label>Is Active</label>
