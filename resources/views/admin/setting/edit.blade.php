@@ -13,12 +13,16 @@
             @endif
         	<div class="content-title">Edit {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form" onsubmit="return confirm('save data')">
+        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box" onsubmit="return confirm('save data')">
                 {{ csrf_field() }}   
                 <input type="hidden" name="id" value="{{ $obj->id }}">
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" class="form-control" placeholder="name" maxlength="150" value="{{ $obj->name }}" <?php if($obj->is_editable==0){ echo 'readonly'; } ?> required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea type="text" name="description" class="form-control" placeholder="description" maxlength="150"<?php if($obj->is_editable==0){ echo 'readonly'; } ?> required>{{ $obj->description }}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Value</label>

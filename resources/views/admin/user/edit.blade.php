@@ -13,8 +13,13 @@
             @endif
         	<div class="content-title">Edit {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form" onsubmit="return confirm('save data')">
+        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box" onsubmit="return confirm('save data')">
                 {{ csrf_field() }}   
+
+                <div align="right">
+                    <a href="#" class="btn btn-success confirm-modal" data-toggle="modal" data-target="#confirmModal" data-content="reset {{ $obj->name }} password to {{ $user_default_password }}" data-url="{{ url('admin/'.$objectName.'/resetPassword/'.$obj->id) }}"><i class="fa fa-lock"></i> Reset Password</a>
+                </div>
+
                 <input type="hidden" name="id" value="{{ $obj->id }}">
                 <div class="form-group">
                     <label>Name</label>

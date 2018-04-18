@@ -16,6 +16,7 @@ class CreateSettingTable extends Migration
         Schema::create('setting', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description');
             $table->string('value');
             $table->boolean('is_active');
             $table->boolean('is_deleted');
@@ -27,7 +28,20 @@ class CreateSettingTable extends Migration
         DB::table('setting')->insert(
             array(
                 'name' => 'pagination',
+                'description' => 'total data row on 1 page',
                 'value' => '10',
+                'is_active' => 1,
+                'is_deleted' => 0,
+                'is_editable' => 0,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
+            )
+        );
+        DB::table('setting')->insert(
+            array(
+                'name' => 'user_default_password',
+                'description' => 'reset user password to default password',
+                'value' => '123456',
                 'is_active' => 1,
                 'is_deleted' => 0,
                 'is_editable' => 0,

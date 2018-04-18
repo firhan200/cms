@@ -154,6 +154,10 @@ class UserController extends BaseController
 
     public function edit($id){
         $this->data['adminInfo'] = $this->__getUserInfo();
+        $this->data['user_default_password'] = $this->__getSettingValueByName('user_default_password');
+        if($this->data['user_default_password']==null){
+            $this->data['user_default_password'] = "123456";
+        }
 
         //validating data
         $this->data['obj'] = $this->model->where('id', $id)->first();
@@ -243,5 +247,27 @@ class UserController extends BaseController
         Session::flash('message', $message);
 
         return Redirect::back();
+    }
+
+    public function resetPassword($id){
+        //check if user exist
+        $user = $this->model->where('id', $id)->first();
+        if($user!=null){
+            //get default password
+            $user_default_password = $this->__getSettingValueByName('user_default_password');
+            if($user_default_password==null){
+                $user_default_password = "123456";
+            }
+
+            //update user password
+            $user->password = sha1($user_default_password);
+            $user->save();
+
+            Session::flash('message', 'Password has been reset to '.$user_default_password);
+            return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$user->id);
+        }else{
+            Session::flash('message', 'user did not exist!');
+            return Redirect('/admin/'.$this->data['objectName']);
+        }
     }
 }

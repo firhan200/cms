@@ -10,38 +10,40 @@
         <div class="col-md-12">
         	<div class="content-title">Detail {{ $title }}</div>  
 
-        	<div class="content">
-        		<div class="label">Name</div>
-        		{{ $obj->name }}
-        	</div>
-        	<div class="content">
-        		<div class="label">E-mail</div>
-        		{{ $obj->email }}
-        	</div>
-            <div class="content">
-                <div class="label">Address</div>
-                {{ $obj->address }}
+            <div class="box">
+            	<div class="content">
+            		<div class="label">Name</div>
+            		{{ $obj->name }}
+            	</div>
+            	<div class="content">
+            		<div class="label">E-mail</div>
+            		{{ $obj->email }}
+            	</div>
+                <div class="content">
+                    <div class="label">Address</div>
+                    {{ $obj->address }}
+                </div>
+                <div class="content">
+                    <div class="label">Phone Number</div>
+                    {{ $obj->phone_number }}
+                </div>
+                <div class="content">
+                    <div class="label">Active</div>
+                    @if($obj->is_active)
+                        <span class="badge badge-success">active</span>
+                    @else
+                        <span class="badge badge-danger">un-active</span>
+                    @endif
+                </div>
+            	<div class="content">
+            		<div class="label">Created At</div>
+            		{{ date("d-m-Y, H:i", strtotime($obj->created_at)) }}
+            	</div>
+            	<div class="content">
+            		<div class="label">Updated At</div>
+            		{{ date("d-m-Y, H:i", strtotime($obj->updated_at)) }}
+            	</div>
             </div>
-            <div class="content">
-                <div class="label">Phone Number</div>
-                {{ $obj->phone_number }}
-            </div>
-            <div class="content">
-                <div class="label">Active</div>
-                @if($obj->is_active)
-                    <span class="badge badge-success">active</span>
-                @else
-                    <span class="badge badge-danger">un-active</span>
-                @endif
-            </div>
-        	<div class="content">
-        		<div class="label">Created At</div>
-        		{{ date("d-m-Y, H:i", strtotime($obj->created_at)) }}
-        	</div>
-        	<div class="content">
-        		<div class="label">Updated At</div>
-        		{{ date("d-m-Y, H:i", strtotime($obj->updated_at)) }}
-        	</div>
         </div>
     </div>
 </div>

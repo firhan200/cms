@@ -54,8 +54,9 @@ app.web = {
 				}
 			})
 		});
-	},
-	users : function(){
+
+		$(".form-with-check-passsword").find(".btn-submit").prop('disabled', true);
+
 		$("#password").bind('keyup change', function(){
 			checkPassword();
 		});
@@ -72,8 +73,10 @@ app.web = {
 				$(".password-error").html('');
 				if(password===repeat_password){
 					message = '<div class="success"><i class="fa fa-check-circle"></i> password match!</div>';				
+					$(".form-with-check-passsword").find(".btn-submit").prop('disabled', false);
 				}else{
 					message = '<div class="error">password not same</div>';
+					$(".form-with-check-passsword").find(".btn-submit").prop('disabled', true);
 				}
 				$(".repeat-password-error").html(message);
 			}else{
@@ -83,9 +86,13 @@ app.web = {
 					message = '<div class="error">password must be at least 6 character</div>';
 					$(".password-error").html(message);
 				}	
-				$(".password-error").html(message);			
+				$(".password-error").html(message);	
+				$(".form-with-check-passsword").find(".btn-submit").prop('disabled', true);		
 			}
 		}
+	},
+	users : function(){
+		
 	}
 }
 

@@ -13,6 +13,7 @@ class HomeController extends BaseController
     	$this->middleware('cms_auth');
 
     	$this->data['title'] = "dashboard";
+        $this->data['objectName'] = "home";
 
     }
 

@@ -13,7 +13,7 @@
             @if (Session::has('message'))
                <div class="alert alert-info">{{ Session::get('message') }}</div>
             @endif
-        	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form">
+        	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form form-with-check-passsword box">
                 {{ csrf_field() }}   
                 <div class="form-group">
                     <label>* Name</label>

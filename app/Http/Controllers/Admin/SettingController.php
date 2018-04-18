@@ -92,6 +92,7 @@ class SettingController extends BaseController
 
         //insert data to model
         $this->model->name = $request->input('name');
+        $this->model->description = $request->input('description');
         $this->model->value = $request->input('value');
         $this->model->is_active = $is_active;
         $this->model->is_deleted = 0;
@@ -143,6 +144,7 @@ class SettingController extends BaseController
         $is_active = $request->input('is_active')=="on" ? 1 : 0;
         //insert data to model
         $obj->name = $request->input('name');
+        $obj->description = $request->input('description');
         $obj->value = $request->input('value');
         $obj->is_active = $is_active;
 
@@ -160,6 +162,12 @@ class SettingController extends BaseController
         $obj = $this->model->where('id', $id)->first();
         if($obj==null){
             //not found
+            return Redirect('/admin/'.$this->data['objectName']);
+        }
+
+        //check if editable
+        if($obj->is_editable==0){
+            Session::flash('message', $obj->name." is non editable");
             return Redirect('/admin/'.$this->data['objectName']);
         }
 

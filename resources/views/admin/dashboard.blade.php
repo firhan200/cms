@@ -2,6 +2,7 @@
 
 @section('title', $title)
 @section('admin-name', $adminInfo['name'])
+@section($objectName, 'active')
 
 @section('body')
 <div class="container">

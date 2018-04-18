@@ -11,7 +11,7 @@ class BaseController extends Controller
 {
     public function __getUserInfo(){
     	$admin = array(
-    		'id'=>Session::get('cms_admin_name'),
+    		'id'=>Session::get('cms_admin_id'),
     		'name'=>Session::get('cms_admin_name')
     	);
     	return $admin;

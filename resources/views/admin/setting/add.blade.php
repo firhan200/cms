@@ -10,11 +10,15 @@
         <div class="col-md-12">
         	<div class="content-title">Add {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form">
+        	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form box">
                 {{ csrf_field() }}   
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" class="form-control" placeholder="name" maxlength="150" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea type="text" name="description" class="form-control" placeholder="description" maxlength="150" required></textarea>
                 </div>
                 <div class="form-group">
                     <label>Value</label>

@@ -10,7 +10,7 @@
         <div class="col-md-12">
         	<div class="content-title">Add {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form">
+        	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form box">
                 {{ csrf_field() }}   
                 <div class="form-group">
                     <label>Name</label>

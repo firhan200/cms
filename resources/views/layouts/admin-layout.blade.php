@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta name="csrf-token" content="{{ csrf_token() }}">
 		<title>@yield('title') | CMS</title>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
@@ -30,7 +30,7 @@
 			    	<ul class="navbar-nav ml-auto">
 			      		<li class="nav-item dropdown">
 			        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			          			<i class="fa fa-bell"></i> Notifications</a>
+			          			<i class="fa fa-bell"></i></a>
 			        		</a>
 			        		<div class="dropdown-menu dropdown-menu-right dropdown-notifications" aria-labelledby="navbarDropdown">
 			          			<a class="dropdown-item" href="#"><i class="fa fa-plus-circle"></i> <b>4</b> new user sign up</a>
@@ -43,8 +43,8 @@
 			          			<i class="fa fa-user-circle"></i> @yield('admin-name')
 			        		</a>
 			        		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-			          			<a class="dropdown-item" href="#">Profile</a>
-			          			<a class="dropdown-item" href="#">Change Password</a>
+			          			<a class="dropdown-item" href="{{ url('/admin/profile') }}">Profile</a>
+			          			<a class="dropdown-item" href="{{ url('/admin/changePassword') }}">Change Password</a>
 			          			<div class="dropdown-divider"></div>
 			          			<a class="dropdown-item confirm-modal" data-toggle="modal" data-target="#confirmModal" data-url="{{ url('admin/logout') }}" data-content="Logout from system?" href="#"><i class="fa fa-sign-out"></i> Logout</a>
 			        		</div>
@@ -64,7 +64,7 @@
 
 		      <!-- Modal Header -->
 		      <div class="modal-header">
-		        <h4 class="modal-title">Confirmation</h4>
+		        <h4 class="modal-title"><i class="fa fa-info-circle"></i> Confirmation</h4>
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
 		      </div>
 		      <div class="modal-body" id="confirm-content">

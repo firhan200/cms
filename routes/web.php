@@ -17,10 +17,14 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function () {
     Route::get('/', 'Admin\LogController@login');
-    Route::post('/login', 'Admin\LogController@loginProcess');
-    Route::get('/home', 'Admin\HomeController@dashboard');
     Route::get('/logout', 'Admin\HomeController@logout');
+    Route::get('/home', 'Admin\HomeController@dashboard');
+    Route::get('/profile', 'Admin\ProfileController@profile');
+    Route::get('/changePassword', 'Admin\ProfileController@changePassword');
+
+    Route::post('/login', 'Admin\LogController@loginProcess');
     Route::post('/checkUnique', 'Admin\BaseController@__checkUnique');
+    Route::post('/changePasswordProcess', 'Admin\ProfileController@changePasswordProcess');
 
     /*user*/
     Route::prefix('user')->group(function(){
@@ -33,6 +37,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/editProcess', 'Admin\UserController@editProcess');
         Route::get('/delete/{id}/{isDeleted}', 'Admin\UserController@deleteProcess');
         Route::get('/deletePermanent/{id}', 'Admin\UserController@deletePermanentProcess');
+        Route::get('/resetPassword/{id}', 'Admin\UserController@resetPassword');
     });
 
     /*setting*/
