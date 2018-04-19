@@ -12,8 +12,15 @@ app.web = {
 		CKEDITOR.replaceClass = 'ckeditor';
 
 		$(".disable-form").submit(function(){
-			$(this).find('.btn-submit').text("Please wait...");
-			$(this).find('.btn-submit').prop('disabled', true);
+			var confirm = window.confirm('Save data?', 'Yes', 'Abort');
+			if(confirm){
+				$(this).find('.btn-submit').text("Please wait...");
+				$(this).find('.btn-submit').prop('disabled', true);
+			}else{
+				$(this).find('.btn-submit').prop('disabled', false);
+				return false;
+			}
+			
 		})
 
 		$(".confirm-modal").click(function(){
@@ -51,6 +58,37 @@ app.web = {
 				},
 				error: function(){
 					console.log('error');
+				}
+			})
+		});
+
+		$(".unique-validation-edit").bind('change keyup', function(){
+			var entity = $(this).data('entity');
+			var field = $(this).data('field');
+			var oldValue = $(this).data('old-value');
+			var value = $(this).val();
+			var feedbackField = $(this).parents('.unique-form').find('.unique-feedback');
+			$.ajax({
+				url:hostAdmin+'checkUnique',
+				data:{ entity: entity, field:field, value:value, oldValue:oldValue },
+				type : 'post',
+				headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    },
+				beforeSend:function(){
+					feedbackField.text('please wait...');
+				},
+				success:function(data){
+					console.log(data);
+					if(data.found==true){
+						feedbackField.html('<div class="error">Email already taken!</div>');
+					}else{
+						feedbackField.html('');
+					}
+					
+				},
+				error: function(){
+					feedbackField.html('<div class="error">error occured!</div>');
 				}
 			})
 		});

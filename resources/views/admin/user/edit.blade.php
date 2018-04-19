@@ -13,7 +13,7 @@
             @endif
         	<div class="content-title">Edit {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box" onsubmit="return confirm('save data')">
+        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box">
                 {{ csrf_field() }}   
 
                 <div align="right">
@@ -25,9 +25,18 @@
                     <label>Name</label>
                     <input type="text" name="name" class="form-control" placeholder="name" maxlength="150" value="{{ $obj->name }}" required>
                 </div>
+                <div class="form-group unique-form">
+                    <label>* E-mail</label>
+                    <input type="email" id="email" name="email" class="form-control unique-validation-edit" data-entity="users" data-field="email" placeholder="email" maxlength="200" data-old-value="{{ $obj->email }}" value="{{ $obj->email }}" required>
+                    <div class="unique-feedback"></div>
+                </div>
                 <div class="form-group">
-                    <label>Value</label>
-                    <input type="text" name="value" class="form-control" placeholder="value" maxlength="150" value="{{ $obj->value }}" required>
+                    <label>Address</label>
+                    <input type="text" value="{{ $obj->address }}" name="address" class="form-control" placeholder="address" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" value="{{ $obj->phone_number }}" name="phone_number" class="form-control" placeholder="Phone Number" maxlength="50">
                 </div>
                 <div class="form-group">
                     <label>Is Active</label>

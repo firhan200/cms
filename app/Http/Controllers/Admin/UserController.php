@@ -179,16 +179,28 @@ class UserController extends BaseController
         }
 
         $is_active = $request->input('is_active')=="on" ? 1 : 0;
-        //insert data to model
-        $obj->name = $request->input('name');
-        $obj->value = $request->input('value');
-        $obj->is_active = $is_active;
 
-        //save model
-        $obj->save();
+        //check email
+        $checkEmail = $this->model->where('email', $request->input('email'))->where('email', '!=', $obj->email)->count();
+        if($checkEmail > 0){
+            //trigget flash message
+            Session::flash('message', "Email: ".$request->input('email')." already taken");
+        }else{
+            //insert data to model
+            $obj->name = $request->input('name');
+            $obj->email = $request->input('email');
+            $obj->address = $request->input('address');
+            $obj->phone_number = $request->input('phone_number');
+            $obj->is_active = $is_active;
 
-        //trigget flash message
-        Session::flash('message', "Successfully edit ".$obj->name);
+            //save model
+            $obj->save();
+
+            //trigget flash message
+            Session::flash('message', "Successfully edit ".$obj->name);
+        }
+
+        
 
         return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$id);
     }

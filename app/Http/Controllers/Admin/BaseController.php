@@ -34,10 +34,18 @@ class BaseController extends Controller
 
         $tableName = $request->input('entity');
         $field = $request->input('field');
-        $value = $request->input('value');
+        $value = $request->input('value');       
+        if($request->input('oldValue')!=null){
+            //edit
+            $oldValue = $request->input('oldValue');
+            $obj = DB::table($tableName)->where($field, $value)->where($field, '!=', $oldValue)->where('is_deleted', 0)->count();
+        }else{
+            //add
+            $obj = DB::table($tableName)->where($field, $value)->where('is_deleted', 0)->count();
+        }
 
         try{
-            $obj = DB::table($tableName)->where($field, $value)->where('is_deleted', 0)->count();
+            
             if($obj > 0){
                 $response = ['found' => true, 'message'=>'<div class="error">email already taken!</div>'];
             }

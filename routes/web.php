@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/', 'HomeController@index');
+
+
+
+
+/*================= admin section start =================*/
 Route::prefix('admin')->group(function () {
     Route::get('/', 'Admin\LogController@login');
     Route::get('/logout', 'Admin\HomeController@logout');

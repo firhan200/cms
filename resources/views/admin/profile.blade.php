@@ -13,11 +13,15 @@
 			@endif
         	<div class="content-title">{{ $title }}</div>  
         	
-            <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2">
-                    <i class="fa fa-user-circle" style="font-size:50pt"></i>
-                </div>
-                <div class="col-xs-10 col-sm-10 col-md-8">
+            <div class="row">               
+                <div class="col-sm-10 col-md-8 col-lg-6 offset-sm-1 offset-md-2 offset-lg-3 box">
+                    <div align="right">
+                        <a href="{{ url('admin/changePassword') }}" class="btn btn-success btn-sm"><i class="fa fa-lock"></i> Change Password</a>
+                    </div>
+                    <div align="center">
+                        <i class="fa fa-user-circle" style="font-size:50pt"></i>
+                    </div>
+                    <br/>
                     <table class="table table-striped">
                         <tbody>
                             <tr>

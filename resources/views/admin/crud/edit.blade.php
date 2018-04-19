@@ -13,7 +13,7 @@
             @endif
         	<div class="content-title">Edit {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box" onsubmit="return confirm('save data')">
+        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box">
                 {{ csrf_field() }}   
                 <input type="hidden" name="id" value="{{ $obj->id }}">
                 <div class="form-group">
