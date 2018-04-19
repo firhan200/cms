@@ -15,6 +15,7 @@
 			<ul class="menu">
 				<a href="{{ url('/admin/home') }}" class="@yield('home')"><li><i class="fa fa-home"></i> Home</li></a>
 				<a href="{{ url('/admin/user') }}" class="@yield('user')"><li><i class="fa fa-users"></i> Users</li></a>
+				<a href="{{ url('/admin/contact_us') }}" class="@yield('contact_us')"><li><i class="fa fa-envelope"></i> Contact Us</li></a>
 				<a href="{{ url('/admin/setting') }}" class="@yield('setting')"><li><i class="fa fa-cogs"></i> Setting</li></a>
 			</ul>
 		</div>
@@ -29,13 +30,16 @@
 			  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			    	<ul class="navbar-nav ml-auto">
 			      		<li class="nav-item dropdown">
-			        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			          			<i class="fa fa-bell"></i></a>
+			        		<a class="nav-link dropdown-toggle notification-head" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          			<i class="fa fa-bell notifications-bell"></i> <span style="display:none" class="badge notifications-count">0</span><span class="fa fa-spinner loading"></span></a>
 			        		</a>
 			        		<div class="dropdown-menu dropdown-menu-right dropdown-notifications" aria-labelledby="navbarDropdown">
-			          			<a class="dropdown-item" href="#"><i class="fa fa-plus-circle"></i> <b>4</b> new user sign up</a>
+			          			<a class="dropdown-item notification-content-loading" style="display:none" href="#"><center><i class="fa fa-spinner loading"></i></center></a>
+			          			<!-- <a class="dropdown-item" href="#"><i class="fa fa-plus-circle"></i> new sign up user</a>
 			          			<div class="dropdown-divider"></div>
-			          			<a class="dropdown-item" href="#"><i class="fa fa-plus-circle"></i> <b>4</b> new feedback</a>		
+			          			<a class="dropdown-item" href="#"><i class="fa fa-plus-circle"></i> new feedback</a>
+			          			<div class="dropdown-divider"></div>
+			          			<a class="dropdown-item" href="#"><i class="fa fa-plus-circle"></i> new feedback</a> -->	
 			        		</div>
 			      		</li>
 			      		<li class="nav-item dropdown">

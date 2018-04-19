@@ -27,6 +27,9 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/login', 'Admin\LogController@loginProcess');
     Route::post('/checkUnique', 'Admin\BaseController@__checkUnique');
+    Route::post('/checkNotifications', 'Admin\NotificationController@checkNotifications');
+    Route::post('/getNotifications', 'Admin\NotificationController@getNotifications');
+    Route::post('/truncateNotifications', 'Admin\NotificationController@truncate');
     Route::post('/changePasswordProcess', 'Admin\ProfileController@changePasswordProcess');
 
     /*user*/
@@ -41,6 +44,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete/{id}/{isDeleted}', 'Admin\UserController@deleteProcess');
         Route::get('/deletePermanent/{id}', 'Admin\UserController@deletePermanentProcess');
         Route::get('/resetPassword/{id}', 'Admin\UserController@resetPassword');
+    });
+
+    /*contact us*/
+    Route::prefix('contact_us')->group(function(){
+        Route::get('/truncate', 'Admin\ContactUsController@truncate');
+        Route::get('/', 'Admin\ContactUsController@list');
+        Route::get('/{id}', 'Admin\ContactUsController@detail');
+        Route::get('/delete/{id}/{isDeleted}', 'Admin\ContactUsController@deleteProcess');
+        Route::get('/deletePermanent/{id}', 'Admin\ContactUsController@deletePermanentProcess');
     });
 
     /*setting*/

@@ -5,8 +5,100 @@ var app = {};
 
 app.web = {
 	init : function(){
+		app.web.notifications();
 		app.web.common();
 		app.web.users();
+	},
+	notifications : function(){
+		notificationsCheck();
+
+		setInterval(function(){
+			//check notification every 5 minute
+			notificationsCheck();
+		}, 1000 * 60 * 5)
+
+		function notificationsCheck(){
+			$.ajax({
+				url:hostAdmin+'checkNotifications',
+				data:{ },
+				type : 'post',
+				headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    },
+				beforeSend:function(){
+					$(".notifications-count").hide();
+					$(".notification-head").find('.loading').show();
+					$(".notifications-bell").removeClass('.active');
+				},
+				success:function(data){			
+					$(".notification-head").find('.loading').hide();	
+					if(data.total > 0){
+						$(".notifications-bell").addClass('active');
+						$(".notifications-count").text(data.total);
+						$(".notifications-count").fadeIn();
+					}else{
+						$(".notifications-bell").removeClass('.active');
+						$(".notifications-count").hide();
+					}
+				},
+				error: function(){
+					console.log('error');
+				}
+			});
+
+			$(".notification-head").click(function(){
+				if(!$(".dropdown-notifications").hasClass('show')){
+					$.ajax({
+						url:hostAdmin+'getNotifications',
+						data:{ },
+						type : 'post',
+						headers: {
+					        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					    },
+						beforeSend:function(){
+							$(".notification-content-loading").show();
+						},
+						success:function(data){		
+							$(".notification-content-loading").hide();	
+							if(data.notifications.length > 0){
+								$(".dropdown-notifications").html('');
+								$.each(data.notifications, function(key, notification){
+									$(".dropdown-notifications").append('<a class="dropdown-item" href="'+host+notification.link+'">'+notification.action+' '+notification.object+'</a>');
+								})
+								setTimeout(function(){
+									//truncate notification after wait for 1 sec
+									truncateNotifications();
+								}, 1000);
+							}else{
+								$(".dropdown-notifications").html('<center class="help">no notifications</center>');
+							}
+							
+						},
+						error: function(){
+							console.log('error');
+						}
+					});
+				}
+			});
+		}		
+
+		//delete all notification
+		function truncateNotifications(){
+			$.ajax({
+				url:hostAdmin+'truncateNotifications',
+				data:{ },
+				type : 'post',
+				headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    },
+				success:function(data){	
+					console.log(data);	
+				},
+				error: function(){
+					console.log('error occured');
+				}
+			});
+		}
 	},
 	common : function(){
 		CKEDITOR.replaceClass = 'ckeditor';

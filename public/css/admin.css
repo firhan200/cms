@@ -108,9 +108,32 @@ body{
 	padding:10px 30px 10px 30px;
 	font-size:10pt;
 }
+.notification-head .active{
+	color:#17a2b8;
+}
+.notification-head .notifications-count{
+	position:absolute;
+	margin-left:-10px;
+	margin-top:-10px;
+	background-color: #1c1c1c;
+	color:#fff;
+	border-radius: 50%;
+}
+.notification-head .loading{
+	position:absolute;
+	margin-left:-10px;
+	margin-top:-10px;
+}
 /*========= layouting ==========*/
 
 /*========= Common class ==========*/
+.loading{
+	-webkit-animation: rotating 2s linear infinite;
+	-moz-animation: rotating 2s linear infinite;
+	-ms-animation: rotating 2s linear infinite;
+	-o-animation: rotating 2s linear infinite;
+	animation: rotating 2s linear infinite;
+}
 .box{
 	background-color: #fff;
 	padding:30px;
@@ -201,4 +224,39 @@ body{
 	font-size:9pt;
 	font-style: italic;
 }
+.help{
+	font-size:10pt;
+	color:#bdbdbd;
+}
 /*========= Common class ==========*/
+
+/*======== shake animation ==========*/
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

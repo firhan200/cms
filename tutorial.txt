@@ -1,4 +1,3 @@
-# cms
 Run laravel:
 1. php artisan serve
 

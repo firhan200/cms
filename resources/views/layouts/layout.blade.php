@@ -20,9 +20,9 @@
 
 			  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			    	<ul class="navbar-nav ml-auto">
-			      		<li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-home"></i> Home</a></li>
-			      		<li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-info-circle"></i> About</a></li>
-			      		<li class="nav-item"><a href="#" class="nav-link"><i class="fa fa-phone"></i> Contact us</a></li>
+			      		<li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+			      		<li class="nav-item"><a href="#" class="nav-link">About</a></li>
+			      		<li class="nav-item"><a href="#" class="nav-link">Contact us</a></li>
 			    	</ul>
 			  	</div>
 			</nav>
