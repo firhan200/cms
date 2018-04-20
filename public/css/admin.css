@@ -126,6 +126,12 @@ body{
 }
 /*========= layouting ==========*/
 
+/*========== Article ==========*/
+.tag{
+	margin-right: 10px;
+}
+/*========== Article ==========*/
+
 /*========= Common class ==========*/
 .loading{
 	-webkit-animation: rotating 2s linear infinite;
@@ -226,7 +232,7 @@ body{
 }
 .help{
 	font-size:10pt;
-	color:#bdbdbd;
+	color:#696969;
 }
 /*========= Common class ==========*/
 

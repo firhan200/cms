@@ -4,19 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends BaseController
+class ContactUsController extends Controller
 {
-	public $data;
+    public $data;
 
     public function __construct(){
     	//constructor
-    	$this->data['title'] = 'Home';
+    	$this->data['title'] = 'Contact Us';
 
     	/* folder in views */
-        $this->data['objectName'] = 'home';
+        $this->data['objectName'] = 'contact-us';
 
         /*active menu*/
-        $this->data['activeMenu'] = 'home';
+        $this->data['activeMenu'] = 'contact-us';
     }
 
     public function index(){

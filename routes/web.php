@@ -13,6 +13,9 @@
 
 
 Route::get('/', 'HomeController@index');
+Route::get('/contact-us', 'ContactUsController@index');
+Route::get('/login', 'UserController@login');
+Route::get('/sign-up', 'UserController@signUp');
 
 
 
@@ -31,6 +34,19 @@ Route::prefix('admin')->group(function () {
     Route::post('/getNotifications', 'Admin\NotificationController@getNotifications');
     Route::post('/truncateNotifications', 'Admin\NotificationController@truncate');
     Route::post('/changePasswordProcess', 'Admin\ProfileController@changePasswordProcess');
+
+    /*articles*/
+    Route::prefix('article')->group(function(){
+        Route::get('/truncate', 'Admin\ArticleController@truncate');
+        Route::get('/', 'Admin\ArticleController@list');
+        Route::get('/add', 'Admin\ArticleController@add');
+        Route::post('/addProcess', 'Admin\ArticleController@addProcess');
+        Route::get('/{id}', 'Admin\ArticleController@detail');
+        Route::get('/edit/{id}', 'Admin\ArticleController@edit');
+        Route::post('/editProcess', 'Admin\ArticleController@editProcess');
+        Route::get('/delete/{id}/{isDeleted}', 'Admin\ArticleController@deleteProcess');
+        Route::get('/deletePermanent/{id}', 'Admin\ArticleController@deletePermanentProcess');
+    });
 
     /*user*/
     Route::prefix('user')->group(function(){

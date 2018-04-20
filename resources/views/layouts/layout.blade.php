@@ -20,9 +20,11 @@
 
 			  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			    	<ul class="navbar-nav ml-auto">
-			      		<li class="nav-item"><a href="#" class="nav-link">Home</a></li>
-			      		<li class="nav-item"><a href="#" class="nav-link">About</a></li>
-			      		<li class="nav-item"><a href="#" class="nav-link">Contact us</a></li>
+			      		<li class="nav-item @yield('home')"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
+			      		<li class="nav-item @yield('about')"><a href="{{ url('/about') }}" class="nav-link">About</a></li>
+			      		<li class="nav-item @yield('contact-us')"><a href="{{ url('/contact-us') }}" class="nav-link">Contact us</a></li>
+			      		<li class="nav-item @yield('login')"><a href="{{ url('/login') }}" class="nav-link">Login</a></li>
+			      		<li class="nav-item @yield('sign-up')"><a href="{{ url('/sign-up') }}" class="nav-link">Sign up</a></li>
 			    	</ul>
 			  	</div>
 			</nav>
@@ -56,6 +58,7 @@
 		<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/popper.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('js/config.js') }}"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
 			
 		@yield('additional-script')

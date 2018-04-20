@@ -82,8 +82,11 @@ class ContactUsController extends BaseController
         //procedure query
         $this->data['objList'] = $this->model->
             where('is_deleted', $this->data['is_deleted'])->
-            where('name', 'LIKE', "%".$this->data['keyword']."%")->
-            orWhere('email', 'LIKE', "%".$this->data['keyword']."%")->
+            where(function($query){
+                $query->
+                where('name', 'LIKE', "%".$this->data['keyword']."%")->
+                orWhere('email', 'LIKE', "%".$this->data['keyword']."%");
+            })->
             orderBy($this->data['sort_by'], $this->data['order_type'])->
             paginate($this->data['paginate']);
 

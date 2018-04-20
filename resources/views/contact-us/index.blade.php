@@ -5,6 +5,6 @@
 
 @section('body')
 <div class="container pad">
-    Home
+    Contact Us
 </div>
 @endsection

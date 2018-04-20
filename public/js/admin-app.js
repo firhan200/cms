@@ -1,6 +1,3 @@
-var host = 'http://localhost:8000/';//window.location.hostname;
-var hostAdmin = 'http://localhost:8000/admin/';//window.location.hostname;
-
 var app = {};
 
 app.web = {
@@ -8,6 +5,7 @@ app.web = {
 		app.web.notifications();
 		app.web.common();
 		app.web.users();
+		app.web.articles();
 	},
 	notifications : function(){
 		notificationsCheck();
@@ -223,6 +221,32 @@ app.web = {
 	},
 	users : function(){
 		
+	},
+	articles : function(){
+		$("#newsContent").val($("#content").val());
+
+		if($("#tags").val().length > 2){
+			var tags = $("#tags").val();
+			var tagsResult = renderTags(tags);
+			$("#tags-result").html(tagsResult);
+		}
+
+		$("#tags").bind('keyup change', function(){			
+			var tags = $(this).val();
+			var tagsResult = renderTags(tags);
+
+			$("#tags-result").html(tagsResult);
+		})
+
+		function renderTags(tagsString){
+			var tagsResult = '';
+			var tagList = tagsString.split(',');
+			$.each(tagList, function(key, tag){
+				tagsResult = tagsResult + '<div class="badge badge-info tag">'+tag.trim()+'</div>';
+			})
+
+			return tagsResult;
+		}
 	}
 }
 
