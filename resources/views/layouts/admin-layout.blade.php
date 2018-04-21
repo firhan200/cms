@@ -18,7 +18,7 @@
 		        <i class="fa fa-spinner loading"></i>
 		    </div>
 		</div>
-		<div class="sidenav sidenav-small">			
+		<div class="sidenav sidenav-large">			
 			<ul class="menu">
 				<a href="{{ url('/admin/home') }}" class="@yield('home')" title="Home"><li><i class="fa fa-home"></i> Home</li></a>
 				<a href="{{ url('/admin/article') }}" class="@yield('article')" title="Articles"><li><i class="fa fa-newspaper-o"></i> Articles</li></a>
@@ -28,7 +28,7 @@
 			</ul>
 		</div>
 
-		<div class="main main-small">
+		<div class="main main-large">
 			<nav class="navbar navbar-expand fixed-top navbar-expand-lg navbar-light bg-light">
 			  	<a class="navbar-brand" href="#">CMS</a>
 			  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

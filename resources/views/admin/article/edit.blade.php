@@ -13,12 +13,23 @@
             @endif
         	<div class="content-title">Edit {{ $title }}</div>  
 
-        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box">
+        	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box" enctype="multipart/form-data">
                 {{ csrf_field() }}   
                 <input type="hidden" name="id" value="{{ $obj->id }}">
                 <div class="form-group">
                     <label>Title</label>
                     <input type="text" name="title" class="form-control" placeholder="Title" maxlength="150" value="{{ $obj->title }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Uploaded Cover:</label>
+                    <br/>
+                    <img src="{{ asset('images/'.$objectName.'/'.$obj->cover) }}" class="img-thumbnail img-small">
+                    <br/>
+                    <label>Change Cover</label>
+                    <input type="file" name="cover" class="form-control" id="cover">
+                    <div class="help">
+                        Leave this field empty if you do not want to change cover.<br/>Allowed image extension : {{ $allowed_image_extension }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Summary</label>

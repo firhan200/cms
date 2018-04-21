@@ -56,4 +56,14 @@ class BaseController extends Controller
 
         return response()->json($response);
     }
+
+    public function __validateImage($image){
+        $extension = $image->getClientOriginalExtension();
+        $allowed_extension = explode('|', $this->__getSettingValueByName('allowed_image_extension'));
+        if(in_array($extension, $allowed_extension)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

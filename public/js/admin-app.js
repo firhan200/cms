@@ -196,11 +196,9 @@ app.web = {
 		$(".toggle-sidebar").click(function(){
 			if($(".toggle-sidebar").hasClass('shrink')){
 				localStorage.setItem('sidenav', 'large');
-				console.log(localStorage.getItem("sidenav"));
 				renderSidenav();
 			}else{
 				localStorage.setItem('sidenav', 'small');
-				console.log(localStorage.getItem("sidenav"));
 				renderSidenav();
 			}			
 		})
@@ -330,6 +328,11 @@ app.web = {
 	},
 	articles : function(){
 		$("#newsContent").val($("#content").val());
+
+		/*$("#cover").change(function(){
+			var image = $(this).val();
+			console.log(image.height);
+		})*/
 
 		var tags = $("#tags").val();
 		if(tags!=null){

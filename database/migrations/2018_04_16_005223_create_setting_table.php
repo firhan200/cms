@@ -49,6 +49,18 @@ class CreateSettingTable extends Migration
                 'updated_at' => new DateTime()
             )
         );
+        DB::table('setting')->insert(
+            array(
+                'name' => 'allowed_image_extension',
+                'description' => 'allowed image extension to be uploaded to system, split with |',
+                'value' => 'png|jpg|jpeg',
+                'is_active' => 1,
+                'is_deleted' => 0,
+                'is_editable' => 0,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
+            )
+        );
     }
 
     /**

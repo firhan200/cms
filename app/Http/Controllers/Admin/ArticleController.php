@@ -38,6 +38,8 @@ class ArticleController extends BaseController
 
         /* folder in views & routes name */
         $this->data['objectName'] = 'article';
+
+        $this->data['allowed_image_extension'] = $this->__getSettingValueByName('allowed_image_extension');
     }
 
     public function list(Request $request){
@@ -109,24 +111,46 @@ class ArticleController extends BaseController
     }
 
     public function addProcess(Request $request){
-        //process data
-        $is_active = $request->input('is_active')=="on" ? 1 : 0;
+        //processing image cover
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover');
+            //validate image
+            $imageValidated = $this->__validateImage($image);
+            if($imageValidated){
+                $fileName = gmdate("d-m-y-H-i-s", time()).'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('/images/'.$this->data['objectName']);
+                $image->move($destinationPath, $fileName);
 
-        //insert data to model
-        $this->model->title = $request->input('title');
-        $this->model->summary = $request->input('summary');
-        $this->model->body = $request->input('body');
-        $this->model->tags = $request->input('tags');
-        $this->model->is_active = $is_active;
-        $this->model->is_deleted = 0;
+                //insert data to model
+                $is_active = $request->input('is_active')=="on" ? 1 : 0;
+                $this->model->title = $request->input('title');
+                $this->model->cover = $fileName;
+                $this->model->summary = $request->input('summary');
+                $this->model->body = $request->input('body');
+                $this->model->tags = $request->input('tags');
+                $this->model->is_active = $is_active;
+                $this->model->is_deleted = 0;
 
-        //save model
-        $this->model->save();
+                //save model
+                $this->model->save();
 
-        //trigger flash message
-        Session::flash('message', "Successfully insert ".$this->model->title);
+                //trigger flash message
+                Session::flash('message', "Successfully insert ".$this->model->title);
 
-        return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
+                return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
+            }else{
+                //extension error
+
+                //trigger flash message
+                Session::flash('message', "Invalid image extension, allowed extension: ".$this->data['allowed_image_extension']);
+            }
+        }else{
+            //cover null
+            //trigger flash message
+            Session::flash('message', "Cover is required");
+        }
+
+        return Redirect('/admin/'.$this->data['objectName'].'/add');
     }
 
     public function detail($id){
@@ -164,9 +188,39 @@ class ArticleController extends BaseController
             return Redirect('/admin/'.$this->data['objectName']);
         }
 
+        //processing image cover
+        $newImage = false;
+        $fileName = '';
+        $imageError = '';
+        if ($request->hasFile('cover')) {
+            $newImage = true;
+            $image = $request->file('cover');
+            //validate image
+            $imageValidated = $this->__validateImage($image);
+            if($imageValidated){
+                $fileName = gmdate("d-m-y-H-i-s", time()).'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('/images/'.$this->data['objectName']);
+                $image->move($destinationPath, $fileName);
+            }else{
+                $imageError = "Invalid image extension, allowed extension: ".$this->data['allowed_image_extension'];
+            }
+        }else{
+            $imageError = 'kosong';
+        }
+
         $is_active = $request->input('is_active')=="on" ? 1 : 0;
         //insert data to model
         $obj->title = $request->input('title');
+        if($newImage){
+            if($imageError==''){
+                $obj->cover = $fileName;
+            }else{
+                //trigget flash message
+                Session::flash('message', $imageError);
+
+                return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$id);
+            }           
+        }
         $obj->summary = $request->input('summary');
         $obj->body = $request->input('body');
         $obj->tags = $request->input('tags');

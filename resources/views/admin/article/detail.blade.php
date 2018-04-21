@@ -15,6 +15,10 @@
             		<div class="label">Title</div>
             		{{ $obj->title }}
             	</div>
+                <div class="content">
+                    <div class="label">Cover</div>
+                    <img src="{{ asset('images/'.$objectName.'/'.$obj->cover) }}" class="img-thumbnail img-small">
+                </div>
             	<div class="content">
             		<div class="label">Summary</div>
             		{{ $obj->summary }}
