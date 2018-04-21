@@ -35,6 +35,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/truncateNotifications', 'Admin\NotificationController@truncate');
     Route::post('/changePasswordProcess', 'Admin\ProfileController@changePasswordProcess');
 
+    //dashboard
+    Route::post('/getTotal', 'Admin\HomeController@getTotal');
+    Route::post('/getLatestFeedback', 'Admin\HomeController@getLatestFeedback');
+
     /*articles*/
     Route::prefix('article')->group(function(){
         Route::get('/truncate', 'Admin\ArticleController@truncate');

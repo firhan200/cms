@@ -3,6 +3,7 @@ var app = {};
 app.web = {
 	init : function(){
 		app.web.notifications();
+		app.web.dashboards();
 		app.web.common();
 		app.web.users();
 		app.web.articles();
@@ -98,7 +99,112 @@ app.web = {
 			});
 		}
 	},
+	dashboards: function(){
+		renderLatestFeedback();
+		renderTotal();
+
+		//refresh dashboard every 5 minutes
+		setInterval(function(){
+			renderLatestFeedback();
+			renderTotal();
+		},1000 * 60 * 5);
+
+		function renderTotal(){
+			$(".dashboard-total").each(function(){
+				var entity = $(this).data('entity');
+				var objectDOM = $(this);
+				$.ajax({
+					url:hostAdmin+'getTotal',
+					data:{entity:entity},
+					type : 'post',
+					headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				    },
+				    beforeSend:function(data){
+				    	objectDOM.find('.total-result').html('<i class="fa fa-spinner loading"></i>');
+				    },
+					success:function(data){
+						objectDOM.find('.total-result').html(data.total);	
+					},
+					error: function(){
+						console.log('error occured');
+					}
+				})
+			})
+		}
+		
+
+		function renderLatestFeedback(){
+			$.ajax({
+				url:hostAdmin+'getLatestFeedback',
+				data:{},
+				type : 'post',
+				headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    },
+			    beforeSend: function(){
+			    	$(".latest-feedback").html('<center><i class="fa fa-spinner loading"></i></center>');
+			    },
+				success:function(data){
+					if(data.length > 0){
+						$(".latest-feedback").html('');
+						$.each(data, function(key, feedback){
+							var feedbackName = '<div class="feedback-container"><div class="feedback-name">'+feedback.name+'</div>';
+							var feedbackEmail = '<div class="feedback-email">'+feedback.email+'</div>';
+							var message = feedback.message.length > 50 ? feedback.message.substring(0,50)+"..." : feedback.message;
+							var feedbackMessage = '<div class="feedback-message">'+message+'</div>';
+							var feedbackLink = '<div align="right"><a href="'+hostAdmin+'contact_us/'+feedback.id+'">see detail</a></div></div>';
+							var feedbackContainer = feedbackName+feedbackEmail+feedbackMessage+feedbackLink;
+							$(".latest-feedback").append(feedbackContainer);
+						})
+					}else{
+						$(".latest-feedback").html('<center><div class="help">empty</div></center>');
+					}
+				},
+				error: function(){
+					console.log('error occured');
+				}
+			})
+		}
+	},
 	common : function(){
+		//sidenav
+		var sidenav = localStorage.getItem("sidenav");
+		if(sidenav!=null){
+			renderSidenav();
+		}
+
+		function renderSidenav(){
+			var sidenav = localStorage.getItem("sidenav");
+			if(sidenav=='large'){
+				$(".sidenav").removeClass('sidenav-small');
+				$(".sidenav").addClass('sidenav-large');
+				$(".main").removeClass('main-small');
+				$(".main").addClass('main-large');
+				$(".toggle-sidebar").html('<i class="fa fa-chevron-left"></i>');
+				$(".toggle-sidebar").removeClass('shrink');
+			}else{
+				$(".sidenav").removeClass('sidenav-large');
+				$(".sidenav").addClass('sidenav-small');
+				$(".main").removeClass('main-large');
+				$(".main").addClass('main-small');
+				$(".toggle-sidebar").html('<i class="fa fa-align-justify"></i>');
+				$(".toggle-sidebar").addClass('shrink');
+			}
+		}
+
+		$(".toggle-sidebar").click(function(){
+			if($(".toggle-sidebar").hasClass('shrink')){
+				localStorage.setItem('sidenav', 'large');
+				console.log(localStorage.getItem("sidenav"));
+				renderSidenav();
+			}else{
+				localStorage.setItem('sidenav', 'small');
+				console.log(localStorage.getItem("sidenav"));
+				renderSidenav();
+			}			
+		})
+
 		CKEDITOR.replaceClass = 'ckeditor';
 
 		$(".disable-form").submit(function(){
@@ -217,7 +323,7 @@ app.web = {
 				$(".password-error").html(message);	
 				$(".form-with-check-passsword").find(".btn-submit").prop('disabled', true);		
 			}
-		}
+		}	
 	},
 	users : function(){
 		
@@ -225,11 +331,14 @@ app.web = {
 	articles : function(){
 		$("#newsContent").val($("#content").val());
 
-		if($("#tags").val().length > 2){
-			var tags = $("#tags").val();
-			var tagsResult = renderTags(tags);
-			$("#tags-result").html(tagsResult);
-		}
+		var tags = $("#tags").val();
+		if(tags!=null){
+			if(tags.length > 2){
+				var tags = $("#tags").val();
+				var tagsResult = renderTags(tags);
+				$("#tags-result").html(tagsResult);
+			}
+		}		
 
 		$("#tags").bind('keyup change', function(){			
 			var tags = $(this).val();
@@ -242,10 +351,21 @@ app.web = {
 			var tagsResult = '';
 			var tagList = tagsString.split(',');
 			$.each(tagList, function(key, tag){
+				tag = escapeHTML(tag);
 				tagsResult = tagsResult + '<div class="badge badge-info tag">'+tag.trim()+'</div>';
 			})
 
 			return tagsResult;
+		}
+
+		function escapeHTML (unsafe_str) {
+		    return unsafe_str
+		      .replace(/&/g, '&amp;')
+		      .replace(/</g, '&lt;')
+		      .replace(/>/g, '&gt;')
+		      .replace(/\"/g, '&quot;')
+		      .replace(/\'/g, '&#39;')
+		      .replace(/\//g, '&#x2F;')
 		}
 	}
 }

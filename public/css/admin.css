@@ -52,15 +52,25 @@ body{
 /*========= layouting ==========*/
 .sidenav {
     height: 100%;
-    width: 200px;
+    width :200px;
     position: fixed;
     margin-top: 45px !important;
     z-index: 1;
     top: 0;
     left: 0;
     background-color: #17a2b8;
-    overflow-x: hidden;
     padding-top: 10px;
+    -webkit-transition:0.3s;
+    transition:0.3s;
+}
+
+.sidenav-large{
+	width: 200px;
+}
+
+.sidenav-small{
+	overflow-x: hidden;
+	width: 40px;
 }
 
 .menu{
@@ -80,6 +90,7 @@ body{
 }
 
 .menu li{
+	width:200px !important;
 	padding: 15px;
 	-webkit-transition:0.5s;
 	transition:0.5s;
@@ -97,13 +108,27 @@ body{
 
 .main {
 	margin-top: 50px;
-    margin-left: 200px; /* Same as the width of the sidenav */
     padding:20px;
+    -webkit-transition:0.3s;
+	transition:0.3s;
+}
+
+.main-large{
+	margin-left: 200px;
+}
+
+.main-small{
+	margin-left: 40px;
 }
 
 .navbar{
 	border-bottom: 1px solid #bdbdbd; 
 }
+
+.navbar .dropdown-toggle::after {
+    display:none
+}
+
 .dropdown-notifications .dropdown-item{
 	padding:10px 30px 10px 30px;
 	font-size:10pt;
@@ -121,8 +146,8 @@ body{
 }
 .notification-head .loading{
 	position:absolute;
-	margin-left:-10px;
-	margin-top:-10px;
+	margin-left:12px;
+	margin-top:-32px;
 }
 /*========= layouting ==========*/
 
@@ -142,8 +167,14 @@ body{
 }
 .box{
 	background-color: #fff;
-	padding:30px;
+	padding:20px;
 	border: 1px solid #e6e6e6;
+}
+.box-title{
+	font-weight: bold;
+}
+.box .label{
+	font-size:10pt;
 }
 .pad{
 	margin-top: 30px;
@@ -235,6 +266,32 @@ body{
 	color:#696969;
 }
 /*========= Common class ==========*/
+
+/*======== dashboard ==========*/
+.feedback-container{
+	background-color: #f2f2f2;
+	border-radius: 10px;
+	padding:10px;
+	margin-bottom: 10px;
+}
+
+.feedback-container .feedback-name{
+	font-size:9pt;
+	font-weight: bold;
+}
+
+.feedback-container .feedback-email{
+	font-size:8pt;
+}
+
+.feedback-container .feedback-message{
+	font-size:9pt;
+	color:#696969;
+}
+.feedback-container a{
+	font-size:10pt;
+}
+/*======== dashboard ==========*/
 
 /*======== shake animation ==========*/
 

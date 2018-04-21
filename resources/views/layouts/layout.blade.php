@@ -23,8 +23,31 @@
 			      		<li class="nav-item @yield('home')"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
 			      		<li class="nav-item @yield('about')"><a href="{{ url('/about') }}" class="nav-link">About</a></li>
 			      		<li class="nav-item @yield('contact-us')"><a href="{{ url('/contact-us') }}" class="nav-link">Contact us</a></li>
-			      		<li class="nav-item @yield('login')"><a href="{{ url('/login') }}" class="nav-link">Login</a></li>
-			      		<li class="nav-item @yield('sign-up')"><a href="{{ url('/sign-up') }}" class="nav-link">Sign up</a></li>
+			      		<li class="nav-item dropdown @yield('login')">
+			        		<a class="nav-link dropdown-toggle login-form-trigger" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          			Login
+			        		</a>
+			        		<div class="dropdown-menu dropdown-menu-right dropdown-login" aria-labelledby="navbarDropdown">
+			          			<form class="form-login" action="#!" method="post">
+			          				<div class="form-group has-icon">
+			          					<div class="icon-container" align="center">
+			          						<i class="fa fa-envelope"></i>
+			          					</div>
+			          					<input type="text" class="form-control" id="email" placeholder="email">
+			          				</div>
+			          				<div class="form-group has-icon">
+			          					<div class="icon-container" align="center">
+			          						<i class="fa fa-lock"></i>
+			          					</div>
+			          					<input type="password" class="form-control" id="password" placeholder="password">
+			          				</div>
+			          				<div class="form-group">
+			          					<button type="submit" class="btn btn-info btn-login">Login</button>
+			          					<a href="url('/sign-up')"><button type="button" class="btn btn-danger btn-login">Sign up</button></a>
+			          				</div>
+			          			</form>
+			        		</div>
+			      		</li>
 			    	</ul>
 			  	</div>
 			</nav>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class HomeController extends BaseController
 {
@@ -20,6 +21,29 @@ class HomeController extends BaseController
     public function dashboard(){
     	$this->data['adminInfo'] = $this->__getUserInfo();
     	return view('admin/dashboard', $this->data);
+    }
+
+    public function getTotal(Request $request){
+        $response = ['total' => 0, 'message' => ''];
+
+        try{
+            $db = $request->input('entity');
+
+            $total = DB::table($db)->where('is_deleted', 0)->count();
+            $response = ['total' => $total, 'message' => 'success'];
+        }catch(\Exception $e){
+            $response['message'] = $e->getMessage();
+        }       
+
+        return response()->json($response);
+    }
+
+    public function getLatestFeedback(){
+        $contactUs = new \App\Models\ContactUs;
+
+        $feedbackList = $contactUs->where('is_deleted', 0)->orderBy('id', 'desc')->limit(5)->get();
+
+        return response()->json($feedbackList);
     }
 
     public function logout(Request $request){
