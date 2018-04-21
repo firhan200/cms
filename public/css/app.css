@@ -1,38 +1,80 @@
-.form-login{
-	padding:10px;
-	min-width:250px;
+/*======== shake animation ==========*/
+
+@-webkit-keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
-.form-login .form-control{
-	height:30px;
-	font-size:10pt;
+@keyframes rotating {
+  from {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
-.form-login .has-icon > .icon-container{
-	position: absolute;
-	width:40px;
-	height:30px;
-}
-.form-login .has-icon > .icon-container > i{
-	margin:0 auto;
-	margin-top: 6px;
-	color:#696969;
-}
-.has-icon > .form-control{
-	padding-left: 35px;
+.form-login {
+  padding: 10px;
+  min-width: 250px;
 }
 
-.form-login .form-group{
-	margin-bottom: 10px;
+.form-login .form-control {
+  height: 30px;
+  font-size: 10pt;
 }
 
-.btn-login{
-	height:30px;
-	padding: 0px 15px 0px 15px;
-	font-size:10pt !important;
+.form-login .has-icon .icon-container {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+}
+
+.form-login .has-icon .icon-container i {
+  margin: 0 auto;
+  margin-top: 6px;
+  color: #696969;
+}
+
+.form-login .has-icon .form-control {
+  padding-left: 35px;
+}
+
+.form-login .form-group {
+  margin-bottom: 10px;
+}
+
+.btn-login {
+  height: 30px;
+  padding: 0px 15px 0px 15px;
+  font-size: 10pt !important;
 }
 
 /*========= common ===========*/
-.form-control, .btn{
-	border-radius: 0px; 
+
+.form-control,
+.btn {
+  border-radius: 0px;
 }
+
+.loading {
+  -webkit-animation-duration: 3s;
+  animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: rotating;
+  animation-name: rotating;
+  -webkit-animation-direction: normal;
+  animation-direction: normal;
+}
+

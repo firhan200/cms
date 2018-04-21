@@ -7,10 +7,17 @@
 		<title>@yield('title')</title>
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome/css/font-awesome.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/preloader.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 	</head>
 
 	<body>
+		<div class="preloader-wrapper">
+		    <div class="preloader" align="center">
+		    	Loading...<br/>
+		        <i class="fa fa-spinner loading"></i>
+		    </div>
+		</div>
 		<div class="main">
 			<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-info">
 			  	<a class="navbar-brand" href="#">Brand</a>
@@ -81,6 +88,7 @@
 		<script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/popper.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('js/preloader.js') }}"></script>
 		<script src="{{ asset('js/config.js') }}"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
 			

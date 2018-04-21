@@ -1,0 +1,297 @@
+@import 'animation';
+
+body{
+	font-family: arial;
+	background-color: #f8f8f8;
+}
+
+/*========= Login ==============*/
+.bg-login{
+	background-color: #f2f2f2;	
+}
+.btn-login{
+	width: 100%;
+	height:55px;
+}
+.form-box{
+	background-color: #fff;
+	padding:30px;
+	border: 1px solid #e6e6e6;
+	box-shadow: 1px 2px 1px #e6e6e6;
+}
+.form-box .form-control{
+	height:55px;
+}
+.form-title{
+	font-size:20pt;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.form-footer{
+	text-align: center;
+	font-size:10pt;
+	color:#f2f2f2;
+	background-color:#17a2b8;
+	padding:10px;
+	margin:50px -30px -30px -30px;
+}
+.form-box .has-icon > .icon-container{
+	position: absolute;
+	width:30px;
+	height:54px;
+}
+.form-box .has-icon > .icon-container > i{
+	margin:0 auto;
+	margin-top: 20px;
+	margin-left: 15px;
+	color:#696969;
+}
+.has-icon > .form-control{
+	padding-left: 40px;
+}
+/*========= Login ==============*/
+
+/*========= layouting ==========*/
+.sidenav {
+    height: 100%;
+    width :200px;
+    position: fixed;
+    margin-top: 45px !important;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #17a2b8;
+    padding-top: 10px;
+    -webkit-transition:0.3s;
+    transition:0.3s;
+}
+
+.sidenav-large{
+	width: 200px;
+}
+
+.sidenav-small{
+	overflow-x: hidden;
+	width: 40px;
+}
+
+.menu{
+	text-decoration: none;
+	list-style: none;
+	padding: 0px;
+}
+
+.menu > a {
+	font-size:10pt;
+	color:#e6e6e6;
+	text-decoration: none;	
+}
+
+.menu > a i{
+	width:25px;
+}
+
+.menu li{
+	width:200px !important;
+	padding: 15px;
+	-webkit-transition:0.5s;
+	transition:0.5s;
+}
+
+.menu li:hover {
+	color:#1c1c1c;
+	background-color: #f2f2f2;
+}
+
+.menu .active li{
+	color:#1c1c1c;
+	background-color: #f2f2f2 !important;
+}
+
+.main {
+	margin-top: 50px;
+    padding:20px;
+    -webkit-transition:0.3s;
+	transition:0.3s;
+}
+
+.main-large{
+	margin-left: 200px;
+}
+
+.main-small{
+	margin-left: 40px;
+}
+
+.navbar{
+	border-bottom: 1px solid #bdbdbd; 
+}
+
+.navbar .dropdown-toggle::after {
+    display:none
+}
+
+.dropdown-notifications .dropdown-item{
+	padding:10px 30px 10px 30px;
+	font-size:10pt;
+}
+.notification-head .active{
+	color:#17a2b8;
+}
+.notification-head .notifications-count{
+	position:absolute;
+	margin-left:12px;
+	margin-top:-32px;
+	background-color: #1c1c1c;
+	color:#fff;
+	border-radius: 50%;
+}
+.notification-head .loading{
+	position:absolute;
+	margin-left:12px;
+	margin-top:-32px;
+}
+/*========= layouting ==========*/
+
+/*========== Article ==========*/
+.tag{
+	margin-right: 10px;
+}
+.img-small{
+	max-height:300px;
+	max-width: 300px;
+}
+/*========== Article ==========*/
+
+/*========= Common class ==========*/
+.loading{
+	@include rotating;
+}
+.box{
+	background-color: #fff;
+	padding:20px;
+	border: 1px solid #e6e6e6;
+	margin-bottom: 10px;
+}
+.box-title{
+	font-weight: bold;
+}
+.box .label{
+	font-size:10pt;
+}
+.pad{
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+.pad-row{
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.form-control{
+	border-radius:0px;	
+}
+.alert{
+	border-radius: 0px;
+}
+.btn{
+	border-radius: 0px;
+	-webkit-transition:0.5;
+	-moz-transition:0.5;
+	-o-transition:0.5;
+	transition:0.5;
+}
+.content-title{
+	font-size:14pt;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.pagination > li > a 
+{
+	border:1px solid #17a2b8;
+	background-color: #fff;
+	color:#17a2b8;
+	padding:10px 15px 10px 15px !important;
+	text-decoration: none;
+}
+
+.pagination > li > a:hover{
+	background-color: #17a2b8;
+	color:#fff !important;
+}
+
+.pagination > .disabled > span{
+	border:1px solid #17a2b8;
+	padding:10px 15px 10px 15px !important;
+}
+
+.pagination > .active > span{
+	border:1px solid #17a2b8;
+	padding:10px 15px 10px 15px !important;
+	background-color: #17a2b8;
+	color:#fff;
+}
+.table td, .table th{
+	font-size:10pt !important;
+}
+.has-icon > .icon-container{
+	position: absolute;
+	width:30px;
+	height:34px;
+}
+.has-icon > .icon-container > i{
+	margin:0 auto;
+	margin-top: 10px;
+	margin-left: 15px;
+	color:#696969;
+}
+.content{
+	margin-bottom: 10px;
+	background-color: #f2f2f2;
+	padding:20px;
+}
+
+.content .label{
+	font-weight: bold;
+}
+.error{
+	color:red;
+	font-size:9pt;
+	font-style: italic;
+}
+.success{
+	color:green;
+	font-size:9pt;
+	font-style: italic;
+}
+.help{
+	font-size:10pt;
+	color:#696969;
+}
+/*========= Common class ==========*/
+
+/*======== dashboard ==========*/
+.feedback-container{
+	background-color: #f2f2f2;
+	border-radius: 10px;
+	padding:10px;
+	margin-bottom: 10px;
+}
+
+.feedback-container .feedback-name{
+	font-size:9pt;
+	font-weight: bold;
+}
+
+.feedback-container .feedback-email{
+	font-size:8pt;
+}
+
+.feedback-container .feedback-message{
+	font-size:9pt;
+	color:#696969;
+}
+.feedback-container a{
+	font-size:10pt;
+}
+/*======== dashboard ==========*/

@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome/css/font-awesome.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/preloader.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/admin.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/admin-main.css') }}">
 	</head>
 
 	<body>
@@ -93,7 +93,7 @@
 		<script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
 		<script src="{{ asset('js/config.js') }}"></script>
-		<script src="{{ asset('js/admin-app.js') }}"></script>
+		<script src="{{ asset('js/admin-main.js') }}"></script>
 			
 		@yield('additional-script')
 		</script>

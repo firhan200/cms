@@ -1,9 +1,52 @@
+@import 'animation';
 
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+//var
+$default-color : #17a2b8;
 
-// Variables
-@import "variables";
+.form-login{
+	padding:10px;
+	min-width:250px;
 
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+	.form-control{
+		height:30px;
+		font-size:10pt;
+	}
+
+	.has-icon{
+		.icon-container{
+			position: absolute;
+			width:40px;
+			height:30px;
+
+			i{
+				margin:0 auto;
+				margin-top: 6px;
+				color:#696969;
+			}
+		}
+
+		.form-control{
+			padding-left: 35px;
+		}
+	}
+
+	.form-group{
+		margin-bottom: 10px;
+	}
+}
+
+
+.btn-login{
+	height:30px;
+	padding: 0px 15px 0px 15px;
+	font-size:10pt !important;
+}
+
+/*========= common ===========*/
+.form-control, .btn{
+	border-radius: 0px; 
+}
+
+.loading{
+	@include rotating;
+}
