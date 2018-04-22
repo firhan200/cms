@@ -22,4 +22,11 @@ class HomeController extends BaseController
     public function index(){
     	return view($this->data['objectName'].'/index', $this->data);
     }
+
+    public function logout(Request $request){
+        $request->session()->forget('user_id');
+        $request->session()->forget('user_name');
+
+        return Redirect('/');
+    }
 }

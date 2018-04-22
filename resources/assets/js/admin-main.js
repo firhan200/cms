@@ -62,7 +62,7 @@ app.web = {
 							if(data.notifications.length > 0){
 								$(".dropdown-notifications").html('');
 								$.each(data.notifications, function(key, notification){
-									$(".dropdown-notifications").append('<a class="dropdown-item" href="'+host+notification.link+'">'+notification.action+' '+notification.object+'</a>');
+									$(".dropdown-notifications").append('<a class="dropdown-item" href="'+notification.link+'">'+notification.action+' <b>'+notification.object+'</b></a>');
 								})
 								setTimeout(function(){
 									//truncate notification after wait for 1 sec

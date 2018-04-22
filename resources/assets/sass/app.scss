@@ -2,6 +2,18 @@
 
 //var
 $default-color : #17a2b8;
+$default-color-lighter : lighten( $default-color, 10%);
+$bg-color : #f3f3f3;
+$pad : 70px;
+$content-pad : 50px;
+
+body{
+	background-color:$bg-color;
+}
+
+.navbar{
+	background-color:$default-color !important;
+}
 
 .form-login{
 	padding:10px;
@@ -35,18 +47,99 @@ $default-color : #17a2b8;
 	}
 }
 
+.form-box{
+	border:1px solid #e6e6e6;
+	padding-top:20px !important;
+	padding-bottom:50px !important;
 
-.btn-login{
+	.title{
+		font-size:14pt;
+		font-weight:bold;
+		margin-bottom:30px;
+	}
+
+	.form-control{
+		height:50px;
+		font-size:11pt;
+	}
+
+	.has-icon{
+		.icon-container{
+			position: absolute;
+			width:40px;
+			height:30px;
+
+			i{
+				margin:0 auto;
+				margin-top: 16px;
+				color:#696969;
+			}
+		}
+
+		.form-control{
+			padding-left: 35px;
+		}
+	}
+}
+
+.alert{
+	box-shadow:1px 2px 5px #bdbdbd;
+	border-radius:0px;
+}
+
+.full{
+	width:100% !important;
+}
+
+.btn-default{	
+	background-color:$default-color !important;
+	border-color:$default-color !important;
+}
+
+.btn-default:hover{	
+	background-color:$default-color-lighter !important;
+	border-color:$default-color-lighter !important;
+}
+
+.btn-small{
 	height:30px;
 	padding: 0px 15px 0px 15px;
 	font-size:10pt !important;
 }
 
-/*========= common ===========*/
+.form-box{
+	background-color:#fff;
+	padding:30px;
+}
+
+.pad{
+	padding-top:$pad;
+	padding-bottom:$pad;
+}
+
+.content-pad{
+	padding-top:$content-pad;
+	padding-bottom:$content-pad;
+}
+
 .form-control, .btn{
 	border-radius: 0px; 
 }
 
 .loading{
 	@include rotating;
+}
+
+.error{
+	color:red;
+	font-style:italic;
+}
+
+.success{
+	color:green;
+	font-style:italic;
+}
+
+.feedback{
+	font-size:10pt;
 }

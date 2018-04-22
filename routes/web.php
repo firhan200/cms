@@ -16,6 +16,10 @@ Route::get('/', 'HomeController@index');
 Route::get('/contact-us', 'ContactUsController@index');
 Route::get('/login', 'UserController@login');
 Route::get('/sign-up', 'UserController@signUp');
+Route::get('/logout', 'HomeController@logout');
+Route::post('/loginProcess', 'UserController@loginProcess');
+Route::post('/signUpProcess', 'UserController@signUpProcess');
+Route::post('/checkUnique', 'BaseController@__checkUnique');
 
 
 

@@ -30,35 +30,53 @@
 			      		<li class="nav-item @yield('home')"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
 			      		<li class="nav-item @yield('about')"><a href="{{ url('/about') }}" class="nav-link">About</a></li>
 			      		<li class="nav-item @yield('contact-us')"><a href="{{ url('/contact-us') }}" class="nav-link">Contact us</a></li>
+			      		@if(Session::has('user_id'))
+			      		<li class="nav-item dropdown">
+			        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          			<i class="fa fa-user-circle"></i> {{ Session::get('user_name') }}
+			        		</a>
+			        		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+			          			<a class="dropdown-item" href="{{ url('/profile') }}">Profile</a>
+			          			<a class="dropdown-item" href="{{ url('/changePassword') }}">Change Password</a>
+			          			<div class="dropdown-divider"></div>
+			          			<a class="dropdown-item confirm-modal" data-toggle="modal" data-target="#confirmModal" data-url="{{ url('/logout') }}" data-content="Logout from system?" href="#"><i class="fa fa-sign-out"></i> Logout</a>
+			        		</div>
+			      		</li>
+			      		@else
 			      		<li class="nav-item dropdown @yield('login')">
 			        		<a class="nav-link dropdown-toggle login-form-trigger" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			          			Login
 			        		</a>
 			        		<div class="dropdown-menu dropdown-menu-right dropdown-login" aria-labelledby="navbarDropdown">
-			          			<form class="form-login" action="#!" method="post">
+			          			<form class="form-login disable-form-unconfirm" action="{{ url('/loginProcess') }}" method="post">
+			          				{!! csrf_field(); !!}
 			          				<div class="form-group has-icon">
 			          					<div class="icon-container" align="center">
 			          						<i class="fa fa-envelope"></i>
 			          					</div>
-			          					<input type="text" class="form-control" id="email" placeholder="email">
+			          					<input name="email" type="text" class="form-control" placeholder="email" value="firhan.faisal1995@gmail.com">
 			          				</div>
 			          				<div class="form-group has-icon">
 			          					<div class="icon-container" align="center">
 			          						<i class="fa fa-lock"></i>
 			          					</div>
-			          					<input type="password" class="form-control" id="password" placeholder="password">
+			          					<input type="password" name="password" class="form-control" placeholder="password" value="123456">
 			          				</div>
 			          				<div class="form-group">
-			          					<button type="submit" class="btn btn-info btn-login">Login</button>
-			          					<a href="url('/sign-up')"><button type="button" class="btn btn-danger btn-login">Sign up</button></a>
+			          					<button type="submit" class="btn btn-info btn-default btn-small btn-submit">Login</button>
+			          					<a href="{{ url('/sign-up') }}"><button type="button" class="btn btn-danger btn-small">Sign up</button></a>
 			          				</div>
 			          			</form>
 			        		</div>
 			      		</li>
+			      		@endif
 			    	</ul>
 			  	</div>
 			</nav>
-			<div class="container">
+			<div class="container pad">
+				@if (Session::has('message'))
+				   {!! Session::get('message') !!}
+				@endif
 				@yield('body')
 			</div>
 		</div>

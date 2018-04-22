@@ -24,6 +24,14 @@
   }
 }
 
+body {
+  background-color: #f3f3f3;
+}
+
+.navbar {
+  background-color: #17a2b8 !important;
+}
+
 .form-login {
   padding: 10px;
   min-width: 250px;
@@ -54,13 +62,79 @@
   margin-bottom: 10px;
 }
 
-.btn-login {
+.form-box {
+  border: 1px solid #e6e6e6;
+  padding-top: 20px !important;
+  padding-bottom: 50px !important;
+}
+
+.form-box .title {
+  font-size: 14pt;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.form-box .form-control {
+  height: 50px;
+  font-size: 11pt;
+}
+
+.form-box .has-icon .icon-container {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+}
+
+.form-box .has-icon .icon-container i {
+  margin: 0 auto;
+  margin-top: 16px;
+  color: #696969;
+}
+
+.form-box .has-icon .form-control {
+  padding-left: 35px;
+}
+
+.alert {
+  -webkit-box-shadow: 1px 2px 5px #bdbdbd;
+          box-shadow: 1px 2px 5px #bdbdbd;
+  border-radius: 0px;
+}
+
+.full {
+  width: 100% !important;
+}
+
+.btn-default {
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.btn-default:hover {
+  background-color: #1fc8e3 !important;
+  border-color: #1fc8e3 !important;
+}
+
+.btn-small {
   height: 30px;
   padding: 0px 15px 0px 15px;
   font-size: 10pt !important;
 }
 
-/*========= common ===========*/
+.form-box {
+  background-color: #fff;
+  padding: 30px;
+}
+
+.pad {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+.content-pad {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
 
 .form-control,
 .btn {
@@ -76,5 +150,19 @@
   animation-name: rotating;
   -webkit-animation-direction: normal;
   animation-direction: normal;
+}
+
+.error {
+  color: red;
+  font-style: italic;
+}
+
+.success {
+  color: green;
+  font-style: italic;
+}
+
+.feedback {
+  font-size: 10pt;
 }
 
