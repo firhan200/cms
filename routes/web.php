@@ -19,6 +19,7 @@ Route::get('/sign-up', 'UserController@signUp');
 Route::get('/logout', 'HomeController@logout');
 Route::post('/loginProcess', 'UserController@loginProcess');
 Route::post('/signUpProcess', 'UserController@signUpProcess');
+Route::post('/contactUsProcess', 'ContactUsController@contactUsProcess');
 Route::post('/checkUnique', 'BaseController@__checkUnique');
 
 

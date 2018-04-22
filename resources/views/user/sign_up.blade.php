@@ -4,7 +4,7 @@
 @section($activeMenu, 'active')
 
 @section('body')
-<div class="container pad">
+<div class="container content-pad">
     <div class="row">
 		<div class="col-sm-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 form-box">
 			<div class="title">Sign up</div>

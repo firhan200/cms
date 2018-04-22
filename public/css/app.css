@@ -132,8 +132,8 @@ body {
 }
 
 .content-pad {
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .form-control,
@@ -164,5 +164,26 @@ body {
 
 .feedback {
   font-size: 10pt;
+}
+
+.box {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #e6e6e6;
+}
+
+.box .title {
+  font-size: 14pt;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.social-icon a {
+  color: #17a2b8;
+  font-size: 24pt;
+}
+
+.social-icon a:hover {
+  color: #1fc8e3;
 }
 
