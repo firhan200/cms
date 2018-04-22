@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
     //dashboard
     Route::post('/getTotal', 'Admin\HomeController@getTotal');
     Route::post('/getLatestFeedback', 'Admin\HomeController@getLatestFeedback');
+    Route::post('/getLatestUsers', 'Admin\HomeController@getLatestUsers');
 
     /*articles*/
     Route::prefix('article')->group(function(){

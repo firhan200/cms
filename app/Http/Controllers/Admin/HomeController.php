@@ -46,6 +46,14 @@ class HomeController extends BaseController
         return response()->json($feedbackList);
     }
 
+    public function getLatestUsers(){
+        $users = new \App\Models\User;
+
+        $userList = $users->where('is_deleted', 0)->orderBy('id', 'desc')->limit(3)->get();
+
+        return response()->json($userList);
+    }
+
     public function logout(Request $request){
     	$request->session()->forget('cms_admin_id');
     	$request->session()->forget('cms_admin_name');

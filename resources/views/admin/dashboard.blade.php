@@ -60,7 +60,12 @@
                         </div>
             	</div>
             	<div class="col-md-6 col-lg-4 col-sm-6">
-            		
+            		<div class="box">
+                              <div class="box-title">Latest Users</div>
+                              <div class="latest-users">
+                                    <center><i class="fa fa-spinner loading"></i></center>
+                              </div>    
+                        </div>
             	</div>
             </div>
         </div>

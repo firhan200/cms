@@ -50,19 +50,24 @@ class UserController extends BaseController
         $responses = ['isValid' => false, 'message' => ''];
 
         //check login
-        $userObj = $this->model::where('email' , $email)->first();
+        $userObj = $this->model::where('email' , $email)->where('is_deleted', 0)->first();
         if($userObj!=null){
-            if($userObj->password==sha1($password)){
-                //set session
-                Session::put('user_id', $userObj->id);
-                Session::put('user_name', $userObj->name);
+            if($userObj->is_active==1){
+                //active user
+                if($userObj->password==sha1($password)){
+                    //set session
+                    Session::put('user_id', $userObj->id);
+                    Session::put('user_name', $userObj->name);
 
-                $responses = ['isValid' => true, 'message' => '<div class="alert alert-primary">Welcome, '.Session::get('user_name').'</div>'];
+                    $responses = ['isValid' => true, 'message' => '<div class="alert alert-primary">Welcome, '.Session::get('user_name').'</div>'];
+                }else{
+                    //password incorrect
+                    $responses = ['isValid' => false, 'message' => "<div class='alert alert-danger'><i class='fa fa-info-circle'></i> Incorrect password!</div>"];
+                }
             }else{
-                //password incorrect
-                $responses = ['isValid' => false, 'message' => "<div class='alert alert-danger'><i class='fa fa-info-circle'></i> Incorrect password!</div>"];
-            }
-            
+                //unactive user
+                $responses = ['isValid' => false, 'message' => "<div class='alert alert-warning'><i class='fa fa-info-circle'></i> Your account is unactive</div>"];
+            }          
         }else{
             //account not found
             $responses = ['isValid' => false, 'message' => "<div class='alert alert-warning'>Account not found!</div>"];
