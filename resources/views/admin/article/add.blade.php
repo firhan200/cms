@@ -7,17 +7,14 @@
 @section('body')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            @if (Session::has('message'))
-               <div class="alert alert-info">{{ Session::get('message') }}</div>
-            @endif
+        <div class="col-md-12">          
         	<div class="content-title">Add {{ $title }}</div>  
 
         	<form action="{{ url('/admin/'.$objectName.'/addProcess') }}" method="post" class="disable-form box" enctype="multipart/form-data">
                 {{ csrf_field() }}   
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" name="title" class="form-control" placeholder="Title" maxlength="150" value="Title" required>
+                    <input type="text" name="title" class="form-control" placeholder="Title" maxlength="150" required>
                 </div>
                 <div class="form-group">
                     <label>Cover</label>
@@ -28,11 +25,11 @@
                 </div>
                 <div class="form-group">
                     <label>Summary</label>
-                    <textarea type="text" name="summary" class="form-control" placeholder="Summary" maxlength="250" required>Summarynya</textarea>
+                    <textarea type="text" name="summary" class="form-control" placeholder="Summary" maxlength="250" required></textarea>
                 </div>
                 <div class="form-group">
                     <label>Body</label>
-                    <textarea name="body" class="form-control ckeditor" placeholder="news content" required>what</textarea>
+                    <textarea name="body" class="form-control ckeditor" placeholder="news content" required></textarea>
                 </div>
                 <div class="form-group">
                     <label>Tags</label>

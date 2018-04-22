@@ -61,6 +61,11 @@
 			  	</div>
 			</nav>
 			<div class="container">
+				@if (Session::has('message'))            
+					<div class="row">
+						<div class="col-md-12">{!! Session::get('message') !!}</div>
+					</div>	
+				@endif		
 				@yield('body')
 			</div>
 		</div>

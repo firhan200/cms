@@ -9,10 +9,6 @@
     <div class="row">
         <div class="col-md-12">
         	<div class="content-title">{{ $title }}</div>  
-        	
-            @if (Session::has('message'))
-               {!! Session::get('message') !!}
-            @endif
 
             <div class="row">
                 <div class="col-sm-8 col-md-6 col-lg-4 offset-sm-2 offset-md-3 offset-lg-4 box">

@@ -101,7 +101,7 @@ class SettingController extends BaseController
         $this->model->save();
 
         //trigger flash message
-        Session::flash('message', "Successfully insert ".$this->model->name);
+        Session::flash('message', "<div class='alert alert-primary'>Successfully insert ".$this->model->name."</div>");
 
         return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
     }
@@ -152,7 +152,7 @@ class SettingController extends BaseController
         $obj->save();
 
         //trigget flash message
-        Session::flash('message', "Successfully edit ".$obj->name);
+        Session::flash('message', "<div class='alert alert-primary'>Successfully edit ".$obj->name."</div>");
 
         return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$id);
     }
@@ -167,7 +167,7 @@ class SettingController extends BaseController
 
         //check if editable
         if($obj->is_editable==0){
-            Session::flash('message', $obj->name." is non editable");
+            Session::flash('message', "<div class='alert alert-warning'>".$obj->name." is non editable</div>");
             return Redirect('/admin/'.$this->data['objectName']);
         }
 
@@ -179,9 +179,9 @@ class SettingController extends BaseController
 
         //trigger flash message
         if($is_deleted==1){
-            $message = "Successfully delete ".$obj->name;
+            $message = "<div class='alert alert-primary'>Successfully delete ".$obj->name."</div>";
         }else{
-            $message = "Successfully restore ".$obj->name;
+            $message = "<div class='alert alert-primary'>Successfully restore ".$obj->name."</div>";
         }
         Session::flash('message', $message);
 
@@ -200,7 +200,7 @@ class SettingController extends BaseController
         $obj->delete();
 
         //trigger flash message
-        $message = "Successfully permanent delete on ".$obj->name;
+        $message = "<div class='alert alert-primary'>Successfully permanent delete on ".$obj->name."</div>";
 
         Session::flash('message', $message);
 
@@ -212,7 +212,7 @@ class SettingController extends BaseController
         $this->model->where('is_deleted', 1)->delete();
 
         //trigger flash message
-        $message = "Recycle bin is empty now";
+        $message = "<div class='alert alert-primary'>Recycle bin is empty now</div>";
 
         Session::flash('message', $message);
 

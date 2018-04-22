@@ -118,7 +118,7 @@ class CRUDController extends BaseController
         $this->model->save();
 
         //trigger flash message
-        Session::flash('message', "Successfully insert ".$this->model->name);
+        Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully insert ".$this->model->name."</div>");
 
         return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
     }
@@ -168,7 +168,7 @@ class CRUDController extends BaseController
         $obj->save();
 
         //trigget flash message
-        Session::flash('message', "Successfully edit ".$obj->name);
+        Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully edit ".$obj->name."</div>");
 
         return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$id);
     }
@@ -189,9 +189,9 @@ class CRUDController extends BaseController
 
         //trigger flash message
         if($is_deleted==1){
-            $message = "Successfully delete ".$obj->name;
+            $message = "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully delete ".$obj->name."</div>";
         }else{
-            $message = "Successfully restore ".$obj->name;
+            $message = "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully restore ".$obj->name."</div>";
         }
         Session::flash('message', $message);
 
@@ -210,7 +210,7 @@ class CRUDController extends BaseController
         $obj->delete();
 
         //trigger flash message
-        $message = "Successfully permanent delete on ".$obj->name;
+        $message = "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully permanent delete on ".$obj->name."</div>";
 
         Session::flash('message', $message);
 
@@ -222,7 +222,7 @@ class CRUDController extends BaseController
         $this->model->where('is_deleted', 1)->delete();
 
         //trigger flash message
-        $message = "Recycle bin is empty now";
+        $message = "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Recycle bin is empty now</div>";
 
         Session::flash('message', $message);
 

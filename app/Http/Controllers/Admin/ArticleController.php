@@ -135,19 +135,19 @@ class ArticleController extends BaseController
                 $this->model->save();
 
                 //trigger flash message
-                Session::flash('message', "Successfully insert ".$this->model->title);
+                Session::flash('message', '<div class="alert alert-primary">Successfully insert '.$this->model->title.'</div>');
 
                 return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
             }else{
                 //extension error
 
                 //trigger flash message
-                Session::flash('message', "Invalid image extension, allowed extension: ".$this->data['allowed_image_extension']);
+                Session::flash('message', '<div class="alert alert-warning">Invalid image extension, allowed extension: '.$this->data['allowed_image_extension'].'</div>');
             }
         }else{
             //cover null
             //trigger flash message
-            Session::flash('message', "Cover is required");
+            Session::flash('message', '<div class="alert alert-warning">Cover is required</div>');
         }
 
         return Redirect('/admin/'.$this->data['objectName'].'/add');
@@ -202,7 +202,7 @@ class ArticleController extends BaseController
                 $destinationPath = public_path('/images/'.$this->data['objectName']);
                 $image->move($destinationPath, $fileName);
             }else{
-                $imageError = "Invalid image extension, allowed extension: ".$this->data['allowed_image_extension'];
+                $imageError = '<div class="alert alert-warning">Invalid image extension, allowed extension: '.$this->data['allowed_image_extension'].'</div>';
             }
         }else{
             $imageError = 'kosong';
@@ -230,7 +230,7 @@ class ArticleController extends BaseController
         $obj->save();
 
         //trigget flash message
-        Session::flash('message', "Successfully edit ".$obj->title);
+        Session::flash('message', '<div class="alert alert-primary">Successfully edit '.$obj->title.'</div>');
 
         return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$id);
     }
@@ -251,9 +251,9 @@ class ArticleController extends BaseController
 
         //trigger flash message
         if($is_deleted==1){
-            $message = "Successfully delete ".$obj->title;
+            $message = '<div class="alert alert-primary">Successfully delete '.$obj->title.'</div>';
         }else{
-            $message = "Successfully restore ".$obj->title;
+            $message = '<div class="alert alert-primary">Successfully restore '.$obj->title.'</div>';
         }
         Session::flash('message', $message);
 
@@ -272,7 +272,7 @@ class ArticleController extends BaseController
         $obj->delete();
 
         //trigger flash message
-        $message = "Successfully permanent delete on ".$obj->title;
+        $message = '<div class="alert alert-primary">Successfully permanent delete on '.$obj->title.'</div>';
 
         Session::flash('message', $message);
 
@@ -284,7 +284,7 @@ class ArticleController extends BaseController
         $this->model->where('is_deleted', 1)->delete();
 
         //trigger flash message
-        $message = "Recycle bin is empty now";
+        $message = '<div class="alert alert-primary">Recycle bin is empty now</div>';
 
         Session::flash('message', $message);
 

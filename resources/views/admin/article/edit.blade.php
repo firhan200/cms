@@ -8,9 +8,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            @if (Session::has('message'))
-               <div class="alert alert-info">{{ Session::get('message') }}</div>
-            @endif
         	<div class="content-title">Edit {{ $title }}</div>  
 
         	<form action="{{ url('/admin/'.$objectName.'/editProcess') }}" method="post" class="disable-form box" enctype="multipart/form-data">

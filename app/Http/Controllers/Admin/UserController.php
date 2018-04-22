@@ -120,7 +120,7 @@ class UserController extends BaseController
 
         $checkObj = $this->model->where('email', $request->input('email'))->count();
         if($checkObj > 0){
-            Session::flash('message', "Email already taken ".$this->model->name);
+            Session::flash('message', "<div class='alert alert-warning'>Email already taken ".$this->model->name."</div>");
             //already taken
             return view('admin/'.$this->data['objectName'].'/add', $this->data);
         }else{
@@ -137,7 +137,7 @@ class UserController extends BaseController
             $this->model->save();
 
             //trigger flash message
-            Session::flash('message', "Successfully insert ".$this->model->name);
+            Session::flash('message', "<div class='alert alert-primary'>Successfully insert ".$this->model->name."</div>");
 
             return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
         }       
@@ -188,7 +188,7 @@ class UserController extends BaseController
         $checkEmail = $this->model->where('email', $request->input('email'))->where('email', '!=', $obj->email)->count();
         if($checkEmail > 0){
             //trigget flash message
-            Session::flash('message', "Email: ".$request->input('email')." already taken");
+            Session::flash('message', "<div class='alert alert-warning'>Email: ".$request->input('email')." already taken</div>");
         }else{
             //insert data to model
             $obj->name = $request->input('name');
@@ -201,7 +201,7 @@ class UserController extends BaseController
             $obj->save();
 
             //trigget flash message
-            Session::flash('message', "Successfully edit ".$obj->name);
+            Session::flash('message', "<div class='alert alert-primary'>Successfully edit ".$obj->name."</div>");
         }
 
         
@@ -225,9 +225,9 @@ class UserController extends BaseController
 
         //trigger flash message
         if($is_deleted==1){
-            $message = "Successfully delete ".$obj->name;
+            $message = "<div class='alert alert-primary'>Successfully delete ".$obj->name."</div>";
         }else{
-            $message = "Successfully restore ".$obj->name;
+            $message = "<div class='alert alert-primary'>Successfully restore ".$obj->name."</div>";
         }
         Session::flash('message', $message);
 
@@ -246,7 +246,7 @@ class UserController extends BaseController
         $obj->delete();
 
         //trigger flash message
-        $message = "Successfully permanent delete on ".$obj->name;
+        $message = "<div class='alert alert-primary'>Successfully permanent delete on ".$obj->name."</div>";
 
         Session::flash('message', $message);
 
@@ -258,7 +258,7 @@ class UserController extends BaseController
         $this->model->where('is_deleted', 1)->delete();
 
         //trigger flash message
-        $message = "Recycle bin is empty now";
+        $message = "<div class='alert alert-primary'>Recycle bin is empty now</div>";
 
         Session::flash('message', $message);
 
@@ -279,10 +279,10 @@ class UserController extends BaseController
             $user->password = sha1($user_default_password);
             $user->save();
 
-            Session::flash('message', 'Password has been reset to '.$user_default_password);
+            Session::flash('message', "<div class='alert alert-primary'>Password has been reset to ".$user_default_password."</div>");
             return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$user->id);
         }else{
-            Session::flash('message', 'user did not exist!');
+            Session::flash('message', "<div class='alert alert-danger'>user did not exist!");
             return Redirect('/admin/'.$this->data['objectName']);
         }
     }

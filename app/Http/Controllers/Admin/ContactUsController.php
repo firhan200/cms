@@ -132,9 +132,9 @@ class ContactUsController extends BaseController
 
         //trigger flash message
         if($is_deleted==1){
-            $message = "Successfully delete ".$obj->name;
+            $message = "<div class='alert alert-primary'>Successfully delete ".$obj->name."</div>";
         }else{
-            $message = "Successfully restore ".$obj->name;
+            $message = "<div class='alert alert-primary'>Successfully restore ".$obj->name."</div>";
         }
         Session::flash('message', $message);
 
@@ -153,7 +153,7 @@ class ContactUsController extends BaseController
         $obj->delete();
 
         //trigger flash message
-        $message = "Successfully permanent delete on ".$obj->name;
+        $message = "<div class='alert alert-primary'>Successfully permanent delete on ".$obj->name."</div>";
 
         Session::flash('message', $message);
 
@@ -165,7 +165,7 @@ class ContactUsController extends BaseController
         $this->model->where('is_deleted', 1)->delete();
 
         //trigger flash message
-        $message = "Recycle bin is empty now";
+        $message = "<div class='alert alert-primary'>Recycle bin is empty now</div>";
 
         Session::flash('message', $message);
 
