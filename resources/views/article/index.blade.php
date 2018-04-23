@@ -18,7 +18,8 @@
 							<input type="text" id="keyword" name="keyword" class="form-control" placeholder="search" maxlength="100"/>
 						</div>
 					</div>
-				</div>			
+				</div>
+				Total results: <span class="total-results"></span>
 			</form>
 			<div class="row" id="articles-results">				
 			</div>

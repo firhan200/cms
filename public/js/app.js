@@ -218,8 +218,10 @@ app.web = {
 
 		$(".articles-search").submit(function (e) {
 			e.preventDefault();
+			page = 1;
 			keyword = $(this).find('#keyword').val();
 			renderArticles(true);
+			$(this).find('#keyword').blur();
 			return false;
 		});
 
@@ -227,6 +229,12 @@ app.web = {
 			page = page + 1;
 			renderArticles(false);
 			return false;
+		});
+
+		$(document).on('click', '.tag-searchable', function () {
+			keyword = $(this).text();
+			$(".articles-search").find('#keyword').val(keyword);
+			renderArticles(true);
 		});
 
 		function renderArticles(reset) {
@@ -239,41 +247,38 @@ app.web = {
 				},
 				beforeSend: function beforeSend() {
 					if (reset) {
-						$("#articles-results").html(loading);
+						$("#articles-results").html('<div class="col-md-12">' + loading + '</div>');
 					}
 					$(".articles-navigation").html(loading);
+					$(".total-results").html(loading);
 				},
 				success: function success(data) {
+					console.log(data);
 					if (reset) {
 						$("#articles-results").html('');
 					}
-					console.log(data);
+
+					//set total result
+					$(".total-results").html(data.total_results);
+
 					if (data.articles.length > 0) {
 						$(".articles-navigation").html(showMoreArticlesBtn);
-						$.each(data.articles, function (key, article) {
-							var openTag = '<div class="col-lg-4 col-md-6 news-box"><div class="card">';
-							var articleDate = '<div class="news-date">' + article.created_at + '</div>';
-							var image = article.cover != null ? host + 'images/article/' + article.cover : '';
-							var articleImg = '<div class="news-img-frame"><img src="' + image + '" class="card-img"/></div>';
-							var articleTitle = '<div class="card-body"><div class="card-title">' + article.title + '</div>';
 
-							var summary = article.summary.length > 150 ? article.summary.substring(0, 150) + "..." : article.summary;
-							var articleBody = '<div class="card-text">' + summary + '</div></div>';
-							var closeTag = '</div></div>';
+						var articleCard = renderArticlesCardView(data.articles);
 
-							var articleCard = openTag + articleDate + articleImg + articleTitle + articleBody + closeTag;
-
-							$("#articles-results").append(articleCard);
-						});
+						$("#articles-results").append(articleCard);
 
 						if (data.page < data.total_page) {
 							$(".articles-navigation").html(showMoreArticlesBtn);
 						} else {
 							$(".articles-navigation").html('');
 						}
+
+						//set on result
+						$(".articles-navigation").prepend('<div align="center" class="help"><b>' + data.on_result + "</b> of <b>" + data.total_results + '</b></div>');
 					} else {
 						$(".articles-navigation").html('');
-						$("#articles-results").html(loading);
+						$("#articles-results").html('<div class="col-md-12 help" align="center">No results</div>');
 					}
 				},
 				error: function error() {
@@ -281,12 +286,60 @@ app.web = {
 				}
 			});
 		}
+
+		function renderArticlesCardView(articles) {
+			var articlesHtml = '';
+
+			$.each(articles, function (key, article) {
+				var openTag = '<div class="col-lg-4 col-md-6 news-box"><div class="card">';
+				var date = formatDateTime(article.created_at);
+				var articleDate = '<div class="news-date">' + date + '</div>';
+				var image = article.cover != null ? host + 'images/article/' + article.cover : '';
+				var articleImg = '<div class="news-img-frame"><img src="' + image + '" class="card-img"/></div>';
+				var articleTitle = '<div class="card-body"><div class="card-title"><a href="' + host + 'article/' + article.title.replaceAll(' ', '-') + '">' + article.title + '</a></div>';
+
+				var summary = article.summary.length > 150 ? article.summary.substring(0, 150) + "..." : article.summary;
+				var articleBody = '<div class="card-text">' + summary + '</div>';
+				var articleTags = article.tags != null ? renderTags(article.tags) : '';
+				var closeTag = '</div></div></div>';
+
+				var articleCard = openTag + articleDate + articleImg + articleTitle + articleBody + articleTags + closeTag;
+
+				articlesHtml = articlesHtml + articleCard;
+			});
+
+			return articlesHtml;
+		}
 	}
 };
 
 $(document).ready(function () {
 	app.web.init();
 });
+
+function escapeHTML(unsafe_str) {
+	return unsafe_str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/\'/g, '&#39;').replace(/\//g, '&#x2F;');
+}
+
+function renderTags(tagsString) {
+	var tagsResult = '';
+	var tagList = tagsString.split(',');
+	$.each(tagList, function (key, tag) {
+		tag = escapeHTML(tag);
+		tagsResult = tagsResult + '<a href="#"><div class="badge badge-info badge-default tag tag-searchable">' + tag.trim() + '</div></a>';
+	});
+
+	return tagsResult;
+}
+
+function formatDateTime(dateTime) {
+	dateFormatted = moment(dateTime).format('DD MMM YYYY, HH:mm');
+	return dateFormatted;
+}
+
+String.prototype.replaceAll = function (str1, str2, ignore) {
+	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), ignore ? "gi" : "g"), typeof str2 == "string" ? str2.replace(/\$/g, "$$$$") : str2);
+};
 
 /***/ }),
 /* 2 */

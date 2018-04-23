@@ -76,8 +76,11 @@ class ArticleController extends Controller
             //total page
             $total_page = ceil($total_results/$take);
 
+            //on result
+            $on_result = $skip + $articles->count();
+
             //init responses
-            $response = ['articles' => $articles, 'total_results'=>$total_results, 'page' => $page, 'total_page' => $total_page, 'keyword'=>$this->data['keyword']];
+            $response = ['articles' => $articles, 'on_result' => $on_result, 'total_results'=>$total_results, 'page' => $page, 'total_page' => $total_page, 'keyword'=>$this->data['keyword']];
         }catch(\Exception $e){
             $response['message'] = $e->getMessage();
         }       

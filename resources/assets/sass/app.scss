@@ -194,10 +194,13 @@ body{
 	}
 
 	.card-title{
-	  font-size:14pt !important;
-	  color: #000;
-	  font-weight: 600;
-	  margin-bottom: 5px !important;
+		a{
+			font-size:14pt !important;
+		  	color: #000;
+		  	font-weight: 600;
+		  	margin-bottom: 5px !important;
+		}
+	  
 	}
 
 	.news-date{
@@ -236,4 +239,17 @@ body{
 .content-toolbar{
 	margin-top:-20px;
 	margin-bottom:10px;
+}
+
+.help{
+	font-size:10pt;
+	color:#696969;
+}
+
+.tag{
+	margin-right:5px;
+}
+
+.badge-default{
+	background-color:$default-color;
 }
