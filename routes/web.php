@@ -22,6 +22,12 @@ Route::post('/signUpProcess', 'UserController@signUpProcess');
 Route::post('/contactUsProcess', 'ContactUsController@contactUsProcess');
 Route::post('/checkUnique', 'BaseController@__checkUnique');
 
+/*======== profile ============*/
+Route::get('/profile', 'ProfileController@index');
+
+/*======== article ============*/
+Route::get('/articles', 'ArticleController@index');
+Route::post('/getArticles', 'ArticleController@getArticles');
 
 
 

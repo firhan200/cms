@@ -28,16 +28,16 @@
 			  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			    	<ul class="navbar-nav ml-auto">
 			      		<li class="nav-item @yield('home')"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
+			      		<li class="nav-item @yield('article')"><a href="{{ url('/articles') }}" class="nav-link">Articles</a></li>
 			      		<li class="nav-item @yield('about')"><a href="{{ url('/about') }}" class="nav-link">About</a></li>
 			      		<li class="nav-item @yield('contact-us')"><a href="{{ url('/contact-us') }}" class="nav-link">Contact us</a></li>
 			      		@if(Session::has('user_id'))
-			      		<li class="nav-item dropdown">
+			      		<li class="nav-item dropdown @yield('profile')">
 			        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			          			<i class="fa fa-user-circle"></i> {{ Session::get('user_name') }}
 			        		</a>
 			        		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 			          			<a class="dropdown-item" href="{{ url('/profile') }}">Profile</a>
-			          			<a class="dropdown-item" href="{{ url('/changePassword') }}">Change Password</a>
 			          			<div class="dropdown-divider"></div>
 			          			<a class="dropdown-item confirm-modal" data-toggle="modal" data-target="#confirmModal" data-url="{{ url('/logout') }}" data-content="Logout from system?" href="#"><i class="fa fa-sign-out"></i> Logout</a>
 			        		</div>

@@ -106,6 +106,7 @@ app.web = {
 	init: function init() {
 		app.web.commons();
 		app.web.users();
+		app.web.articles();
 	},
 	commons: function commons() {
 		$(".disable-form-unconfirm").submit(function () {
@@ -207,6 +208,78 @@ app.web = {
 			} else {
 				$(".sign-up-form").find(".btn-submit").prop('disabled', true);
 			}
+		}
+	},
+	articles: function articles() {
+		var page = 1;
+		var keyword = '';
+		var showMoreArticlesBtn = '<a href="#!" id="show-more-articles" class="btn btn-info btn-default">Show more</a>';
+		renderArticles(true);
+
+		$(".articles-search").submit(function (e) {
+			e.preventDefault();
+			keyword = $(this).find('#keyword').val();
+			renderArticles(true);
+			return false;
+		});
+
+		$(document).on('click', "#show-more-articles", function () {
+			page = page + 1;
+			renderArticles(false);
+			return false;
+		});
+
+		function renderArticles(reset) {
+			$.ajax({
+				url: host + 'getArticles',
+				data: { page: page, keyword: keyword },
+				type: 'post',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				beforeSend: function beforeSend() {
+					if (reset) {
+						$("#articles-results").html(loading);
+					}
+					$(".articles-navigation").html(loading);
+				},
+				success: function success(data) {
+					if (reset) {
+						$("#articles-results").html('');
+					}
+					console.log(data);
+					if (data.articles.length > 0) {
+						$(".articles-navigation").html(showMoreArticlesBtn);
+						$.each(data.articles, function (key, article) {
+							var openTag = '<div class="col-lg-4 col-md-6 news-box"><div class="card">';
+							var articleDate = '<div class="news-date">' + article.created_at + '</div>';
+							var image = article.cover != null ? host + 'images/article/' + article.cover : '';
+							var articleImg = '<div class="news-img-frame"><img src="' + image + '" class="card-img"/></div>';
+							var articleTitle = '<div class="card-body"><div class="card-title">' + article.title + '</div>';
+
+							var summary = article.summary.length > 150 ? article.summary.substring(0, 150) + "..." : article.summary;
+							var articleBody = '<div class="card-text">' + summary + '</div></div>';
+							var closeTag = '</div></div>';
+
+							var articleCard = openTag + articleDate + articleImg + articleTitle + articleBody + closeTag;
+
+							$("#articles-results").append(articleCard);
+						});
+
+						if (data.page < data.total_page) {
+							$(".articles-navigation").html(showMoreArticlesBtn);
+						} else {
+							$(".articles-navigation").html('');
+						}
+					} else {
+						$(".articles-navigation").html('');
+						$("#articles-results").html(loading);
+					}
+				},
+				error: function error() {
+					console.log('error');
+				}
+			});
 		}
 	}
 };
