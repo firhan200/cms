@@ -27,6 +27,7 @@ Route::get('/profile', 'ProfileController@index');
 
 /*======== article ============*/
 Route::get('/articles', 'ArticleController@index');
+Route::get('/articles/{id}', 'ArticleController@detail');
 Route::post('/getArticles', 'ArticleController@getArticles');
 
 

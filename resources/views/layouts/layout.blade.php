@@ -73,7 +73,7 @@
 			    	</ul>
 			  	</div>
 			</nav>
-			<div class="container pad">
+			<div class="pad">
 				@if (Session::has('message'))
 				   {!! Session::get('message') !!}
 				@endif

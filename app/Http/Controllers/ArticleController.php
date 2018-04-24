@@ -26,6 +26,50 @@ class ArticleController extends Controller
         return view($this->data['objectName'].'/index', $this->data);
     }
 
+    public function detail($id){
+    	//validating article
+    	$this->data['article'] = $this->model->
+    							where('id', $id)->
+    							where('is_deleted', 0)->
+    							where('is_active', 1)->
+    							first();
+    	if($this->data['article']!=null){
+    		//get related articles
+    		if($this->data['article']->tags!="" && $this->data['article']->tags!=null){
+    			$tags = explode(',', $this->data['article']->tags);
+    			$this->data['article']['tagList'] = $tags;
+    			$counter=1;
+    			foreach($tags as $tag){
+    				$this->data['tagList']['tag'.$counter] = $tag;
+    				$counter++;
+    			}
+    		}
+
+    		$this->data['related_articles'] = $this->model->
+					where('is_deleted', 0)->
+					where('is_active', 1)->
+					where('id', '!=', $this->data['article']->id)->
+					where(function($query){
+						$counter = 1;
+						foreach($this->data['tagList'] as $tag){
+							if($counter==1){
+								$query->
+			                	where('tags', 'LIKE', "%".$this->data['tagList']['tag'.$counter]."%");
+							}else{
+								$query->
+			                	orWhere('tags', 'LIKE', "%".$this->data['tagList']['tag'.$counter]."%");
+							}
+							
+			                $counter++;
+						}
+		            })->orderBy('updated_at', 'desc')->limit(3)->get();
+
+    		return view($this->data['objectName'].'/detail', $this->data);
+    	}else{
+    		return Redirect();
+    	}
+    }
+
     public function getArticles(Request $request){
     	$response = ['articles' => [], 'total_results'=>0, 'page' => 1, 'total_page' => 0];
 

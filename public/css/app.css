@@ -178,6 +178,22 @@ body {
   margin-bottom: 10px;
 }
 
+.box .has-icon .icon-container {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+}
+
+.box .has-icon .icon-container i {
+  margin: 0 auto;
+  margin-top: 10px;
+  color: #696969;
+}
+
+.box .has-icon .form-control {
+  padding-left: 35px;
+}
+
 .social-icon a {
   color: #17a2b8;
   font-size: 24pt;
@@ -265,8 +281,39 @@ body {
   width: 150%;
 }
 
+.news-detail .box {
+  padding: 0px;
+}
+
+.news-detail .content {
+  padding: 20px;
+}
+
+.news-detail .title {
+  font-size: 20pt;
+}
+
+.news-detail .cover-frame {
+  width: 100% !important;
+  min-height: 10em;
+  background-color: #000;
+}
+
+.news-detail .cover-frame .cover {
+  width: 100%;
+}
+
+.news-detail .body {
+  color: #696969;
+}
+
+.news-detail .date {
+  font-size: 10pt;
+  text-align: right;
+}
+
 .content-toolbar {
-  margin-top: -20px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 

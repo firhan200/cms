@@ -218,7 +218,7 @@ app.web = {
 				var articleDate = '<div class="news-date">'+date+'</div>';
 				var image = article.cover!=null ? host+'images/article/'+article.cover : '';
 				var articleImg = '<div class="news-img-frame"><img src="'+image+'" class="card-img"/></div>';
-				var articleTitle = '<div class="card-body"><div class="card-title"><a href="'+host+'article/'+article.title.replaceAll(' ', '-')+'">'+article.title+'</a></div>';
+				var articleTitle = '<div class="card-body"><div class="card-title"><a href="'+host+'articles/'+article.id+'">'+article.title+'</a></div>';
 				
 				var summary = article.summary.length > 150 ? article.summary.substring(0, 150) + "..." : article.summary;
 				var articleBody = '<div class="card-text">'+summary+'</div>';

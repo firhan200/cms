@@ -61,7 +61,7 @@ body{
 	.form-control{
 		height:50px;
 		font-size:11pt;
-	}
+	}	
 
 	.has-icon{
 		.icon-container{
@@ -81,6 +81,8 @@ body{
 		}
 	}
 }
+
+
 
 .alert{
 	box-shadow:1px 2px 5px #bdbdbd;
@@ -148,11 +150,28 @@ body{
 	background-color:#fff;
 	padding:20px;
 	border:1px solid #e6e6e6;
-
 	.title{
 		font-size:14pt;
 		font-weight:bold;
 		margin-bottom:10px;
+	}
+
+	.has-icon{
+		.icon-container{
+			position: absolute;
+			width:40px;
+			height:30px;
+
+			i{
+				margin:0 auto;
+				margin-top: 10px;
+				color:#696969;
+			}
+		}
+
+		.form-control{
+			padding-left: 35px;
+		}
 	}
 }
 
@@ -236,8 +255,35 @@ body{
 	}
 }
 
+.news-detail{
+	.box{
+		padding:0px;
+	}
+	.content{
+		padding:20px;
+	}
+	.title{
+		font-size:20pt;
+	}
+	.cover-frame{
+		width:100% !important;
+		min-height:10em;
+		background-color:#000;
+		.cover{
+			width:100%;
+		}
+	}
+	.body{
+		color:#696969;
+	}
+	.date{
+		font-size:10pt;
+		text-align:right;
+	}
+}
+
 .content-toolbar{
-	margin-top:-20px;
+	margin-top:20px;
 	margin-bottom:10px;
 }
 
