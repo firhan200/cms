@@ -61,6 +61,19 @@ class ContactUsController extends BaseController
             }
         }
 
+        if($request->session()->has('user_id')){
+            //login user
+            $user = new \App\Models\User;
+            $userObj = $user->where('id', Session::get('user_id'))->first();
+            if($userObj!=null){
+                $this->data['obj']['name'] = $userObj->name;
+                $this->data['obj']['email'] = $userObj->email;
+            }else{
+                Session::flash('message', '<div class="alert alert-danger">Something wrong, failed to send feedback</div>');
+                return Redirect(url('/contact-us'));
+            }          
+        }
+        
         //last feedback from same email already 1 minute ago
         $this->model->name = $this->data['obj']['name'];
         $this->model->email = $this->data['obj']['email'];

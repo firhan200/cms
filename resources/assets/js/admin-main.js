@@ -151,9 +151,9 @@ app.web = {
 					if(data.length > 0){
 						$(".latest-feedback").html('');
 						$.each(data, function(key, feedback){
-							var feedbackName = '<div class="feedback-container"><div class="feedback-name">'+feedback.name+'</div>';
-							var feedbackEmail = '<div class="feedback-email">'+feedback.email+'</div>';
-							var message = feedback.message.length > 50 ? feedback.message.substring(0,50)+"..." : feedback.message;
+							var feedbackName = '<div class="feedback-container"><div class="feedback-name">'+escapeHTML(feedback.name)+'</div>';
+							var feedbackEmail = '<div class="feedback-email">'+escapeHTML(feedback.email)+'</div>';
+							var message = feedback.message.length > 50 ? escapeHTML(feedback.message.substring(0,50))+"..." : escapeHTML(feedback.message);
 							var feedbackMessage = '<div class="feedback-message">'+message+'</div>';
 							var feedbackLink = '<div align="right"><a href="'+hostAdmin+'contact_us/'+feedback.id+'">see detail</a></div></div>';
 							var feedbackContainer = feedbackName+feedbackEmail+feedbackMessage+feedbackLink;
@@ -184,8 +184,8 @@ app.web = {
 					if(data.length > 0){
 						$(".latest-users").html('');
 						$.each(data, function(key, user){
-							var userName = '<div class="feedback-container"><div class="feedback-name"><a href="'+hostAdmin+'user/'+user.id+'">'+user.name+'</a></div>';
-							var userEmail = '<div class="feedback-email">'+user.email+'</div></div>';
+							var userName = '<div class="feedback-container"><div class="feedback-name"><a href="'+hostAdmin+'user/'+user.id+'">'+escapeHTML(user.name)+'</a></div>';
+							var userEmail = '<div class="feedback-email">'+escapeHTML(user.email)+'</div></div>';
 							var userContainer = userName+userEmail;
 							$(".latest-users").append(userContainer);
 						})
@@ -391,20 +391,22 @@ app.web = {
 			})
 
 			return tagsResult;
-		}
-
-		function escapeHTML (unsafe_str) {
-		    return unsafe_str
-		      .replace(/&/g, '&amp;')
-		      .replace(/</g, '&lt;')
-		      .replace(/>/g, '&gt;')
-		      .replace(/\"/g, '&quot;')
-		      .replace(/\'/g, '&#39;')
-		      .replace(/\//g, '&#x2F;')
-		}
+		}	
 	}
 }
 
 $(document).ready(function() {
 	app.web.init();
 });
+
+function escapeHTML (unsafe_str) {
+	if(unsafe_str!=null){
+		return unsafe_str
+	      .replace(/&/g, '&amp;')
+	      .replace(/</g, '&lt;')
+	      .replace(/>/g, '&gt;')
+	      .replace(/\"/g, '&quot;')
+	      .replace(/\'/g, '&#39;')
+	      .replace(/\//g, '&#x2F;')
+	}  
+}

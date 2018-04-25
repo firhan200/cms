@@ -4,7 +4,7 @@
 $default-color : #17a2b8;
 $default-color-lighter : lighten( $default-color, 10%);
 $bg-color : #f3f3f3;
-$pad : 70px;
+$pad : 56px;
 $content-pad : 20px;
 
 body{
@@ -59,7 +59,7 @@ body{
 	}
 
 	.form-control{
-		height:50px;
+		min-height:50px;
 		font-size:11pt;
 	}	
 
@@ -298,4 +298,13 @@ body{
 
 .badge-default{
 	background-color:$default-color;
+}
+
+.link-toolbar{
+	a{
+		padding:7px;
+	}
+	a:hover{
+		background-color:#e6e6e6;
+	}
 }

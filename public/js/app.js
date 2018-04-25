@@ -124,7 +124,6 @@ app.web = {
 	users: function users() {
 		var isEmailValid = false;
 		var isPasswordValid = false;
-		checkSubmitButton();
 
 		$(".login-form-trigger").click(function () {
 			if (!$(".dropdown-login").hasClass('show')) {
@@ -158,7 +157,7 @@ app.web = {
 							isEmailValid = true;
 							feedbackField.html('');
 						}
-						checkSubmitButton();
+						checkSubmitButton($(".sign-up-form"), true);
 					},
 					error: function error() {
 						console.log('error');
@@ -168,17 +167,25 @@ app.web = {
 		});
 
 		$(".sign-up-form").find("#password").bind('keyup change', function () {
-			checkPassword();
+			checkPassword($(".sign-up-form"), true);
 		});
 
 		$(".sign-up-form").find("#repeat_password").bind('keyup change', function () {
-			checkPassword();
+			checkPassword($(".sign-up-form"), true);
 		});
 
-		function checkPassword() {
+		$(".change-password-form").find("#password").bind('keyup change', function () {
+			checkPassword($(".change-password-form"), false);
+		});
+
+		$(".change-password-form").find("#repeat_password").bind('keyup change', function () {
+			checkPassword($(".change-password-form"), false);
+		});
+
+		function checkPassword(obj, withEmail) {
 			var message = '';
-			var password = $(".sign-up-form").find("#password").val();
-			var repeat_password = $(".sign-up-form").find("#repeat_password").val();
+			var password = obj.find("#password").val();
+			var repeat_password = obj.find("#repeat_password").val();
 			if (password.length > 5) {
 				$(".password-error").html('');
 				if (password === repeat_password) {
@@ -199,14 +206,22 @@ app.web = {
 				}
 				$(".password-error").html(message);
 			}
-			checkSubmitButton();
+			checkSubmitButton(obj, withEmail);
 		}
 
-		function checkSubmitButton() {
-			if (isPasswordValid && isEmailValid) {
-				$(".sign-up-form").find(".btn-submit").prop('disabled', false);
+		function checkSubmitButton(obj, withEmail) {
+			if (withEmail) {
+				if (isPasswordValid && isEmailValid) {
+					obj.find(".btn-submit").prop('disabled', false);
+				} else {
+					obj.find(".btn-submit").prop('disabled', true);
+				}
 			} else {
-				$(".sign-up-form").find(".btn-submit").prop('disabled', true);
+				if (isPasswordValid) {
+					obj.find(".btn-submit").prop('disabled', false);
+				} else {
+					obj.find(".btn-submit").prop('disabled', true);
+				}
 			}
 		}
 	},
@@ -253,7 +268,6 @@ app.web = {
 					$(".total-results").html(loading);
 				},
 				success: function success(data) {
-					console.log(data);
 					if (reset) {
 						$("#articles-results").html('');
 					}
@@ -296,9 +310,9 @@ app.web = {
 				var articleDate = '<div class="news-date">' + date + '</div>';
 				var image = article.cover != null ? host + 'images/article/' + article.cover : '';
 				var articleImg = '<div class="news-img-frame"><img src="' + image + '" class="card-img"/></div>';
-				var articleTitle = '<div class="card-body"><div class="card-title"><a href="' + host + 'articles/' + article.id + '">' + article.title + '</a></div>';
+				var articleTitle = '<div class="card-body"><div class="card-title"><a href="' + host + 'articles/' + article.id + '">' + escapeHTML(article.title) + '</a></div>';
 
-				var summary = article.summary.length > 150 ? article.summary.substring(0, 150) + "..." : article.summary;
+				var summary = article.summary.length > 150 ? escapeHTML(article.summary.substring(0, 150)) + "..." : escapeHTML(article.summary);
 				var articleBody = '<div class="card-text">' + summary + '</div>';
 				var articleTags = article.tags != null ? renderTags(article.tags) : '';
 				var closeTag = '</div></div></div>';
@@ -318,7 +332,9 @@ $(document).ready(function () {
 });
 
 function escapeHTML(unsafe_str) {
-	return unsafe_str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/\'/g, '&#39;').replace(/\//g, '&#x2F;');
+	if (unsafe_str != null) {
+		return unsafe_str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/\'/g, '&#39;').replace(/\//g, '&#x2F;');
+	}
 }
 
 function renderTags(tagsString) {

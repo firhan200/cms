@@ -75,7 +75,7 @@ body {
 }
 
 .form-box .form-control {
-  height: 50px;
+  min-height: 50px;
   font-size: 11pt;
 }
 
@@ -127,8 +127,8 @@ body {
 }
 
 .pad {
-  padding-top: 70px;
-  padding-bottom: 70px;
+  padding-top: 56px;
+  padding-bottom: 56px;
 }
 
 .content-pad {
@@ -328,5 +328,13 @@ body {
 
 .badge-default {
   background-color: #17a2b8;
+}
+
+.link-toolbar a {
+  padding: 7px;
+}
+
+.link-toolbar a:hover {
+  background-color: #e6e6e6;
 }
 

@@ -36,7 +36,7 @@
 					</div>
 				</div>							
 				<div class="form-group-btn" align="right">
-					<button type="submit" class="btn btn-info btn-default btn-submit">Sign up</button>
+					<button type="submit" class="btn btn-info btn-default btn-submit" disabled="disabled">Sign up</button>
 				</div>
 			</form>
 		</div>

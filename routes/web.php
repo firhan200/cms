@@ -24,6 +24,10 @@ Route::post('/checkUnique', 'BaseController@__checkUnique');
 
 /*======== profile ============*/
 Route::get('/profile', 'ProfileController@index');
+Route::get('/profile/change-password', 'ProfileController@changePassword');
+Route::post('/profile/changePasswordProcess', 'ProfileController@changePasswordProcess');
+Route::get('/profile/edit', 'ProfileController@edit');
+Route::post('/profile/editProcess', 'ProfileController@editProcess');
 
 /*======== article ============*/
 Route::get('/articles', 'ArticleController@index');
