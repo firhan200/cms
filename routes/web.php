@@ -43,6 +43,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/home', 'Admin\HomeController@dashboard');
     Route::get('/profile', 'Admin\ProfileController@profile');
     Route::get('/changePassword', 'Admin\ProfileController@changePassword');
+    Route::get('/forgotPassword', 'Admin\LogController@forgotPassword');
+    Route::get('/resetPassword', 'Admin\LogController@resetPassword');
+    Route::post('/forgotPasswordProcess', 'Admin\LogController@forgotPasswordProcess');
+    Route::post('/resetPasswordProcess', 'Admin\LogController@resetPasswordProcess');
 
     Route::post('/login', 'Admin\LogController@loginProcess');
     Route::post('/checkUnique', 'Admin\BaseController@__checkUnique');

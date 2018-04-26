@@ -9,12 +9,17 @@ app.web = {
 		app.web.articles();
 	},
 	notifications : function(){
-		notificationsCheck();
-
-		setInterval(function(){
-			//check notification every 1 minute
+		try{
 			notificationsCheck();
-		}, 1000 * 60 * 1)
+
+			setInterval(function(){
+				//check notification every 1 minute
+				notificationsCheck();
+			}, 1000 * 60 * 1)
+		}catch(err){
+			console.log('error');
+		}
+		
 
 		function notificationsCheck(){
 			$.ajax({
@@ -100,16 +105,20 @@ app.web = {
 		}
 	},
 	dashboards: function(){
-		renderLatestFeedback();
-		renderLatestUsers();
-		renderTotal();
-
-		//refresh dashboard every 1 minutes
-		setInterval(function(){
+		try{
 			renderLatestFeedback();
 			renderLatestUsers();
 			renderTotal();
-		},1000 * 60 * 1);
+
+			//refresh dashboard every 1 minutes
+			setInterval(function(){
+				renderLatestFeedback();
+				renderLatestUsers();
+				renderTotal();
+			},1000 * 60 * 1);
+		}catch(err){
+			console.log('error');
+		}
 
 		function renderTotal(){
 			$(".dashboard-total").each(function(){
@@ -148,22 +157,26 @@ app.web = {
 			    	$(".latest-feedback").html('<center><i class="fa fa-spinner loading"></i></center>');
 			    },
 				success:function(data){
-					if(data.length > 0){
-						$(".latest-feedback").html('');
-						$.each(data, function(key, feedback){
-							var feedbackName = '<div class="feedback-container"><div class="feedback-name">'+escapeHTML(feedback.name)+'</div>';
-							var feedbackEmail = '<div class="feedback-email">'+escapeHTML(feedback.email)+'</div>';
-							var message = feedback.message.length > 50 ? escapeHTML(feedback.message.substring(0,50))+"..." : escapeHTML(feedback.message);
-							var feedbackMessage = '<div class="feedback-message">'+message+'</div>';
-							var feedbackLink = '<div align="right"><a href="'+hostAdmin+'contact_us/'+feedback.id+'">see detail</a></div></div>';
-							var feedbackContainer = feedbackName+feedbackEmail+feedbackMessage+feedbackLink;
-							$(".latest-feedback").append(feedbackContainer);
-						})
-					}else{
-						$(".latest-feedback").html('<center><div class="help">empty</div></center>');
+					try{
+						if(data.length > 0){
+							$(".latest-feedback").html('');
+							$.each(data, function(key, feedback){
+								var feedbackName = '<div class="feedback-container"><div class="feedback-name">'+escapeHTML(feedback.name)+'</div>';
+								var feedbackEmail = '<div class="feedback-email">'+escapeHTML(feedback.email)+'</div>';
+								var message = feedback.message.length > 50 ? escapeHTML(feedback.message.substring(0,50))+"..." : escapeHTML(feedback.message);
+								var feedbackMessage = '<div class="feedback-message">'+message+'</div>';
+								var feedbackLink = '<div align="right"><a href="'+hostAdmin+'contact_us/'+feedback.id+'">see detail</a></div></div>';
+								var feedbackContainer = feedbackName+feedbackEmail+feedbackMessage+feedbackLink;
+								$(".latest-feedback").append(feedbackContainer);
+							})
+						}else{
+							$(".latest-feedback").html('<center><div class="help">empty</div></center>');
+						}
+					}catch(err){
+						//console.log('renderLatestFeedback failed');
 					}
 				},
-				error: function(){
+				error: function(request, status, error){
 					console.log('error occured');
 				}
 			})
@@ -181,19 +194,23 @@ app.web = {
 			    	$(".latest-users").html('<center><i class="fa fa-spinner loading"></i></center>');
 			    },
 				success:function(data){
-					if(data.length > 0){
-						$(".latest-users").html('');
-						$.each(data, function(key, user){
-							var userName = '<div class="feedback-container"><div class="feedback-name"><a href="'+hostAdmin+'user/'+user.id+'">'+escapeHTML(user.name)+'</a></div>';
-							var userEmail = '<div class="feedback-email">'+escapeHTML(user.email)+'</div></div>';
-							var userContainer = userName+userEmail;
-							$(".latest-users").append(userContainer);
-						})
-					}else{
-						$(".latest-users").html('<center><div class="help">empty</div></center>');
-					}
+					try{
+						if(data.length > 0){
+							$(".latest-users").html('');
+							$.each(data, function(key, user){
+								var userName = '<div class="feedback-container"><div class="feedback-name"><a href="'+hostAdmin+'user/'+user.id+'">'+escapeHTML(user.name)+'</a></div>';
+								var userEmail = '<div class="feedback-email">'+escapeHTML(user.email)+'</div></div>';
+								var userContainer = userName+userEmail;
+								$(".latest-users").append(userContainer);
+							})
+						}else{
+							$(".latest-users").html('<center><div class="help">empty</div></center>');
+						}
+					}catch(err){
+						//console.log('renderLatestUsers failed');
+					}	
 				},
-				error: function(){
+				error: function(request, status, error){
 					console.log('error occured');
 				}
 			})
@@ -245,8 +262,12 @@ app.web = {
 			}else{
 				$(this).find('.btn-submit').prop('disabled', false);
 				return false;
-			}
-			
+			}		
+		})
+
+		$(".disable-form-unconfirm").submit(function(){
+			$(this).find('.btn-submit').text("Please wait...");
+			$(this).find('.btn-submit').prop('disabled', true);		
 		})
 
 		$(".confirm-modal").click(function(){

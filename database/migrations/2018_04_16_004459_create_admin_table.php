@@ -20,6 +20,7 @@ class CreateAdminTable extends Migration
             $table->string('password', 60);
             $table->string('api_token')->nullable();
             $table->string('reset_password_token')->nullable();
+            $table->dateTime('reset_password_sent')->nullable();
             $table->boolean('is_active');
             $table->boolean('is_deleted');
             $table->timestamps();

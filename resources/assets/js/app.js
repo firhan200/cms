@@ -235,7 +235,7 @@ app.web = {
 				var articleTitle = '<div class="card-body"><div class="card-title"><a href="'+host+'articles/'+article.id+'">'+escapeHTML(article.title)+'</a></div>';
 				
 				var summary = article.summary.length > 150 ? escapeHTML(article.summary.substring(0, 150)) + "..." : escapeHTML(article.summary);
-				var articleBody = '<div class="card-text">'+summary+'</div>';
+				var articleBody = '<div class="card-text">'+escapeHTML(summary)+'</div>';
 				var articleTags = article.tags!=null ? renderTags(article.tags) : '';
 				var closeTag = '</div></div></div>';
 
