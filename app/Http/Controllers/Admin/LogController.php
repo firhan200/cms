@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
+use Mail;
 use Carbon\Carbon;
 use Redirect;
 
-class LogController extends Controller
+class LogController extends BaseController
 {
     protected $data;
 	private $admin;
@@ -68,6 +69,15 @@ class LogController extends Controller
             $adminObj->reset_password_token = $resetPasswordToken;
             $adminObj->reset_password_sent = Carbon::now('UTC');
             $adminObj->save();
+
+            //send email
+            $resetPasswordUrl = $this->__getSettingValueByName('admin_url')."/resetPassword/?token=".$resetPasswordToken;
+            $data = array('name'=>$adminObj->name, "url" => $resetPasswordUrl);
+            $this->data['email'] = $adminObj->email;
+            Mail::send('emails.admin_forgot_password', $data, function($message) {
+                $message->to('firhan.faisal1995@gmail.com', 'Administrator')
+                ->subject('CMS Forgot Password');
+            });
 
             $message = '<div class="alert alert-primary">Link to reset password has been send to your email</div>';
         }else{
@@ -142,5 +152,10 @@ class LogController extends Controller
         Session::flash('message', $message);
 
         return Redirect(url('admin/resetPassword/').'?token='.$this->data['resetPasswordToken']);
+    }
+
+    public function sendEmail(){
+        
+        return view('emails/admin_forgot_password');
     }
 }

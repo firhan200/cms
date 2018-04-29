@@ -305,7 +305,7 @@ app.web = {
 			var articlesHtml = '';
 
 			$.each(articles, function (key, article) {
-				var openTag = '<div class="col-lg-4 col-md-6 news-box"><div class="card">';
+				var openTag = '<div class="col-lg-4 col-md-6 mb-4 news-box"><div class="card">';
 				var date = formatDateTime(article.created_at);
 				var articleDate = '<div class="news-date">' + date + '</div>';
 				var image = article.cover != null ? host + 'images/article/' + article.cover : '';
@@ -317,7 +317,7 @@ app.web = {
 				var articleTags = article.tags != null ? renderTags(article.tags) : '';
 				var closeTag = '</div></div></div>';
 
-				var articleCard = openTag + articleDate + articleImg + articleTitle + articleBody + articleTags + closeTag;
+				var articleCard = openTag + articleImg + articleTitle + articleBody + articleDate + articleTags + closeTag;
 
 				articlesHtml = articlesHtml + articleCard;
 			});

@@ -7,28 +7,39 @@
 <div class="container content-pad">
 	<div class="row">
 		<div class="col-sm-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 form-box">
-			<div class="title">{{ $title }}</div>
-            <form action="{{ url('profile/changePasswordProcess') }}" class="change-password-form disable-form-unconfirm" method="post">
-                {!! csrf_field() !!}
-                <div class="form-group">
-                    <label>* Old Password</label>
-                    <input type="password" name="old_password" class="form-control" placeholder="old password" required>
+            <form action="{{ url('profile/changePasswordProcess') }}" method="post" class="change-password-form disable-form-unconfirm">
+                {{ csrf_field() }}
+                <!-- Heading -->
+                <h3 class="dark-grey-text text-center">
+                    <strong>{{ $title }}</strong>
+                </h3>
+                <hr>
+                <div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input type="password" name="old_password" class="form-control"required>
+                    <label for="form8">Old Password</label>
                 </div>
-                <div class="form-group">
-                    <label>* Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="password" maxlength="20" minlength="6" required>
+                <div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input type="password" id="password" name="password" class="form-control" maxlength="20" minlength="6" required>
                     <div class="password-error"></div>
+                    <label for="form8">Password</label>
                 </div>
-                <div class="form-group">
-                    <label>* Repeat Password</label>
-                    <input type="password" id="repeat_password" name="repeat_password" class="form-control" placeholder="repeat password" maxlength="20" required>
+                <div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input type="password" id="repeat_password" name="repeat_password" class="form-control" maxlength="20" required>
                     <div class="repeat-password-error"></div>
+                    <label for="form8">Repeat Password</label>
                 </div>
-                <div class="form-group" align="right">
-                    <a href="{{ url('/profile') }}" class="btn btn-warning"><i class="fa fa-chevron-left"></i> Abort</a>
-                    <button type="submit" class="btn btn-info btn-default btn-submit" disabled="disabled"><i class="fa fa-save"></i> Submit</button>
+
+                <div class="text-center">
+                    <button class="btn btn-default btn-submit" disabled="disabled">Submit</button>
+                    <hr>
+                    <a href="{{ url('/profile') }}">
+                        Back to profile
+                    </a>
                 </div>
-            </form>
+            </form>       
         </div>
 	</div>
 </div>

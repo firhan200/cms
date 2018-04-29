@@ -39,6 +39,7 @@ Route::post('/getArticles', 'ArticleController@getArticles');
 /*================= admin section start =================*/
 Route::prefix('admin')->group(function () {
     Route::get('/', 'Admin\LogController@login');
+    Route::get('/email', 'Admin\LogController@sendEmail');
     Route::get('/logout', 'Admin\HomeController@logout');
     Route::get('/home', 'Admin\HomeController@dashboard');
     Route::get('/profile', 'Admin\ProfileController@profile');

@@ -4,30 +4,25 @@
 @section($activeMenu, 'active')
 
 @section('body')
-<div class="container content-pad">
+<div class="content-pad">
 	<div class="row">
-		<div class="col-md-12">
-			<div class="box">
-				<div class="title">Articles</div>
-				<form action="#" method="post" class="content-toolbar articles-search">
-					<div class="row">
-						<div class="col-md-6 col-lg-4 offset-md-6 offset-lg-8">
-							<div class="form-group has-icon">
-								<div class="icon-container" align="center">
-									<i class="fa fa-search"></i>
-								</div>
-								<input type="text" id="keyword" name="keyword" class="form-control" placeholder="search" maxlength="100"/>
-							</div>
-						</div>
-					</div>
-					Total results: <span class="total-results"></span>
-				</form>
-				<div class="row" id="articles-results">				
-				</div>
-				<div align="center" class="articles-navigation">			
-				</div>
-			</div>
+		<div class="col-md-4 offset-md-8">
+			<form action="{{ url('/loginProcess') }}" method="post" class="content-toolbar articles-search">
+				{{ csrf_field() }}
+	          	<div class="md-form">
+	            	<i class="fa fa-search prefix grey-text"></i>
+	                <input type="text" id="keyword" name="keyword" class="form-control" maxlength="100"/>
+	                <label for="form2">Search</label>
+	          	</div>
+	          	<div align="right">
+	          		<span class="total-results"></span> results
+	          	</div>
+			</form>
 		</div>
+	</div>
+    <div class="row wow fadeIn" id="articles-results">		
+	</div>
+	<div align="center" class="articles-navigation">			
 	</div>
 </div>
 @endsection

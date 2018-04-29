@@ -7,37 +7,45 @@
 <div class="container content-pad">
     <div class="row">
 		<div class="col-sm-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 form-box">
-			<div class="title">Sign up</div>
 			<form action="{{ url('/signUpProcess') }}" method="post" class="disable-form-unconfirm sign-up-form">
 				{{ csrf_field() }}
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group">
-							<label>Name</label>
-							<input type="text" name="name" class="form-control" placeholder="name" maxlength="100" required/>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input type="email" id="email" name="email" class="form-control" placeholder="email" maxlength="200" autocomplete="off" required/>
+				<!-- Heading -->
+              	<h3 class="dark-grey-text text-center">
+                	<strong>SIGN UP</strong>
+              	</h3>
+              	<hr>
+              	<div class="md-form">
+                	<i class="fa fa-user prefix grey-text"></i>
+                    <input type="text" name="name" class="form-control" maxlength="100" required/>
+                    <label for="form2">Name</label>
+              	</div>
+              	<div class="md-form">
+                	<i class="fa fa-envelope prefix grey-text"></i>
+                    <input type="email" id="email" name="email" class="form-control" maxlength="200" autocomplete="off" required/>
 							<div class="email-feedback feedback"></div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label>Password</label>					
-							<input id="password" type="password" name="password" class="form-control" placeholder="password" maxlength="20" required/>
+                    <label for="form2">E-mail</label>
+              	</div>
+              	<div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input id="password" type="password" name="password" class="form-control" maxlength="20" required/>
 							<div class="password-error feedback"></div>
-						</div>
-						<div class="form-group">
-							<label>Repeat Password</label>					
-							<input id="repeat_password" type="password" name="repeat_password" class="form-control" placeholder="repeat password" maxlength="20" required/>
+                    <label for="form8">Password</label>
+              	</div>
+              	<div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input id="repeat_password" type="password" name="repeat_password" class="form-control" maxlength="20" required/>
 							<div class="repeat-password-error feedback"></div>
-						</div>
-					</div>
-				</div>							
-				<div class="form-group-btn" align="right">
-					<button type="submit" class="btn btn-info btn-default btn-submit" disabled="disabled">Sign up</button>
-				</div>
+                    <label for="form8">Repeat-Password</label>
+              	</div>
+
+              	<div class="text-center">
+                    <button class="btn btn-default btn-submit" disabled="disabled">Login</button>
+                    <hr>
+                    Already have account?
+            		<a href="{{ url('/login') }}">
+                      	Log in now!
+                  	</a>
+              	</div>
 			</form>
 		</div>
 	</div>

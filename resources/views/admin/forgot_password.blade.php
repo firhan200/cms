@@ -29,7 +29,7 @@
 							<a href="{{ url('admin/') }}"><button type="button" class="btn btn-warning btn-login">Back</button></a>
 						</div>
 						<div class="col-sm-6">
-							<button type="submit" class="btn btn-info btn-login">Send</button>
+							<button type="submit" class="btn btn-submit btn-info btn-login">Send</button>
 						</div>
 					</div>		
 				</div>

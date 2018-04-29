@@ -61,6 +61,30 @@ class CreateSettingTable extends Migration
                 'updated_at' => new DateTime()
             )
         );
+        DB::table('setting')->insert(
+            array(
+                'name' => 'front_url',
+                'description' => 'url for front page',
+                'value' => 'http://localhost:8000/',
+                'is_active' => 1,
+                'is_deleted' => 0,
+                'is_editable' => 0,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
+            )
+        );
+        DB::table('setting')->insert(
+            array(
+                'name' => 'admin_url',
+                'description' => 'url for admin cms page',
+                'value' => 'http://localhost:8000/admin/',
+                'is_active' => 1,
+                'is_deleted' => 0,
+                'is_editable' => 0,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
+            )
+        );
     }
 
     /**

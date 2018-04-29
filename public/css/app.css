@@ -25,11 +25,7 @@
 }
 
 body {
-  background-color: #f3f3f3;
-}
-
-.navbar {
-  background-color: #17a2b8 !important;
+  background-color: #f2f2f2;
 }
 
 .form-login {
@@ -44,13 +40,13 @@ body {
 
 .form-login .has-icon .icon-container {
   position: absolute;
-  width: 40px;
+  width: 10px;
   height: 30px;
 }
 
 .form-login .has-icon .icon-container i {
   margin: 0 auto;
-  margin-top: 6px;
+  margin-top: 1px;
   color: #696969;
 }
 
@@ -106,13 +102,13 @@ body {
 }
 
 .btn-default {
-  background-color: #17a2b8 !important;
-  border-color: #17a2b8 !important;
+  background-color: #8c566b !important;
+  border-color: #8c566b !important;
 }
 
 .btn-default:hover {
-  background-color: #1fc8e3 !important;
-  border-color: #1fc8e3 !important;
+  background-color: #a66f84 !important;
+  border-color: #a66f84 !important;
 }
 
 .btn-small {
@@ -132,8 +128,8 @@ body {
 }
 
 .content-pad {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 0px;
+  padding-bottom: 40px;
 }
 
 .form-control,
@@ -166,41 +162,13 @@ body {
   font-size: 10pt;
 }
 
-.box {
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #e6e6e6;
-}
-
-.box .title {
-  font-size: 14pt;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.box .has-icon .icon-container {
-  position: absolute;
-  width: 40px;
-  height: 30px;
-}
-
-.box .has-icon .icon-container i {
-  margin: 0 auto;
-  margin-top: 10px;
-  color: #696969;
-}
-
-.box .has-icon .form-control {
-  padding-left: 35px;
-}
-
 .social-icon a {
-  color: #17a2b8;
+  color: #8c566b;
   font-size: 24pt;
 }
 
 .social-icon a:hover {
-  color: #1fc8e3;
+  color: #a66f84;
 }
 
 .avatar {
@@ -236,17 +204,16 @@ body {
 .news-box .card-title a {
   font-size: 14pt !important;
   color: #000;
-  font-weight: 600;
+  font-weight: lighten;
   margin-bottom: 5px !important;
 }
 
 .news-box .news-date {
-  position: absolute;
   font-size: 10pt !important;
-  color: #fff;
-  font-weight: bold;
-  padding: 10px;
-  background-color: #17a2b8;
+  color: #696969;
+  font-weight: lighten;
+  padding: 10px 0px 10px 0px;
+  text-align: right;
 }
 
 .news-img-frame {
@@ -327,7 +294,7 @@ body {
 }
 
 .badge-default {
-  background-color: #17a2b8;
+  background-color: #8c566b;
 }
 
 .link-toolbar a {
@@ -336,5 +303,10 @@ body {
 
 .link-toolbar a:hover {
   background-color: #e6e6e6;
+}
+
+.footer {
+  background-color: #1c1c1c !important;
+  min-height: 300px;
 }
 

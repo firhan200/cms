@@ -5,8 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta name="csrf-token" content="{{ csrf_token() }}">
 		<title>@yield('title')</title>
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome/css/font-awesome.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/mdb.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/preloader.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
 	</head>
@@ -18,67 +19,72 @@
 		        <i class="fa fa-spinner loading"></i>
 		    </div>
 		</div>
-		<div class="main">
-			<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-info">
-			  	<a class="navbar-brand" href="#">Brand</a>
-			  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			    		<span class="navbar-toggler-icon"></span>
-			  		</button>
+		<!--Main Navigation-->
+	    <header>
+	        <!-- Navbar -->
+	        <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+	            <div class="container">
+	                <!-- Brand -->
+	                <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/material-design-for-bootstrap/" target="_blank">
+	                    <strong class="blue-text">CMS</strong>
+	                </a>
+	                <!-- Collapse -->
+	                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+	                    aria-expanded="false" aria-label="Toggle navigation">
+	                    <span class="navbar-toggler-icon"></span>
+	                </button>
+	                <!-- Links -->
+	                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	                    <!-- Left -->
+	                    <ul class="navbar-nav mr-auto">
+	                        <li class="nav-item @yield('home')">
+	                            <a class="nav-link waves-effect" href="{{ url('/') }}">Home
+	                                <span class="sr-only">(current)</span>
+	                            </a>
+	                        </li>
+	                        <li class="nav-item @yield('article')">
+	                            <a class="nav-link waves-effect" href="{{ url('/articles') }}">Articles</a>
+	                        </li>
+	                        <li class="nav-item @yield('contact-us')">
+	                            <a class="nav-link waves-effect" href="{{ url('/contact-us') }}">Contact Us</a>
+	                        </li>
+	                    </ul>
+	                    <!-- Right -->
+	                    <ul class="navbar-nav nav-flex-icons">
+	                    	@if(Session::has('user_id'))
+	                        <li class="nav-item dropdown">
+				                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					                <i class="fa fa-user-circle mr-2"></i> {{ Session::get('user_name') }}
+					            </a>
+				                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+				                    <a class="dropdown-item" href="{{ url('/profile') }}">Profile</a>
+				                    <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
+				                </div>
+				            </li>
+	                        @else
+				      		<li class="nav-item @yield('login')">
+	                            <a class="nav-link waves-effect" href="{{ url('/login') }}">Login</a>
+	                        </li>
+				      		@endif
+	                    </ul>
+	                </div>
+	            </div>
+	        </nav>
+	        <!-- Navbar -->
+	    </header>
+	    <!--Main Navigation-->
 
-			  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			    	<ul class="navbar-nav ml-auto">
-			      		<li class="nav-item @yield('home')"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
-			      		<li class="nav-item @yield('article')"><a href="{{ url('/articles') }}" class="nav-link">Articles</a></li>
-			      		<li class="nav-item @yield('about')"><a href="{{ url('/about') }}" class="nav-link">About</a></li>
-			      		<li class="nav-item @yield('contact-us')"><a href="{{ url('/contact-us') }}" class="nav-link">Contact us</a></li>
-			      		@if(Session::has('user_id'))
-			      		<li class="nav-item dropdown @yield('profile')">
-			        		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			          			<i class="fa fa-user-circle"></i> {{ Session::get('user_name') }}
-			        		</a>
-			        		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-			          			<a class="dropdown-item" href="{{ url('/profile') }}">Profile</a>
-			          			<div class="dropdown-divider"></div>
-			          			<a class="dropdown-item confirm-modal" data-toggle="modal" data-target="#confirmModal" data-url="{{ url('/logout') }}" data-content="Logout from system?" href="#"><i class="fa fa-sign-out"></i> Logout</a>
-			        		</div>
-			      		</li>
-			      		@else
-			      		<li class="nav-item dropdown @yield('login')">
-			        		<a class="nav-link dropdown-toggle login-form-trigger" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			          			Login
-			        		</a>
-			        		<div class="dropdown-menu dropdown-menu-right dropdown-login" aria-labelledby="navbarDropdown">
-			          			<form class="form-login disable-form-unconfirm" action="{{ url('/loginProcess') }}" method="post">
-			          				{!! csrf_field(); !!}
-			          				<div class="form-group has-icon">
-			          					<div class="icon-container" align="center">
-			          						<i class="fa fa-envelope"></i>
-			          					</div>
-			          					<input name="email" type="text" class="form-control" placeholder="email" value="firhan.faisal1995@gmail.com">
-			          				</div>
-			          				<div class="form-group has-icon">
-			          					<div class="icon-container" align="center">
-			          						<i class="fa fa-lock"></i>
-			          					</div>
-			          					<input type="password" name="password" class="form-control" placeholder="password" value="123456">
-			          				</div>
-			          				<div class="form-group">
-			          					<button type="submit" class="btn btn-info btn-default btn-small btn-submit">Login</button>
-			          					<a href="{{ url('/sign-up') }}"><button type="button" class="btn btn-danger btn-small">Sign up</button></a>
-			          				</div>
-			          			</form>
-			        		</div>
-			      		</li>
-			      		@endif
-			    	</ul>
-			  	</div>
-			</nav>
-			<div class="pad">
+	    <!--Main layout-->
+	    <main class="mt-5 pt-5">
+	        <div class="container">
 				@if (Session::has('message'))
 				   {!! Session::get('message') !!}
 				@endif
 				@yield('body')
 			</div>
+		</main>
+		<div class="footer">
+			tes
 		</div>
 
 		<!-- Logout Modal -->
@@ -107,6 +113,7 @@
 		<script type="text/javascript" src="{{ asset('js/bootstrap/popper.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
 		<script src="{{ asset('js/preloader.js') }}"></script>
+		<script src="{{ asset('js/mdb.min.js') }}"></script>
 		<script src="{{ asset('js/moment.js') }}"></script>
 		<script src="{{ asset('js/config.js') }}"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
