@@ -7,30 +7,38 @@
 <div class="container content-pad">
 	<div class="row">
 		<div class="col-sm-12 col-md-10 col-lg-8 offset-md-1 offset-lg-2 form-box">
-			<div class="title">{{ $title }}</div>
-            <form action="{{ url('profile/editProcess') }}" class="change-password-form disable-form-unconfirm" method="post">
-                {!! csrf_field() !!}
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" value="{{ $user->name }}" class="form-control" placeholder="Name" readonly required>
+            <form action="{{ url('profile/editProcess') }}" method="post" class="disable-form-unconfirm change-password-form">
+                {{ csrf_field() }}
+                <!-- Heading -->
+                <h3 class="dark-grey-text text-center">
+                    <strong>{{ $title }}</strong>
+                </h3>
+                <div class="md-form">
+                    <i class="fa fa-user prefix grey-text"></i>
+                    <input type="text" name="name" value="{{ $user->name }}" class="form-control" readonly required>
+                    <label for="form8">Name</label>
                 </div>
-                <div class="form-group">
-                    <label>E-mail</label>
-                    <input type="email" name="email" value="{{ $user->email }}" class="form-control" placeholder="E-mail" readonly required>
+                <div class="md-form">
+                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <input type="email" name="email" value="{{ $user->email }}" class="form-control" readonly required>
+                    <label for="form8">E-mail</label>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" id="phone_number" value="{{ $user->phone_number }}" name="phone_number" class="form-control" pattern="[0-9-]{1,50}" placeholder="Phone Number" maxlength="50">
+                <div class="md-form">
+                    <i class="fa fa-phone prefix grey-text"></i>
+                    <input type="text" id="phone_number" value="{{ $user->phone_number }}" name="phone_number" class="form-control" pattern="[0-9-]{1,50}" maxlength="50">
+                    <label for="form8">Phone Number</label>
                 </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <textarea type="text" rows="5" id="address" name="address" class="form-control" placeholder="Adress" maxlength="300">{{ $user->address }}</textarea>
+                <div class="md-form">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <textarea type="text" rows="5" id="address" name="address" class="form-control md-textarea" maxlength="300">{{ $user->address }}</textarea>
+                    <label for="form8">Address</label>
                 </div>
-                <div class="form-group" align="right">
+
+                <div class="text-center">
                     <a href="{{ url('/profile') }}" class="btn btn-warning"><i class="fa fa-chevron-left"></i> Abort</a>
-                    <button type="submit" class="btn btn-info btn-default btn-submit"><i class="fa fa-save"></i> Save</button>
+                    <button class="btn btn-default btn-submit"><i class="fa fa-save"></i> Save</button>
                 </div>
-            </form>
+            </form> 
         </div>
 	</div>
 </div>

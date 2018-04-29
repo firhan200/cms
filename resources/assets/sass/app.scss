@@ -44,37 +44,7 @@ body{
 
 .form-box{
 	border:1px solid #e6e6e6;
-	padding-top:20px !important;
-	padding-bottom:50px !important;
-
-	.title{
-		font-size:14pt;
-		font-weight:bold;
-		margin-bottom:30px;
-	}
-
-	.form-control{
-		min-height:50px;
-		font-size:11pt;
-	}	
-
-	.has-icon{
-		.icon-container{
-			position: absolute;
-			width:40px;
-			height:30px;
-
-			i{
-				margin:0 auto;
-				margin-top: 16px;
-				color:#696969;
-			}
-		}
-
-		.form-control{
-			padding-left: 35px;
-		}
-	}
+	border-radius:5px;
 }
 
 
