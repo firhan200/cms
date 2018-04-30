@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-default btn-submit" disabled="disabled">Submit</button>
+                                <button class="btn btn-default btn-submit">Submit</button>
                                 <br/>
                                 <br/>
                                 Get to know us:

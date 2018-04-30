@@ -6,8 +6,8 @@
 @section('body')
 <div class="container content-pad">
 	<div class="row">
-		<div class="col-md-9 news-detail">
-			<div class="box">
+		<div class="col-md-9">
+			<div class="news-detail">
 				<div class="cover-frame">
 					@if($article->cover!=null)
 					<img src="{{ asset('images/article/'.$article->cover) }}" class="img-fluid cover">
@@ -32,10 +32,8 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="title">Related Articles</div>
 			@foreach($related_articles as $article)
-			<div class="news-box card">
-				<div class="news-date">{{ date("H:i, d M Y", strtotime($article->created_at)) }}</div>
+			<div class="news-box card">			
 				<div class="news-img-frame">
 					<img src="{{ asset('images/article/'.$article->cover) }}" class="card-img">
 				</div>

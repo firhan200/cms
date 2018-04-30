@@ -170,6 +170,10 @@ app.web = {
 
 		$(document).on('click', '.tag-searchable', function(){
 			keyword = $(this).text();
+			//active label
+			$(".articles-search").find('.control-label').addClass('active');
+			$(".articles-search").find('.prefix').addClass('active');
+
 			$(".articles-search").find('#keyword').val(keyword);
 			renderArticles(true);
 		})

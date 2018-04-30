@@ -12,7 +12,7 @@
 	          	<div class="md-form">
 	            	<i class="fa fa-search prefix grey-text"></i>
 	                <input type="text" id="keyword" name="keyword" class="form-control" maxlength="100"/>
-	                <label for="form2">Search</label>
+	                <label class="control-label">Search</label>
 	          	</div>
 	          	<div align="right">
 	          		<span class="total-results"></span> results
