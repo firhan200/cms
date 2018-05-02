@@ -46,6 +46,34 @@ class HomeController extends BaseController
         return response()->json($feedbackList);
     }
 
+    public function getUsersStatistic(){
+        $response = ['active' => 0, 'deleted' => 0, 'unactive' => 0];
+
+        $users = new \App\Models\User;
+
+        $response['active'] = $users->where('is_deleted', 0)->where('is_active', 1)->count();
+        $response['deleted'] = $users->where('is_deleted', 1)->count();
+        $response['unactive'] = $users->where('is_deleted', 0)->where('is_active', 0)->count();
+
+        return response()->json($response);
+    }
+
+    public function getFeedbackStatistic(){
+        $month = $this->getMonthNameByNumber();
+        $response = ['month' => ['January', 'February', 'March'], 'count' => [0,0,0]];
+
+        $contactUs = new \App\Models\ContactUs;
+
+        $latestMonth = $contactUs->orderBy('created_at', 'desc')->first()->created_at->month;
+        $latestYear = $contactUs->orderBy('created_at', 'desc')->first()->created_at->year;
+
+        $response['month'][0] = ($latestMonth-2 < 1 ? $month[12-abs(($latestMonth-2))]." ".($latestYear-1) : ($month[$latestMonth-2])." ".$latestYear);
+        $response['month'][1] = ($latestMonth-1 < 1 ? $month[12-abs(($latestMonth-1))]." ".($latestYear-1) : ($month[$latestMonth-1])." ".$latestYear);
+        $response['month'][2] = $month[$latestMonth]." ".$latestYear;
+
+        return response()->json($response);
+    }
+
     public function getLatestUsers(){
         $users = new \App\Models\User;
 
@@ -59,5 +87,24 @@ class HomeController extends BaseController
     	$request->session()->forget('cms_admin_name');
 
     	return Redirect('/admin');
+    }
+
+    public function getMonthNameByNumber(){
+        $month = [
+            1 => "Jan",
+            2 => "Feb",
+            3 => "Mar",
+            4 => "Apr",
+            5 => "May",
+            6 => "Jun",
+            7 => "Jul",
+            8 => "Aug",
+            9 => "Sep",
+            10 => "Oct",
+            11 => "Nov",
+            12 => "Dec"
+        ];
+
+        return $month;
     }
 }

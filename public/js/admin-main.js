@@ -181,19 +181,119 @@ app.web = {
 		}
 	},
 	dashboards: function dashboards() {
-		try {
+		var firstLoad = true;
+		//try{
+		renderLatestFeedback();
+		renderUsersChart();
+		renderFeedbackChart();
+		renderLatestUsers();
+		renderTotal();
+
+		//refresh dashboard every 1 minutes
+		setInterval(function () {
 			renderLatestFeedback();
+			renderUsersChart();
+			renderFeedbackChart();
 			renderLatestUsers();
 			renderTotal();
+		}, 1000 * 60 * 1);
 
-			//refresh dashboard every 1 minutes
-			setInterval(function () {
-				renderLatestFeedback();
-				renderLatestUsers();
-				renderTotal();
-			}, 1000 * 60 * 1);
-		} catch (err) {
-			console.log('error');
+		firstLoad = false;
+		// }catch(err){
+		// 	console.log('error:'+err);
+		// }
+
+		function renderUsersChart() {
+			$.ajax({
+				url: hostAdmin + 'getUsersStatistic',
+				data: {},
+				type: 'post',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				beforeSend: function beforeSend() {},
+				success: function success(data) {
+					var ctx = document.getElementById("users-chart").getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'pie',
+						data: {
+							labels: ["Deleted", "Active", "Unactive"],
+							datasets: [{
+								label: '# of Votes',
+								data: [data.deleted, data.active, data.unactive],
+								backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(214, 214, 214, 0.2)'],
+								borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(214, 214, 214, 1)'],
+								borderWidth: 1
+							}]
+						},
+						options: {
+							responsive: true
+						}
+					});
+				},
+				error: function error() {
+					console.log('error occured');
+				}
+			});
+		}
+
+		function renderFeedbackChart() {
+			$.ajax({
+				url: hostAdmin + 'getFeedbackStatistic',
+				data: {},
+				type: 'post',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				beforeSend: function beforeSend() {},
+				success: function success(data) {
+					console.log(data);
+					var ctx = document.getElementById("feedback-chart").getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: data.month,
+							datasets: [{
+								label: 'Total Feedback',
+								data: data.count,
+								backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+								borderColor: ['rgba(54, 162, 235, 1)'],
+								borderWidth: 1
+							}]
+						},
+						options: {
+							responsive: true,
+							tooltips: {
+								mode: 'index',
+								intersect: false
+							},
+							hover: {
+								mode: 'nearest',
+								intersect: true
+							},
+							scales: {
+								xAxes: [{
+									display: true,
+									scaleLabel: {
+										display: true,
+										labelString: 'Month'
+									}
+								}],
+								yAxes: [{
+									display: true,
+									scaleLabel: {
+										display: true,
+										labelString: 'Count'
+									}
+								}]
+							}
+						}
+					});
+				},
+				error: function error() {
+					console.log('error occured');
+				}
+			});
 		}
 
 		function renderTotal() {
@@ -207,7 +307,7 @@ app.web = {
 					headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					},
-					beforeSend: function beforeSend(data) {
+					beforeSend: function beforeSend() {
 						objectDOM.find('.total-result').html('<i class="fa fa-spinner loading"></i>');
 					},
 					success: function success(data) {
@@ -229,9 +329,17 @@ app.web = {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				beforeSend: function beforeSend() {
-					$(".latest-feedback").html('<center><i class="fa fa-spinner loading"></i></center>');
+					if (firstLoad == true) {
+						$(".latest-feedback").html('<center><i class="fa fa-spinner loading"></i></center>');
+					} else {
+						$(".latest-feedback").parent('.box').find('.loader').html('<i class="fa fa-spinner loading"></i>');
+					}
 				},
 				success: function success(data) {
+					if (firstLoad == false) {
+						$(".latest-feedback").parent('.box').find('.loader').html('');
+					}
+
 					try {
 						if (data.length > 0) {
 							$(".latest-feedback").html('');
@@ -266,9 +374,16 @@ app.web = {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				beforeSend: function beforeSend() {
-					$(".latest-users").html('<center><i class="fa fa-spinner loading"></i></center>');
+					if (firstLoad == true) {
+						$(".latest-users").html('<center><i class="fa fa-spinner loading"></i></center>');
+					} else {
+						$(".latest-users").parent('.box').find('.loader').html('<i class="fa fa-spinner loading"></i>');
+					}
 				},
 				success: function success(data) {
+					if (firstLoad == false) {
+						$(".latest-users").parent('.box').find('.loader').html('');
+					}
 					try {
 						if (data.length > 0) {
 							$(".latest-users").html('');

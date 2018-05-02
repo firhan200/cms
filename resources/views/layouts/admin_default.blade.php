@@ -49,6 +49,7 @@
 		<script src="{{ asset('js/preloader.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/popper.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/chartjs/Chart.min.js') }}"></script>
 		<script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
 		<script src="{{ asset('js/config.js') }}"></script>
 		<script src="{{ asset('js/admin-main.js') }}"></script>

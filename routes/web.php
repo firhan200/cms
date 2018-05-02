@@ -60,6 +60,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/getTotal', 'Admin\HomeController@getTotal');
     Route::post('/getLatestFeedback', 'Admin\HomeController@getLatestFeedback');
     Route::post('/getLatestUsers', 'Admin\HomeController@getLatestUsers');
+    Route::post('/getUsersStatistic', 'Admin\HomeController@getUsersStatistic');
+    Route::post('/getFeedbackStatistic', 'Admin\HomeController@getFeedbackStatistic');
 
     /*articles*/
     Route::prefix('article')->group(function(){
