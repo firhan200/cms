@@ -106,7 +106,7 @@ app.web = {
 	},
 	dashboards: function(){
 		var firstLoad = true;
-		//try{
+		try{
 			renderLatestFeedback();
 			renderUsersChart();
 			renderFeedbackChart();
@@ -123,9 +123,9 @@ app.web = {
 			},1000 * 60 * 1);
 
 			firstLoad = false;
-		// }catch(err){
-		// 	console.log('error:'+err);
-		// }
+		}catch(err){
+			console.log('error:'+err);
+		}
 
 		function renderUsersChart(){
 			$.ajax({
@@ -139,31 +139,36 @@ app.web = {
 					
 				},
 				success:function(data){
-					var ctx = document.getElementById("users-chart").getContext('2d');
-					var myChart = new Chart(ctx, {
-						type: 'pie',
-						data: {
-							labels: ["Deleted", "Active", "Unactive"],
-							datasets: [{
-								label: '# of Votes',
-								data: [data.deleted, data.active, data.unactive],
-								backgroundColor: [
-									'rgba(255, 99, 132, 0.2)',
-									'rgba(54, 162, 235, 0.2)',
-									'rgba(214, 214, 214, 0.2)'
-								],
-								borderColor: [
-									'rgba(255,99,132,1)',
-									'rgba(54, 162, 235, 1)',
-									'rgba(214, 214, 214, 1)'
-								],
-								borderWidth: 1
-							}]
-						},
-						options: {
-							responsive: true
-						}
-					});	
+					try{
+						var ctx = document.getElementById("users-chart").getContext('2d');
+						var myChart = new Chart(ctx, {
+							type: 'pie',
+							data: {
+								labels: ["Deleted", "Active", "Unactive"],
+								datasets: [{
+									label: '# of Votes',
+									data: [data.deleted, data.active, data.unactive],
+									backgroundColor: [
+										'rgba(255, 99, 132, 0.2)',
+										'rgba(54, 162, 235, 0.2)',
+										'rgba(214, 214, 214, 0.2)'
+									],
+									borderColor: [
+										'rgba(255,99,132,1)',
+										'rgba(54, 162, 235, 1)',
+										'rgba(214, 214, 214, 1)'
+									],
+									borderWidth: 1
+								}]
+							},
+							options: {
+								responsive: true
+							}
+						});	
+					}
+					catch(err){
+
+					}
 				},
 				error: function(){
 					console.log('error occured');
@@ -183,52 +188,56 @@ app.web = {
 					
 				},
 				success:function(data){
-					console.log(data);
-					var ctx = document.getElementById("feedback-chart").getContext('2d');
-					var myChart = new Chart(ctx, {
-						type: 'line',
-						data: {
-							labels: data.month,
-							datasets: [{
-								label: 'Total Feedback',
-								data: data.count,
-								backgroundColor: [
-									'rgba(54, 162, 235, 0.2)'
-								],
-								borderColor: [
-									'rgba(54, 162, 235, 1)'
-								],
-								borderWidth: 1
-							}]
-						},
-						options: {
-							responsive: true,
-							tooltips: {
-								mode: 'index',
-								intersect: false,
-							},
-							hover: {
-								mode: 'nearest',
-								intersect: true
-							},
-							scales: {
-								xAxes: [{
-									display: true,
-									scaleLabel: {
-										display: true,
-										labelString: 'Month'
-									}
-								}],
-								yAxes: [{
-									display: true,
-									scaleLabel: {
-										display: true,
-										labelString: 'Count'
-									}
+					try{
+						console.log(data);
+						var ctx = document.getElementById("feedback-chart").getContext('2d');
+						var myChart = new Chart(ctx, {
+							type: 'line',
+							data: {
+								labels: data.month,
+								datasets: [{
+									label: 'Total Feedback',
+									data: data.count,
+									backgroundColor: [
+										'rgba(54, 162, 235, 0.2)'
+									],
+									borderColor: [
+										'rgba(54, 162, 235, 1)'
+									],
+									borderWidth: 1
 								}]
+							},
+							options: {
+								responsive: true,
+								tooltips: {
+									mode: 'index',
+									intersect: false,
+								},
+								hover: {
+									mode: 'nearest',
+									intersect: true
+								},
+								scales: {
+									xAxes: [{
+										display: true,
+										scaleLabel: {
+											display: true,
+											labelString: 'Month'
+										}
+									}],
+									yAxes: [{
+										display: true,
+										scaleLabel: {
+											display: true,
+											labelString: 'Count'
+										}
+									}]
+								}
 							}
-						}
-					});	
+						});	
+					}catch(err){
+
+					}				
 				},
 				error: function(){
 					console.log('error occured');
