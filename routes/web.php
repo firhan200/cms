@@ -90,6 +90,19 @@ Route::prefix('admin')->group(function () {
         Route::get('/resetPassword/{id}', 'Admin\UserController@resetPassword');
     });
 
+    /*message*/
+    Route::prefix('message')->group(function(){
+	    Route::get('/truncate', 'Admin\MessageController@truncate');
+        Route::get('/', 'Admin\MessageController@list');
+        Route::get('/add', 'Admin\MessageController@add');
+        Route::post('/addProcess', 'Admin\MessageController@addProcess');
+        Route::get('/{id}', 'Admin\MessageController@detail');
+        Route::get('/edit/{id}', 'Admin\MessageController@edit');
+        Route::post('/editProcess', 'Admin\MessageController@editProcess');
+        Route::get('/delete/{id}/{isDeleted}', 'Admin\MessageController@deleteProcess');
+        Route::get('/deletePermanent/{id}', 'Admin\MessageController@deletePermanentProcess');
+    });
+
     /*contact us*/
     Route::prefix('contact_us')->group(function(){
         Route::get('/truncate', 'Admin\ContactUsController@truncate');

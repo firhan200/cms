@@ -5,7 +5,7 @@
 @section($objectName, 'active')
 
 @section('body')
-<div class="container">
+<div class="container dashboard">
     <div class="row">
         <div class="col-md-12">
             <div class="content-title">Dashboard</div>

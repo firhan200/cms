@@ -268,7 +268,52 @@ body{
 	font-size:10pt;
 	color:#696969;
 }
+.full{
+	width:100% !important;
+}
+
+.horizontal-label{
+	display: flex;
+    align-items: center; /* align vertical */
+}
 /*========= Common class ==========*/
+
+/*======== message ===========*/
+.message-navigation{
+	padding:0px;
+	list-style: none;
+	a{
+		color:#5C5959;
+		text-decoration: none;
+		li{
+			padding:10px;
+		}	
+	}
+
+	.active{
+		li{
+			background-color:#f2f2f2;
+			color:#1c1c1c;
+		}	
+	}
+
+	a:hover, a:active, a:focus{
+		li{
+			background-color:#f2f2f2;
+			color:#1c1c1c;
+		}		
+	}
+}
+
+.select2-container{
+	width:100% !important;
+}
+
+.select2-container--default .select2-selection--multiple{
+	border-radius:0px;
+	border:1px solid #ced4da;
+}
+/*======== message ===========*/
 
 /*======== dashboard ==========*/
 .feedback-container{

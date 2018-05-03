@@ -7,6 +7,7 @@ app.web = {
 		app.web.common();
 		app.web.users();
 		app.web.articles();
+		app.web.messages();
 	},
 	notifications : function(){
 		try{
@@ -105,26 +106,28 @@ app.web = {
 		}
 	},
 	dashboards: function(){
-		var firstLoad = true;
-		try{
-			renderLatestFeedback();
-			renderUsersChart();
-			renderFeedbackChart();
-			renderLatestUsers();
-			renderTotal();
-
-			//refresh dashboard every 1 minutes
-			setInterval(function(){
+		if($(".dashboard")[0]){
+			var firstLoad = true;
+			try{
 				renderLatestFeedback();
 				renderUsersChart();
 				renderFeedbackChart();
 				renderLatestUsers();
 				renderTotal();
-			},1000 * 60 * 1);
 
-			firstLoad = false;
-		}catch(err){
-			console.log('error:'+err);
+				//refresh dashboard every 1 minutes
+				setInterval(function(){
+					renderLatestFeedback();
+					renderUsersChart();
+					renderFeedbackChart();
+					renderLatestUsers();
+					renderTotal();
+				},1000 * 60 * 1);
+
+				firstLoad = false;
+			}catch(err){
+				console.log('error:'+err);
+			}
 		}
 
 		function renderUsersChart(){
@@ -553,6 +556,11 @@ app.web = {
 
 			return tagsResult;
 		}	
+	},
+	messages : function(){
+		if($(".compose-message")[0]){
+			$('.message-to').select2();
+		}
 	}
 }
 

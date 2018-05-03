@@ -6,7 +6,8 @@
 			<a href="{{ url('/admin/home') }}" class="@yield('home')" title="Home"><li><i class="fa fa-home"></i> Home</li></a>
 			<a href="{{ url('/admin/article') }}" class="@yield('article')" title="Articles"><li><i class="fa fa-newspaper-o"></i> Articles</li></a>
 			<a href="{{ url('/admin/user') }}" class="@yield('user')" title="Users"><li><i class="fa fa-users"></i> Users</li></a>
-			<a href="{{ url('/admin/contact_us') }}" class="@yield('contact_us')" title="Contact Us"><li><i class="fa fa-envelope"></i> Contact Us</li></a>
+			<a href="{{ url('/admin/message') }}" class="@yield('message')" title="Messages"><li><i class="fa fa-envelope"></i> Messages</li></a>
+			<a href="{{ url('/admin/contact_us') }}" class="@yield('contact_us')" title="Contact Us"><li><i class="fa fa-comments"></i> Contact Us</li></a>
 			<a href="{{ url('/admin/setting') }}" class="@yield('setting')" title="Settings"><li><i class="fa fa-cogs"></i> Setting</li></a>
 		</ul>
 	</div>

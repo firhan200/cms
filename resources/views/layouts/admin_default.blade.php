@@ -5,9 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta name="csrf-token" content="{{ csrf_token() }}">
 		<title>@yield('title') | CMS</title>
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/preloader.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/fontawesome/css/font-awesome.min.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ asset('css/preloader.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ asset('css/select2/select2.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/admin-main.css') }}">
 	</head>
 
@@ -50,6 +51,7 @@
 		<script type="text/javascript" src="{{ asset('js/bootstrap/popper.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('js/chartjs/Chart.min.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('js/select2/select2.min.js') }}"></script>
 		<script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
 		<script src="{{ asset('js/config.js') }}"></script>
 		<script src="{{ asset('js/admin-main.js') }}"></script>
