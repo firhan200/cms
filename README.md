@@ -1,6 +1,6 @@
 # cms
 
-<img src="https://image.ibb.co/drFTeS/cms.png"></img>
+<img src="https://preview.ibb.co/dfAEtn/cms.png"></img>
 
 Run laravel:
 1. php artisan serve
