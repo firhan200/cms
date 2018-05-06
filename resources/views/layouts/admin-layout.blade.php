@@ -3,7 +3,7 @@
 @section('default_body')
 	<div class="sidenav sidenav-large">			
 		<ul class="menu">
-			<a href="{{ url('/admin/home') }}" class="@yield('home')" title="Home"><li><i class="fa fa-home"></i> Home</li></a>
+			<a href="{{ url('/admin/home') }}" class="@yield('home')" title="Home"><li><i class="fa fa-dashboard"></i> Dashboard</li></a>
 			<a href="{{ url('/admin/article') }}" class="@yield('article')" title="Articles"><li><i class="fa fa-newspaper-o"></i> Articles</li></a>
 			<a href="{{ url('/admin/user') }}" class="@yield('user')" title="Users"><li><i class="fa fa-users"></i> Users</li></a>
 			<a href="{{ url('/admin/message') }}" class="@yield('message')" title="Messages"><li><i class="fa fa-envelope"></i> Messages</li></a>
