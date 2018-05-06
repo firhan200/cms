@@ -43,7 +43,7 @@
                                 <a href="{{ url('admin/'.$objectName.'/?keyword='.$keyword.'&is_deleted='.$is_deleted.'&sort_by=name&order_type='.$order_type) }}">Name</a>
                             </th>
             				<th>
-                                <a href="{{ url('admin/'.$objectName.'/?keyword='.$keyword.'&is_deleted='.$is_deleted.'&sort_by=value&order_type='.$order_type) }}">Value</a>
+                                <a href="{{ url('admin/'.$objectName.'/?keyword='.$keyword.'&is_deleted='.$is_deleted.'&sort_by=email&order_type='.$order_type) }}">E-mail</a>
                             </th>
             				<th>
                                 <a href="{{ url('admin/'.$objectName.'/?keyword='.$keyword.'&is_deleted='.$is_deleted.'&sort_by=created_at&order_type='.$order_type) }}">Created on</a>
@@ -73,7 +73,7 @@
     	        			<tr>
     	        				<td>{{ $counter }}</td>
                                 <td>{{ $obj->name }}</td>
-    	        				<td>{{ $obj->value }}</td>
+    	        				<td>{{ $obj->email }}</td>
                                 <td>{{ date("d-m-Y, H:i", strtotime($obj->created_at)) }}</td>
     	        				<td>{{ date("d-m-Y, H:i", strtotime($obj->updated_at)) }}</td>
     	        				@if($is_deleted==0)

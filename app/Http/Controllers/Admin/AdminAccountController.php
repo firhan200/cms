@@ -11,7 +11,7 @@ use Redirect;
 views in resources/views/admin/crud
 */
 
-class MessageController extends BaseController
+class AdminAccountController extends BaseController
 {
     protected $model;
     protected $data;
@@ -20,9 +20,12 @@ class MessageController extends BaseController
     	//authorize
         $this->middleware('cms_auth');
 
+        //only super admin is allowed
+        $this->middleware('cms_super');
+
         //init model
-        $this->model = new \App\Models\Message;
-        $this->data['title'] = "Message";
+        $this->model = new \App\Models\Admin;
+        $this->data['title'] = "Admin Account";
         
         //set pagination
         $paginate = $this->__getSettingValueByName('pagination');
@@ -37,7 +40,7 @@ class MessageController extends BaseController
         $this->data['paginate'] = $paginate;
 
         /* folder in views & routes name */
-        $this->data['objectName'] = 'message';
+        $this->data['objectName'] = 'admin_account';
     }
 
     public function list(Request $request){
@@ -84,8 +87,10 @@ class MessageController extends BaseController
             where('is_deleted', $this->data['is_deleted'])->
             where(function($query){
                 $query->
-                where('subject', 'LIKE', "%".$this->data['keyword']."%");
+                where('name', 'LIKE', "%".$this->data['keyword']."%")->
+                orWhere('email', 'LIKE', "%".$this->data['keyword']."%");
             })->
+            where('id', '!=', $this->data['adminInfo']['id'])->
             orderBy($this->data['sort_by'], $this->data['order_type'])->
             paginate($this->data['paginate']);
 
@@ -104,29 +109,37 @@ class MessageController extends BaseController
 
     public function add(){
         $this->data['adminInfo'] = $this->__getUserInfo();
-
-        //get all user admin
-        $admin = new \App\Models\Admin;
-        $this->data['to'] = $admin::where('id', '!=', $this->data['adminInfo']['id'])->
-                            where('is_active', 1)->
-                            where('is_deleted', 0)->
-                            get();
-
+        $this->data['obj']['name'] = '';
+        $this->data['obj']['email'] = '';
         return view('admin/'.$this->data['objectName'].'/add', $this->data);
     }
 
     public function addProcess(Request $request){
-        //process data
-        $is_active = $request->input('is_active')=="on" ? 1 : 0;
+        $this->data['adminInfo'] = $this->__getUserInfo();
 
-        //insert data to model
-        $this->model->name = $request->input('name');
-        $this->model->value = $request->input('value');
-        $this->model->is_active = $is_active;
-        $this->model->is_deleted = 0;
+        $this->data['obj']['name'] = $request->input('name');
+        $this->data['obj']['email'] = $request->input('email');
 
-        //save model
-        $this->model->save();
+        $checkObj = $this->model->where('email', $request->input('email'))->count();
+        if($checkObj > 0){
+            Session::flash('message', "<div class='alert alert-warning'>Email already taken <b>".$request->input('email')."</b></div>");
+            //already taken
+            return view('admin/'.$this->data['objectName'].'/add', $this->data);
+        }else{
+            //process data
+            $is_active = $request->input('is_active')=="on" ? 1 : 0;
+
+            //insert data to model
+            $this->model->name = $request->input('name');
+            $this->model->email = $request->input('email');
+            $this->model->password = sha1($request->input('password'));
+            $this->model->type = 0;
+            $this->model->is_active = $is_active;
+            $this->model->is_deleted = 0;
+
+            //save model
+            $this->model->save();
+        }
 
         //trigger flash message
         Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully insert ".$this->model->name."</div>");
@@ -149,6 +162,10 @@ class MessageController extends BaseController
 
     public function edit($id){
         $this->data['adminInfo'] = $this->__getUserInfo();
+        $this->data['user_default_password'] = $this->__getSettingValueByName('user_default_password');
+        if($this->data['user_default_password']==null){
+            $this->data['user_default_password'] = "123456";
+        }
 
         //validating data
         $this->data['obj'] = $this->model->where('id', $id)->first();
@@ -172,7 +189,6 @@ class MessageController extends BaseController
         $is_active = $request->input('is_active')=="on" ? 1 : 0;
         //insert data to model
         $obj->name = $request->input('name');
-        $obj->value = $request->input('value');
         $obj->is_active = $is_active;
 
         //save model
@@ -238,5 +254,27 @@ class MessageController extends BaseController
         Session::flash('message', $message);
 
         return Redirect::back();
+    }
+
+    public function resetPassword($id){
+        //check if user exist
+        $user = $this->model->where('id', $id)->first();
+        if($user!=null){
+            //get default password
+            $user_default_password = $this->__getSettingValueByName('user_default_password');
+            if($user_default_password==null){
+                $user_default_password = "123456";
+            }
+
+            //update user password
+            $user->password = sha1($user_default_password);
+            $user->save();
+
+            Session::flash('message', "<div class='alert alert-primary'>Password has been reset to ".$user_default_password."</div>");
+            return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$user->id);
+        }else{
+            Session::flash('message', "<div class='alert alert-danger'>user did not exist!");
+            return Redirect('/admin/'.$this->data['objectName']);
+        }
     }
 }

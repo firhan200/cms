@@ -19,8 +19,9 @@
                         <div class="col-1 col-sm-1 horizontal-label">To:</div>
                         <div class="col-11 col-sm-11">
                             <select class="form-control message-to" placeholder="To" name="states[]" multiple="multiple">
-                                <option value="AL">Alabama</option>
-                                <option value="WY">Wyoming</option>
+                                @foreach($to as $user)
+                                <option value="{{ $user->id }}">{{ $user->email }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

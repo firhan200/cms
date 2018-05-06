@@ -21,6 +21,7 @@ class CreateAdminTable extends Migration
             $table->string('api_token')->nullable();
             $table->string('reset_password_token')->nullable();
             $table->dateTime('reset_password_sent')->nullable();
+            $table->integer('type');
             $table->boolean('is_active');
             $table->boolean('is_deleted');
             $table->timestamps();
@@ -36,6 +37,22 @@ class CreateAdminTable extends Migration
                 'reset_password_token' => '',
                 'is_active' => 1,
                 'is_deleted' => 0,
+                'type' => 1 /*super admin*/,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
+            )
+        );
+
+        DB::table('admin')->insert(
+            array(
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => sha1('123456'),
+                'api_token' => '',
+                'reset_password_token' => '',
+                'is_active' => 1,
+                'is_deleted' => 0,
+                'type' => 0 /*admin*/,
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
             )

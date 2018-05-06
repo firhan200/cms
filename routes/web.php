@@ -112,6 +112,20 @@ Route::prefix('admin')->group(function () {
         Route::get('/deletePermanent/{id}', 'Admin\ContactUsController@deletePermanentProcess');
     });
 
+    /*admin account*/
+    Route::prefix('admin_account')->group(function(){
+	    Route::get('/truncate', 'Admin\AdminAccountController@truncate');
+        Route::get('/', 'Admin\AdminAccountController@list');
+        Route::get('/add', 'Admin\AdminAccountController@add');
+        Route::post('/addProcess', 'Admin\AdminAccountController@addProcess');
+        Route::get('/{id}', 'Admin\AdminAccountController@detail');
+        Route::get('/edit/{id}', 'Admin\AdminAccountController@edit');
+        Route::post('/editProcess', 'Admin\AdminAccountController@editProcess');
+        Route::get('/delete/{id}/{isDeleted}', 'Admin\AdminAccountController@deleteProcess');
+        Route::get('/deletePermanent/{id}', 'Admin\AdminAccountController@deletePermanentProcess');
+        Route::get('/resetPassword/{id}', 'Admin\AdminAccountController@resetPassword');
+    });
+
     /*setting*/
     Route::prefix('setting')->group(function(){
 	    Route::get('/truncate', 'Admin\SettingController@truncate');

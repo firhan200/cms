@@ -12,7 +12,8 @@ class BaseController extends Controller
     public function __getUserInfo(){
     	$admin = array(
     		'id'=>Session::get('cms_admin_id'),
-    		'name'=>Session::get('cms_admin_name')
+    		'name'=>Session::get('cms_admin_name'),
+    		'type'=>Session::get('cms_admin_type')
     	);
     	return $admin;
     }
@@ -38,10 +39,10 @@ class BaseController extends Controller
         if($request->input('oldValue')!=null){
             //edit
             $oldValue = $request->input('oldValue');
-            $obj = DB::table($tableName)->where($field, $value)->where($field, '!=', $oldValue)->where('is_deleted', 0)->count();
+            $obj = DB::table($tableName)->where($field, $value)->where($field, '!=', $oldValue)->count();
         }else{
             //add
-            $obj = DB::table($tableName)->where($field, $value)->where('is_deleted', 0)->count();
+            $obj = DB::table($tableName)->where($field, $value)->count();
         }
 
         try{

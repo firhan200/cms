@@ -8,6 +8,9 @@
 			<a href="{{ url('/admin/user') }}" class="@yield('user')" title="Users"><li><i class="fa fa-users"></i> Users</li></a>
 			<a href="{{ url('/admin/message') }}" class="@yield('message')" title="Messages"><li><i class="fa fa-envelope"></i> Messages</li></a>
 			<a href="{{ url('/admin/contact_us') }}" class="@yield('contact_us')" title="Contact Us"><li><i class="fa fa-comments"></i> Contact Us</li></a>
+			@if(Session::get('cms_admin_type')==1)
+			<a href="{{ url('/admin/admin_account') }}" class="@yield('admin_account')" title="Admin account"><li><i class="fa fa-user-circle"></i> Admin</li></a>
+			@endif
 			<a href="{{ url('/admin/setting') }}" class="@yield('setting')" title="Settings"><li><i class="fa fa-cogs"></i> Setting</li></a>
 		</ul>
 	</div>

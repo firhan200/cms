@@ -438,7 +438,6 @@ app.web = {
 					feedbackField.text('please wait...');
 				},
 				success:function(data){
-					console.log(data);
 					if(data.found==true){
 						feedbackField.html('<div class="error">Email already taken!</div>');
 					}else{
@@ -469,7 +468,6 @@ app.web = {
 					feedbackField.text('please wait...');
 				},
 				success:function(data){
-					console.log(data);
 					if(data.found==true){
 						feedbackField.html('<div class="error">Email already taken!</div>');
 					}else{

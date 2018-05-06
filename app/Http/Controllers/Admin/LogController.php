@@ -32,11 +32,17 @@ class LogController extends BaseController
     	$adminObj = $this->admin::where('email' , $email)->first();
     	if($adminObj!=null){
             if($adminObj->password==$password){
-                //set session
-                Session::put('cms_admin_id', $adminObj->id);
-                Session::put('cms_admin_name', $adminObj->name);
+                //check if active
+                if($adminObj->is_active){
+                    //set session
+                    Session::put('cms_admin_id', $adminObj->id);
+                    Session::put('cms_admin_name', $adminObj->name);
+                    Session::put('cms_admin_type', $adminObj->type);
 
-                return Redirect('admin/home');
+                    return Redirect('admin/home');
+                }else{
+                    Session::flash('message', "<div class='alert alert-warning'>Your account is not active yet!</div>");
+                }            
             }else{
                 //password incorrect
                 Session::flash('message', "<div class='alert alert-danger'>Incorrect password!</div>");
@@ -46,8 +52,6 @@ class LogController extends BaseController
             //account not found
             Session::flash('message', "<div class='alert alert-warning'>Account not found!</div>");
         }
-
-        
 
     	return view('admin/login');
     }
