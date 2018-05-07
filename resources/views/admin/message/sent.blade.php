@@ -8,10 +8,10 @@
 <div class="container">
 <div class="content-title">{{ $contentTitle }}</div>  
     <div class="row">
-		<div class="col-sm-12 col-md-12 col-lg-3">
-			@include('admin.message.navigation', ['objectName' => $objectName, 'on' => 'inbox'])
+		<div class="col-sm-12 col-md-3 col-lg-3">
+			@include('admin.message.navigation', ['objectName' => $objectName, 'on' => 'sent'])
 		</div>
-		<div class="col-md-12 col-md-12 col-lg-9">	
+		<div class="col-md-12 col-md-9 col-lg-9">	
             <div class="box">
             	<div class="row">
 					<div class="col-md-3 offset-md-3" align="right">
@@ -52,8 +52,8 @@
                             //utc date to local
                             $dateInLocal = date("Y-m-d H:i:s", strtotime($obj->created_at));
                             ?>
-    	        			<tr class="<?php echo ($obj->is_read==0 ? 'unread':'read' ); ?>">
-                                <td width="20%">{{ $obj->admin->email }}</td>
+    	        			<tr>
+                            <td width="20%">To: {{ $obj->message_receivers }}</td>
     	        				<td>
 									<?php
 										$max = 50;
@@ -76,7 +76,7 @@
 										}
 									?>
 									<b>{{ $date }}</b>
-								</td>    	        				
+								</td> 
     	        			</tr>
     	        			<?php $counter++; ?>
     	        			@endforeach

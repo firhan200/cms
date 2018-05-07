@@ -16,6 +16,7 @@ class CreateMessageTable extends Migration
         Schema::create('message', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admin_id');
+            $table->string('message_receivers');
             $table->string('subject', 150);
             $table->text('body');
             $table->boolean('is_active');

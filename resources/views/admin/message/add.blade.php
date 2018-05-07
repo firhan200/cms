@@ -18,16 +18,16 @@
                     <div class="row">
                         <div class="col-1 col-sm-1 horizontal-label">To:</div>
                         <div class="col-11 col-sm-11">
-                            <select class="form-control message-to" placeholder="To" name="states[]" multiple="multiple">
+                            <select class="form-control message-to" placeholder="To" name="user_ids[]" multiple="multiple">
                                 @foreach($to as $user)
-                                <option value="{{ $user->id }}">{{ $user->email }}</option>
+                                <option value="{{ $user->id.':on:'.$user->name }}">{{ $user->name.' ('.$user->email.')' }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="value" class="form-control" placeholder="Subject" maxlength="150" required>
+                    <input type="text" name="subject" class="form-control" placeholder="Subject" maxlength="150" required>
                 </div>
                 <div class="form-group">
                     <textarea name="body" rows="5" class="form-control ckeditor" placeholder="Message" maxlength="2000" required></textarea>

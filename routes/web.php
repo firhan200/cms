@@ -94,6 +94,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('message')->group(function(){
 	    Route::get('/truncate', 'Admin\MessageController@truncate');
         Route::get('/', 'Admin\MessageController@list');
+        Route::get('/sent', 'Admin\MessageController@sent');
         Route::get('/add', 'Admin\MessageController@add');
         Route::post('/addProcess', 'Admin\MessageController@addProcess');
         Route::get('/{id}', 'Admin\MessageController@detail');

@@ -17,6 +17,7 @@ class CreateMessageReceiverTable extends Migration
             $table->increments('id');
             $table->integer('message_id');
             $table->integer('user_id');
+            $table->boolean('is_read');
             $table->timestamps();
         });
     }

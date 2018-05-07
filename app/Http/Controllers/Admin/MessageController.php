@@ -40,6 +40,7 @@ class MessageController extends BaseController
         $this->data['objectName'] = 'message';
     }
 
+    //inbox
     public function list(Request $request){
         $this->data['adminInfo'] = $this->__getUserInfo();
         $this->data['counter'] = 1;
@@ -86,7 +87,9 @@ class MessageController extends BaseController
                 $query->
                 where('subject', 'LIKE', "%".$this->data['keyword']."%");
             })->
-            orderBy($this->data['sort_by'], $this->data['order_type'])->
+            join('message_receiver', 'message.id', '=', 'message_receiver.message_id')->
+            where('message_receiver.user_id', $this->data['adminInfo']['id'])->
+            orderBy('message.'.$this->data['sort_by'], $this->data['order_type'])->
             paginate($this->data['paginate']);
 
         //append query string to laravel pagination
@@ -100,6 +103,69 @@ class MessageController extends BaseController
         }
 
         return view('admin/'.$this->data['objectName'].'/list', $this->data);
+    }
+
+    public function sent(Request $request){
+        $this->data['adminInfo'] = $this->__getUserInfo();
+        $this->data['counter'] = 1;
+        $this->data['keyword'] = "";
+        $this->data['is_deleted'] = 0;
+        $this->data['sort_by'] = 'id';
+        $this->data['order_type'] = 'desc';
+        $this->data['contentTitle'] = $this->data['title'];
+        //local var
+        $order_type = 'desc';
+
+        //set counter
+        if($request->query('page')!=null){
+            $this->data['counter'] = ($request->query('page')*$this->data['paginate'])-($this->data['paginate'] - 1);
+        }   
+
+        //get & set query string
+        if($request->query('keyword')!=null){
+            $this->data['keyword'] = $request->query('keyword');
+        }
+        if($request->query('is_deleted')!=null){     
+            $this->data['is_deleted'] = $request->query('is_deleted');
+            if($this->data['is_deleted']==1){
+                $this->data['contentTitle'] = "Deleted ".$this->data['title'];
+            }
+        }
+        if($request->query('sort_by')!=null){
+            $this->data['sort_by'] = $request->query('sort_by');
+        }
+        if($request->query('order_type')!=null){
+            $this->data['order_type'] = $request->query('order_type');
+        }
+        $querystringArray = [
+            'keyword' => $this->data['keyword'], 
+            'is_deleted' => $this->data['is_deleted'],
+            'sort_by' => $this->data['sort_by'],
+            'order_type' => $this->data['order_type']
+        ];
+        
+        //procedure query
+        $this->data['objList'] = $this->model->
+            where('is_deleted', $this->data['is_deleted'])->
+            where(function($query){
+                $query->
+                where('subject', 'LIKE', "%".$this->data['keyword']."%");
+            })->
+            where('admin_id', $this->data['adminInfo']['id'])->
+            orderBy($this->data['sort_by'], $this->data['order_type'])->
+            paginate($this->data['paginate']);
+
+        //append query string to laravel pagination
+        $this->data['objList']->appends($querystringArray);
+
+        //var send to view
+        if($this->data['order_type']=="desc"){
+            $this->data['order_type'] = "asc";
+        }else{
+            $this->data['order_type'] = "desc";
+        }
+
+        return view('admin/'.$this->data['objectName'].'/sent', $this->data);
     }
 
     public function add(){
@@ -116,17 +182,43 @@ class MessageController extends BaseController
     }
 
     public function addProcess(Request $request){
-        //process data
-        $is_active = $request->input('is_active')=="on" ? 1 : 0;
+        $this->data['adminInfo'] = $this->__getUserInfo();
 
-        //insert data to model
-        $this->model->name = $request->input('name');
-        $this->model->value = $request->input('value');
-        $this->model->is_active = $is_active;
+        $user_ids = $request->input('user_ids');
+
+        //get message receiver email
+        $receivers = "";
+        foreach($user_ids as $user_id){
+            $user_id_array = explode(":on:", $user_id);
+            if($receivers==""){
+                $receivers = $user_id_array[1];
+            }else{
+                $receivers = $receivers." , ".$user_id_array[1];
+            }  
+        }
+
+        //insert message
+        $this->model->admin_id = $this->data['adminInfo']['id'];
+        $this->model->subject = $request->input('subject');
+        $this->model->body = $request->input('body');
+        $this->model->message_receivers = $receivers;
+        $this->model->is_active = 1;
         $this->model->is_deleted = 0;
 
-        //save model
+        //save message
         $this->model->save();
+
+        $message_id = $this->model->id;
+
+        //insert message receiver
+        foreach($user_ids as $user_id){
+            $user_id_array = explode(":on:", $user_id);
+            $message_receiver = new \App\Models\Message_Receiver;
+            $message_receiver->message_id = $message_id;
+            $message_receiver->user_id = $user_id_array[0];
+            $message_receiver->is_read = 0;
+            $message_receiver->save();
+        }  
 
         //trigger flash message
         Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully insert ".$this->model->name."</div>");

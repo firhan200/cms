@@ -398,7 +398,7 @@ app.web = {
 		CKEDITOR.replaceClass = 'ckeditor';
 
 		$(".disable-form").submit(function(){
-			var confirm = window.confirm('Save data?', 'Yes', 'Abort');
+			var confirm = window.confirm('Submit?', 'Yes', 'Abort');
 			if(confirm){
 				$(this).find('.btn-submit').text("Please wait...");
 				$(this).find('.btn-submit').prop('disabled', true);
