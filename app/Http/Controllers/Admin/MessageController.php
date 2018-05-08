@@ -231,34 +231,45 @@ class MessageController extends BaseController
     public function detail($message_id){
         $this->data['adminInfo'] = $this->__getUserInfo();
 
-        $message_receiver = new \App\Models\Message_Receiver;
-
-        //check if from inbox / sent
-        $message_receiver_obj = $message_receiver::where('message_id', $message_id)->where('user_id', $this->data['adminInfo']['id'])->first();
-        if($message_receiver_obj!=null){
-            //make message is read
-            $message_receiver_obj->is_read = 1;
-            $message_receiver_obj->save();   
-        }
-        
         //validating data
-        $this->data['messages'] = $this->model->
-                where(function ($query) use ($message_id){
-                    $query->
-                    where('message.id', $message_id)->
-                    orWhere('message.message_parent_id', $message_id);
-                })->
-                join('admin', 'admin.id', 'message.admin_id')->
-                select('*', 'message.created_at as message_date')->
-                get();
+        $message = $this->model->where('id', $message_id)->first();
+        if($message!=null){
+            $message_receiver = new \App\Models\Message_Receiver;
 
-        if($this->data['messages']==null){
-        //not found
-        return Redirect('/admin/'.$this->data['objectName']);
-        }
+            //check if from inbox / sent
+            $message_receiver_obj = $message_receiver::where('message_id', $message_id)->where('user_id', $this->data['adminInfo']['id'])->first();
+            if($message_receiver_obj!=null){
+                //make message is read
+                $message_receiver_obj->is_read = 1;
+                $message_receiver_obj->save();   
+            } 
 
-        $this->data['message_id'] = $message_id;
-        return view('admin/'.$this->data['objectName'].'/detail', $this->data);
+            //check if child or parent
+            if($message->message_parent_id!=null){
+                $message_id = $message->message_parent_id;
+            }
+
+            $this->data['messages'] = $this->model->
+                    where(function ($query) use ($message_id){
+                        $query->
+                        where('message.id', $message_id)->
+                        orWhere('message.message_parent_id', $message_id);
+                    })->
+                    join('admin', 'admin.id', 'message.admin_id')->
+                    select('*', 'message.created_at as message_date')->
+                    orderBy('message.id', 'asc')->
+                    get();
+
+            if($this->data['messages']==null){
+            //not found
+            return Redirect('/admin/'.$this->data['objectName']);
+            }
+
+            $this->data['message_id'] = $message_id;
+            return view('admin/'.$this->data['objectName'].'/detail', $this->data);
+        }else{
+            return Redirect('/admin/'.$this->data['objectName']);
+        }   
     }
 
     public function reply($message_id, Request $request){
@@ -288,11 +299,14 @@ class MessageController extends BaseController
         $inserted_message_id = $message->id;
 
         //insert message receiver
-        $message_receiver_obj = new \App\Models\Message_Receiver;
-        $message_receiver_obj->message_id = $inserted_message_id;
-        $message_receiver_obj->user_id = $checkMessage->admin_id;
-        $message_receiver_obj->is_read = 0;
-        $message_receiver_obj->save();
+        //check if replier is original sender / not
+        if($checkMessage->admin_id!=$this->data['adminInfo']['id']){
+            $message_receiver_obj = new \App\Models\Message_Receiver;
+            $message_receiver_obj->message_id = $inserted_message_id;
+            $message_receiver_obj->user_id = $checkMessage->admin_id;
+            $message_receiver_obj->is_read = 0;
+            $message_receiver_obj->save();
+        }   
 
         $message_receiver = new \App\Models\Message_Receiver;
         $receivers = $message_receiver::where('message_id', $message_id)->where('user_id', '!=', $this->data['adminInfo']['id'])->get();

@@ -51,8 +51,9 @@
                             <?php
                             //utc date to local
 							$dateInLocal = date("Y-m-d H:i:s", strtotime($obj->created_at));
-							$message_id = ($obj->message_parent_id!=null ? $obj->message_parent_id : $obj->message_id); 
-                            ?>
+							//$message_id = ($obj->message_parent_id!=null ? $obj->message_parent_id : $obj->message_id); 
+							$message_id = $obj->message_id;
+							?>
     	        			<tr class="message-row <?php echo ($obj->is_read==0 ? 'unread':'read' ); ?>" data-href="{{ url('/admin/message/'.$message_id) }}">
                                 <td width="20%">{{ $obj->admin->email }}</td>
     	        				<td>

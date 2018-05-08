@@ -25,7 +25,15 @@
 		  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    	<ul class="navbar-nav ml-auto">
 		    		<li class="nav-item"><a href="#" class="nav-link toggle-sidebar"><i class="fa fa-chevron-left"></i></a></li>
-		      		<li class="nav-item dropdown">
+					<li class="nav-item dropdown messages-container">
+		        		<a class="nav-link dropdown-toggle notification-head" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          			<i class="fa fa-envelope-open notifications-bell"></i> <span style="display:none" class="badge notifications-count">0</span><span class="fa fa-spinner loading"></span></a>
+		        		</a>
+		        		<div class="dropdown-menu dropdown-menu-right dropdown-notifications big-dropdown" aria-labelledby="navbarDropdown">
+		          			<a class="dropdown-item notification-content-loading" style="display:none" href="#"><center><i class="fa fa-spinner loading"></i></center></a>
+		        		</div>
+		      		</li>
+					<li class="nav-item dropdown notifications-container">
 		        		<a class="nav-link dropdown-toggle notification-head" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		          			<i class="fa fa-bell notifications-bell"></i> <span style="display:none" class="badge notifications-count">0</span><span class="fa fa-spinner loading"></span></a>
 		        		</a>

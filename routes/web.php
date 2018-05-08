@@ -51,8 +51,10 @@ Route::prefix('admin')->group(function () {
 
     Route::post('/login', 'Admin\LogController@loginProcess');
     Route::post('/checkUnique', 'Admin\BaseController@__checkUnique');
+    Route::post('/checkMessages', 'Admin\NotificationController@checkMessages');
     Route::post('/checkNotifications', 'Admin\NotificationController@checkNotifications');
     Route::post('/getNotifications', 'Admin\NotificationController@getNotifications');
+    Route::post('/getMessages', 'Admin\NotificationController@getMessages');
     Route::post('/truncateNotifications', 'Admin\NotificationController@truncate');
     Route::post('/changePasswordProcess', 'Admin\ProfileController@changePasswordProcess');
 

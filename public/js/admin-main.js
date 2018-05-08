@@ -90,6 +90,7 @@ app.web = {
 	notifications: function notifications() {
 		try {
 			notificationsCheck();
+			messagesCheck();
 
 			setInterval(function () {
 				//check notification every 1 minute
@@ -99,69 +100,109 @@ app.web = {
 			console.log('error');
 		}
 
+		function messagesCheck() {
+			genericNotificationCheck($(".messages-container"), hostAdmin + 'checkMessages');
+		}
 		function notificationsCheck() {
+			genericNotificationCheck($(".notifications-container"), hostAdmin + 'checkNotifications');
+		}
+
+		function genericNotificationCheck(parentDOMObject, url) {
+			var thisObj = parentDOMObject;
 			$.ajax({
-				url: hostAdmin + 'checkNotifications',
+				url: url,
 				data: {},
 				type: 'post',
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				beforeSend: function beforeSend() {
-					$(".notifications-count").hide();
-					$(".notification-head").find('.loading').show();
-					$(".notifications-bell").removeClass('.active');
+					thisObj.find(".notifications-count").hide();
+					thisObj.find(".notification-head").find('.loading').show();
+					thisObj.find(".notifications-bell").removeClass('.active');
 				},
 				success: function success(data) {
-					$(".notification-head").find('.loading').hide();
+					thisObj.find(".notification-head").find('.loading').hide();
 					if (data.total > 0) {
-						$(".notifications-bell").addClass('active');
-						$(".notifications-count").text(data.total);
-						$(".notifications-count").fadeIn();
+						thisObj.find(".notifications-bell").addClass('active');
+						thisObj.find(".notifications-count").text(data.total);
+						thisObj.find(".notifications-count").fadeIn();
 					} else {
-						$(".notifications-bell").removeClass('.active');
-						$(".notifications-count").hide();
+						thisObj.find(".notifications-bell").removeClass('.active');
+						thisObj.find(".notifications-count").hide();
 					}
 				},
 				error: function error() {
 					console.log('error');
 				}
 			});
-
-			$(".notification-head").click(function () {
-				if (!$(".dropdown-notifications").hasClass('show')) {
-					$.ajax({
-						url: hostAdmin + 'getNotifications',
-						data: {},
-						type: 'post',
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						},
-						beforeSend: function beforeSend() {
-							$(".notification-content-loading").show();
-						},
-						success: function success(data) {
-							$(".notification-content-loading").hide();
-							if (data.notifications.length > 0) {
-								$(".dropdown-notifications").html('');
-								$.each(data.notifications, function (key, notification) {
-									$(".dropdown-notifications").append('<a class="dropdown-item" href="' + notification.link + '">' + notification.action + ' <b>' + notification.object + '</b></a>');
-								});
-								setTimeout(function () {
-									//truncate notification after wait for 1 sec
-									truncateNotifications();
-								}, 1000);
-							} else {
-								$(".dropdown-notifications").html('<center class="help">no notifications</center>');
-							}
-						},
-						error: function error() {
-							console.log('error');
-						}
-					});
-				}
-			});
 		}
+
+		$(".notifications-container").find(".notification-head").click(function () {
+			if (!$(".dropdown-notifications").hasClass('show')) {
+				$.ajax({
+					url: hostAdmin + 'getNotifications',
+					data: {},
+					type: 'post',
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					beforeSend: function beforeSend() {
+						$(".notifications-container").find(".notification-content-loading").show();
+					},
+					success: function success(data) {
+						$(".notifications-container").find(".notification-content-loading").hide();
+						if (data.notifications.length > 0) {
+							$(".notifications-container").find(".dropdown-notifications").html('');
+							$.each(data.notifications, function (key, notification) {
+								$(".notifications-container").find(".dropdown-notifications").append('<a class="dropdown-item" href="' + notification.link + '">' + notification.action + ' <b>' + notification.object + '</b></a>');
+							});
+							setTimeout(function () {
+								//truncate notification after wait for 1 sec
+								truncateNotifications();
+							}, 1000);
+						} else {
+							$(".notifications-container").find(".dropdown-notifications").html('<center class="help">no notifications</center>');
+						}
+					},
+					error: function error() {
+						console.log('error');
+					}
+				});
+			}
+		});
+
+		$(".messages-container").find(".notification-head").click(function () {
+			if (!$(".dropdown-notifications").hasClass('show')) {
+				$.ajax({
+					url: hostAdmin + 'getMessages',
+					data: {},
+					type: 'post',
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					beforeSend: function beforeSend() {
+						$(".messages-container").find(".notification-content-loading").show();
+					},
+					success: function success(data) {
+						console.log(data);
+						$(".messages-container").find(".notification-content-loading").hide();
+						if (data.messages.length > 0) {
+							$(".messages-container").find(".dropdown-notifications").html('');
+							$.each(data.messages, function (key, message) {
+								var messageBody = message.message.length > 50 ? escapeHTML(message.message.substring(0, 50)) + "..." : escapeHTML(message.message);
+								$(".messages-container").find(".dropdown-notifications").append('<a class="dropdown-item" href="' + message.link + '"><i class="fa fa-user-circle-o"></i> ' + escapeHTML(message.name) + '<div>' + message.subject + '</div>' + '<div style="color:#696969">' + messageBody + '</div><div style="font-size:8pt;" align="right">' + message.date + '</div></a>');
+							});
+						} else {
+							$(".messages-container").find(".dropdown-notifications").html('<center class="help">no notifications</center>');
+						}
+					},
+					error: function error() {
+						console.log('error');
+					}
+				});
+			}
+		});
 
 		//delete all notification
 		function truncateNotifications() {
@@ -253,7 +294,6 @@ app.web = {
 				beforeSend: function beforeSend() {},
 				success: function success(data) {
 					try {
-						console.log(data);
 						var ctx = document.getElementById("feedback-chart").getContext('2d');
 						var myChart = new Chart(ctx, {
 							type: 'line',

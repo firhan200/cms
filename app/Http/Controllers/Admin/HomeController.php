@@ -62,23 +62,27 @@ class HomeController extends BaseController
         $month = $this->getMonthNameByNumber();
         $response = ['month' => ['January', 'February', 'March'], 'count' => [0,0,0]];
 
-        $contactUs = new \App\Models\ContactUs;
+        try{
+            $contactUs = new \App\Models\ContactUs;
 
-        $latestMonth = $contactUs->orderBy('created_at', 'desc')->first()->created_at->month;
-        $latestYear = $contactUs->orderBy('created_at', 'desc')->first()->created_at->year;
+            $latestMonth = $contactUs->orderBy('created_at', 'desc')->first()->created_at->month;
+            $latestYear = $contactUs->orderBy('created_at', 'desc')->first()->created_at->year;
 
-        $month0 = ($latestMonth-2 < 1 ? 12-abs(($latestMonth-2)) : $latestMonth-2);
-        $month1 = ($latestMonth-1 < 1 ? 12-abs(($latestMonth-1)) : $latestMonth-1);
-        $year0 = ($latestMonth-2 < 1 ? $latestYear-1 : $latestYear);
-        $year1 = ($latestMonth-1 < 1 ? $latestYear-1 : $latestYear);
+            $month0 = ($latestMonth-2 < 1 ? 12-abs(($latestMonth-2)) : $latestMonth-2);
+            $month1 = ($latestMonth-1 < 1 ? 12-abs(($latestMonth-1)) : $latestMonth-1);
+            $year0 = ($latestMonth-2 < 1 ? $latestYear-1 : $latestYear);
+            $year1 = ($latestMonth-1 < 1 ? $latestYear-1 : $latestYear);
 
-        $response['month'][0] = ($latestMonth-2 < 1 ? $month[$month0]." ".($latestYear-1) : ($month[$month0])." ".$latestYear);
-        $response['month'][1] = ($latestMonth-1 < 1 ? $month[$month1]." ".($latestYear-1) : ($month[$month1])." ".$latestYear);
-        $response['month'][2] = $month[$latestMonth]." ".$latestYear;
+            $response['month'][0] = ($latestMonth-2 < 1 ? $month[$month0]." ".($latestYear-1) : ($month[$month0])." ".$latestYear);
+            $response['month'][1] = ($latestMonth-1 < 1 ? $month[$month1]." ".($latestYear-1) : ($month[$month1])." ".$latestYear);
+            $response['month'][2] = $month[$latestMonth]." ".$latestYear;
 
-        $response['count'][0] = $contactUs->where('created_at', 'LIKE', '%'.$year0.'-'.str_pad($month0, 2, '0', STR_PAD_LEFT).'%')->where('is_deleted', 0)->count();
-        $response['count'][1] = $contactUs->where('created_at', 'LIKE', '%'.$year1.'-'.str_pad($month1, 2, '0', STR_PAD_LEFT).'%')->where('is_deleted', 0)->count();
-        $response['count'][2] = $contactUs->where('created_at', 'LIKE', '%'.$latestYear.'-'.str_pad($latestMonth, 2, '0', STR_PAD_LEFT).'-%')->where('is_deleted', 0)->count();
+            $response['count'][0] = $contactUs->where('created_at', 'LIKE', '%'.$year0.'-'.str_pad($month0, 2, '0', STR_PAD_LEFT).'%')->where('is_deleted', 0)->count();
+            $response['count'][1] = $contactUs->where('created_at', 'LIKE', '%'.$year1.'-'.str_pad($month1, 2, '0', STR_PAD_LEFT).'%')->where('is_deleted', 0)->count();
+            $response['count'][2] = $contactUs->where('created_at', 'LIKE', '%'.$latestYear.'-'.str_pad($latestMonth, 2, '0', STR_PAD_LEFT).'-%')->where('is_deleted', 0)->count();
+        }catch(\Exception $err){
+
+        }      
 
         return response()->json($response);
     }

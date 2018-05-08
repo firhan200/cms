@@ -348,6 +348,10 @@ body {
   /* align vertical */
 }
 
+.big-dropdown {
+  width: 400px;
+}
+
 /*========= Common class ==========*/
 
 /*======== message ===========*/

@@ -30,7 +30,7 @@
                     <input type="text" name="subject" class="form-control" placeholder="Subject" maxlength="150" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="body" rows="5" class="form-control ckeditor" placeholder="Message" maxlength="2000" required></textarea>
+                    <textarea name="body" rows="5" class="form-control" placeholder="Message" maxlength="2000" required></textarea>
                 </div>
                 <br/>
                 <div class="form-group" align="right">
