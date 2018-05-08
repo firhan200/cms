@@ -98,8 +98,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/add', 'Admin\MessageController@add');
         Route::post('/addProcess', 'Admin\MessageController@addProcess');
         Route::get('/{id}', 'Admin\MessageController@detail');
-        Route::get('/edit/{id}', 'Admin\MessageController@edit');
-        Route::post('/editProcess', 'Admin\MessageController@editProcess');
+        Route::post('/reply/{message_id}', 'Admin\MessageController@reply');
         Route::get('/delete/{id}/{isDeleted}', 'Admin\MessageController@deleteProcess');
         Route::get('/deletePermanent/{id}', 'Admin\MessageController@deletePermanentProcess');
     });

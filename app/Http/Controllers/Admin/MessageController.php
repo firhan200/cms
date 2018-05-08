@@ -90,6 +90,7 @@ class MessageController extends BaseController
             join('message_receiver', 'message.id', '=', 'message_receiver.message_id')->
             where('message_receiver.user_id', $this->data['adminInfo']['id'])->
             orderBy('message.'.$this->data['sort_by'], $this->data['order_type'])->
+            select('*', 'message.id as message_id')->
             paginate($this->data['paginate']);
 
         //append query string to laravel pagination
@@ -152,6 +153,7 @@ class MessageController extends BaseController
                 where('subject', 'LIKE', "%".$this->data['keyword']."%");
             })->
             where('admin_id', $this->data['adminInfo']['id'])->
+            select('*', 'message.id as message_id')->
             orderBy($this->data['sort_by'], $this->data['order_type'])->
             paginate($this->data['paginate']);
 
@@ -223,57 +225,89 @@ class MessageController extends BaseController
         //trigger flash message
         Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully insert ".$this->model->name."</div>");
 
-        return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$this->model->id);
+        return Redirect('/admin/'.$this->data['objectName'].'/'.$message_id);
     }
 
-    public function detail($id){
+    public function detail($message_id){
         $this->data['adminInfo'] = $this->__getUserInfo();
 
-        //validating data 
-        $this->data['obj'] = $this->model->where('id', $id)->first();
-        if($this->data['obj']==null){
-            //not found
-            return Redirect('/admin/'.$this->data['objectName']);
+        $message_receiver = new \App\Models\Message_Receiver;
+
+        //check if from inbox / sent
+        $message_receiver_obj = $message_receiver::where('message_id', $message_id)->where('user_id', $this->data['adminInfo']['id'])->first();
+        if($message_receiver_obj!=null){
+            //make message is read
+            $message_receiver_obj->is_read = 1;
+            $message_receiver_obj->save();   
+        }
+        
+        //validating data
+        $this->data['messages'] = $this->model->
+                where(function ($query) use ($message_id){
+                    $query->
+                    where('message.id', $message_id)->
+                    orWhere('message.message_parent_id', $message_id);
+                })->
+                join('admin', 'admin.id', 'message.admin_id')->
+                select('*', 'message.created_at as message_date')->
+                get();
+
+        if($this->data['messages']==null){
+        //not found
+        return Redirect('/admin/'.$this->data['objectName']);
         }
 
+        $this->data['message_id'] = $message_id;
         return view('admin/'.$this->data['objectName'].'/detail', $this->data);
     }
 
-    public function edit($id){
+    public function reply($message_id, Request $request){
         $this->data['adminInfo'] = $this->__getUserInfo();
 
         //validating data
-        $this->data['obj'] = $this->model->where('id', $id)->first();
-        if($this->data['obj']==null){
+        $checkMessage = $this->model->where('id', $message_id)->first();
+        if($checkMessage==null){
             //not found
             return Redirect('/admin/'.$this->data['objectName']);
         }
 
-        return view('admin/'.$this->data['objectName'].'/edit', $this->data);
-    }
-
-    public function editProcess(Request $request){
-        //validating data
-        $id = $request->input('id');
-        $obj = $this->model->where('id', $id)->first();
-        if($obj==null){
-            //not found
-            return Redirect('/admin/'.$this->data['objectName']);
-        }
-
-        $is_active = $request->input('is_active')=="on" ? 1 : 0;
         //insert data to model
-        $obj->name = $request->input('name');
-        $obj->value = $request->input('value');
-        $obj->is_active = $is_active;
+        $message = new \App\Models\Message;
+        $message->message_parent_id = $message_id;
+        $message->admin_id = $this->data['adminInfo']['id'];
+        $message->subject = 'Re: '.$checkMessage->subject;
+        $message->body = $request->input('body');
+        $message->message_receivers = $checkMessage->message_receivers;
+        $message->is_active = 1;
+        $message->is_deleted  = 0;
 
         //save model
-        $obj->save();
+        $message->save();
+
+        //get last inserted id
+        $inserted_message_id = $message->id;
+
+        //insert message receiver
+        $message_receiver_obj = new \App\Models\Message_Receiver;
+        $message_receiver_obj->message_id = $inserted_message_id;
+        $message_receiver_obj->user_id = $checkMessage->admin_id;
+        $message_receiver_obj->is_read = 0;
+        $message_receiver_obj->save();
+
+        $message_receiver = new \App\Models\Message_Receiver;
+        $receivers = $message_receiver::where('message_id', $message_id)->where('user_id', '!=', $this->data['adminInfo']['id'])->get();
+        foreach($receivers as $receiver){
+            $message_receiver_obj = new \App\Models\Message_Receiver;
+            $message_receiver_obj->message_id = $inserted_message_id;
+            $message_receiver_obj->user_id = $receiver->user_id;
+            $message_receiver_obj->is_read = 0;
+            $message_receiver_obj->save();
+        }
 
         //trigget flash message
-        Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully edit ".$obj->name."</div>");
+        Session::flash('message', "<div class='alert alert-primary'><i class='fa fa-check-circle'></i> Successfully Reply message</div>");
 
-        return Redirect('/admin/'.$this->data['objectName'].'/edit/'.$id);
+        return Redirect('/admin/'.$this->data['objectName'].'/'.$message_id);
     }
 
     public function deleteProcess($id, $is_deleted){

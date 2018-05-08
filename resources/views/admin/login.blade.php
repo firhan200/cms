@@ -12,7 +12,7 @@
 			<div class="form-title">
 				CMS
 			</div>		
-			<form action="{{ url('/admin/login') }}" method="post">
+			<form action="{{ url('/admin/login') }}" method="post" class="disable-form-unconfirm">
 				{{ csrf_field() }}
 
 				<div class="form-group has-icon">
@@ -39,7 +39,7 @@
 					</div>							
 				</div>
 				<div class="form-group">
-					<button type="submit" class="btn btn-info btn-login">Login</button>
+					<button type="submit" class="btn btn-info btn-submit btn-login">Login</button>
 				</div>
 			</form>
 			<div class="form-footer">

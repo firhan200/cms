@@ -609,6 +609,11 @@ app.web = {
 		if ($(".compose-message")[0]) {
 			$('.message-to').select2();
 		}
+
+		$(".message-row").click(function () {
+			var url = $(this).data('href');
+			window.location = url;
+		});
 	}
 };
 
