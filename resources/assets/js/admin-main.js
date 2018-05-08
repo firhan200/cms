@@ -117,7 +117,7 @@ app.web = {
 								$(".messages-container").find(".dropdown-notifications").append('<a class="dropdown-item" href="'+message.link+'"><i class="fa fa-user-circle-o"></i> '+escapeHTML(message.name)+'<div>'+message.subject+'</div>'+'<div style="color:#696969">'+messageBody+'</div><div style="font-size:8pt;" align="right">'+message.date+'</div></a>');
 							})
 						}else{
-							$(".messages-container").find(".dropdown-notifications").html('<center class="help">no notifications</center>');
+							$(".messages-container").find(".dropdown-notifications").html('<center class="help">no messages</center>');
 						}
 						
 					},

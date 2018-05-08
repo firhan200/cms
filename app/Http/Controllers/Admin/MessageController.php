@@ -235,6 +235,21 @@ class MessageController extends BaseController
         $message = $this->model->where('id', $message_id)->first();
         if($message!=null){
             $message_receiver = new \App\Models\Message_Receiver;
+            $total_user_included = $message::where(function($query) use ($message_id){
+                                $query->
+                                where('message.message_parent_id', $message_id)->
+                                orWhere('message.id', $message_id);
+                            })->
+                            where(function($query){
+                                $query->
+                                where('message.admin_id', $this->data['adminInfo']['id'])->
+                                orWhere('message_receiver.user_id', $this->data['adminInfo']['id']);
+                            })->
+                            join('message_receiver', 'message.id', 'message_receiver.message_id')->
+                            count();
+            if($total_user_included < 1){
+                return Redirect('/admin/'.$this->data['objectName']);
+            }
 
             //check if from inbox / sent
             $message_receiver_obj = $message_receiver::where('message_id', $message_id)->where('user_id', $this->data['adminInfo']['id'])->first();
