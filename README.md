@@ -10,7 +10,7 @@ http://localhost:8000/admin
 
 Add CRUD on cms (example):
 1. php artisan make:Migration create_testing_table
-2. php artisan make:Controller Models/Testing
+2. php artisan make:Model Models/Testing
 3. connect Models/Testing to testing table
    protected $table = 'testing';
 1. php artisan make:Controller Admin/TestingController
